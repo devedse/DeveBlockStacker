@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <MonoGameContentReference Include="..\DeveBlockStacker.Content\Content\Content.mgcb" Link="Content\Content.mgcb" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MonoGame.Content.Builder" Version="3.7.0.9" />
+    <PackageReference Include="MonoGame.Framework.DesktopGL.Core" Version="3.7.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DeveBlockStacker.Content\DeveBlockStacker.Content.csproj" />
+  </ItemGroup>
+
+  <Import Project="..\DeveBlockStacker.Shared\DeveBlockStacker.Shared.projitems" Label="Shared" />
+
+</Project>

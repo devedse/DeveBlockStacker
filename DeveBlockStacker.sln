@@ -1,0 +1,66 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2050
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeveBlockStacker.DotnetCoreOpenGL", "DeveBlockStacker.DotnetCoreOpenGL\DeveBlockStacker.DotnetCoreOpenGL.csproj", "{E376D924-F51C-4033-8088-5B4853700E3F}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "DeveBlockStacker.Shared", "DeveBlockStacker.Shared\DeveBlockStacker.Shared.shproj", "{8693457C-1F84-483F-B095-9AC9ECD4D83C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeveBlockStacker.Content", "DeveBlockStacker.Content\DeveBlockStacker.Content.csproj", "{5A25730F-00AB-4CEB-B567-A46766FF6F93}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		DeveBlockStacker.Shared\DeveBlockStacker.Shared.projitems*{8693457c-1f84-483f-b095-9ac9ecd4d83c}*SharedItemsImports = 13
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|ARM = Debug|ARM
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|ARM = Release|ARM
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E376D924-F51C-4033-8088-5B4853700E3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E376D924-F51C-4033-8088-5B4853700E3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E376D924-F51C-4033-8088-5B4853700E3F}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{E376D924-F51C-4033-8088-5B4853700E3F}.Debug|ARM.Build.0 = Debug|Any CPU
+		{E376D924-F51C-4033-8088-5B4853700E3F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E376D924-F51C-4033-8088-5B4853700E3F}.Debug|x64.Build.0 = Debug|Any CPU
+		{E376D924-F51C-4033-8088-5B4853700E3F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E376D924-F51C-4033-8088-5B4853700E3F}.Debug|x86.Build.0 = Debug|Any CPU
+		{E376D924-F51C-4033-8088-5B4853700E3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E376D924-F51C-4033-8088-5B4853700E3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E376D924-F51C-4033-8088-5B4853700E3F}.Release|ARM.ActiveCfg = Release|Any CPU
+		{E376D924-F51C-4033-8088-5B4853700E3F}.Release|ARM.Build.0 = Release|Any CPU
+		{E376D924-F51C-4033-8088-5B4853700E3F}.Release|x64.ActiveCfg = Release|Any CPU
+		{E376D924-F51C-4033-8088-5B4853700E3F}.Release|x64.Build.0 = Release|Any CPU
+		{E376D924-F51C-4033-8088-5B4853700E3F}.Release|x86.ActiveCfg = Release|Any CPU
+		{E376D924-F51C-4033-8088-5B4853700E3F}.Release|x86.Build.0 = Release|Any CPU
+		{5A25730F-00AB-4CEB-B567-A46766FF6F93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A25730F-00AB-4CEB-B567-A46766FF6F93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A25730F-00AB-4CEB-B567-A46766FF6F93}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{5A25730F-00AB-4CEB-B567-A46766FF6F93}.Debug|ARM.Build.0 = Debug|Any CPU
+		{5A25730F-00AB-4CEB-B567-A46766FF6F93}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5A25730F-00AB-4CEB-B567-A46766FF6F93}.Debug|x64.Build.0 = Debug|Any CPU
+		{5A25730F-00AB-4CEB-B567-A46766FF6F93}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5A25730F-00AB-4CEB-B567-A46766FF6F93}.Debug|x86.Build.0 = Debug|Any CPU
+		{5A25730F-00AB-4CEB-B567-A46766FF6F93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A25730F-00AB-4CEB-B567-A46766FF6F93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A25730F-00AB-4CEB-B567-A46766FF6F93}.Release|ARM.ActiveCfg = Release|Any CPU
+		{5A25730F-00AB-4CEB-B567-A46766FF6F93}.Release|ARM.Build.0 = Release|Any CPU
+		{5A25730F-00AB-4CEB-B567-A46766FF6F93}.Release|x64.ActiveCfg = Release|Any CPU
+		{5A25730F-00AB-4CEB-B567-A46766FF6F93}.Release|x64.Build.0 = Release|Any CPU
+		{5A25730F-00AB-4CEB-B567-A46766FF6F93}.Release|x86.ActiveCfg = Release|Any CPU
+		{5A25730F-00AB-4CEB-B567-A46766FF6F93}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {28AA38D9-1737-46A6-A227-CC3A7865D789}
+	EndGlobalSection
+EndGlobal
