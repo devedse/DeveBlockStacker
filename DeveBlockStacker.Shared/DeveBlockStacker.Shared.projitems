@@ -9,6 +9,7 @@
     <Import_RootNamespace>DeveBlockStacker.Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Blocketje.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TheGame.cs" />
   </ItemGroup>
 </Project>
