@@ -11,10 +11,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeveBlockStacker.Content", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeveBlockStacker.Windows10Universal", "DeveBlockStacker.Windows10Universal\DeveBlockStacker.Windows10Universal.csproj", "{0E3B3790-BBEE-4D6E-9B5F-EB3DF0DAC997}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeveBlockStacker.Android", "DeveBlockStacker.Android\DeveBlockStacker.Android.csproj", "{AA2BD1CD-9589-41F1-A306-629A674F302F}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		DeveBlockStacker.Shared\DeveBlockStacker.Shared.projitems*{0e3b3790-bbee-4d6e-9b5f-eb3df0dac997}*SharedItemsImports = 4
 		DeveBlockStacker.Shared\DeveBlockStacker.Shared.projitems*{8693457c-1f84-483f-b095-9ac9ecd4d83c}*SharedItemsImports = 13
+		DeveBlockStacker.Shared\DeveBlockStacker.Shared.projitems*{aa2bd1cd-9589-41f1-a306-629a674f302f}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +82,30 @@ Global
 		{0E3B3790-BBEE-4D6E-9B5F-EB3DF0DAC997}.Release|x86.ActiveCfg = Release|x86
 		{0E3B3790-BBEE-4D6E-9B5F-EB3DF0DAC997}.Release|x86.Build.0 = Release|x86
 		{0E3B3790-BBEE-4D6E-9B5F-EB3DF0DAC997}.Release|x86.Deploy.0 = Release|x86
+		{AA2BD1CD-9589-41F1-A306-629A674F302F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA2BD1CD-9589-41F1-A306-629A674F302F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA2BD1CD-9589-41F1-A306-629A674F302F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{AA2BD1CD-9589-41F1-A306-629A674F302F}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{AA2BD1CD-9589-41F1-A306-629A674F302F}.Debug|ARM.Build.0 = Debug|Any CPU
+		{AA2BD1CD-9589-41F1-A306-629A674F302F}.Debug|ARM.Deploy.0 = Debug|Any CPU
+		{AA2BD1CD-9589-41F1-A306-629A674F302F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{AA2BD1CD-9589-41F1-A306-629A674F302F}.Debug|x64.Build.0 = Debug|Any CPU
+		{AA2BD1CD-9589-41F1-A306-629A674F302F}.Debug|x64.Deploy.0 = Debug|Any CPU
+		{AA2BD1CD-9589-41F1-A306-629A674F302F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AA2BD1CD-9589-41F1-A306-629A674F302F}.Debug|x86.Build.0 = Debug|Any CPU
+		{AA2BD1CD-9589-41F1-A306-629A674F302F}.Debug|x86.Deploy.0 = Debug|Any CPU
+		{AA2BD1CD-9589-41F1-A306-629A674F302F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA2BD1CD-9589-41F1-A306-629A674F302F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA2BD1CD-9589-41F1-A306-629A674F302F}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{AA2BD1CD-9589-41F1-A306-629A674F302F}.Release|ARM.ActiveCfg = Release|Any CPU
+		{AA2BD1CD-9589-41F1-A306-629A674F302F}.Release|ARM.Build.0 = Release|Any CPU
+		{AA2BD1CD-9589-41F1-A306-629A674F302F}.Release|ARM.Deploy.0 = Release|Any CPU
+		{AA2BD1CD-9589-41F1-A306-629A674F302F}.Release|x64.ActiveCfg = Release|Any CPU
+		{AA2BD1CD-9589-41F1-A306-629A674F302F}.Release|x64.Build.0 = Release|Any CPU
+		{AA2BD1CD-9589-41F1-A306-629A674F302F}.Release|x64.Deploy.0 = Release|Any CPU
+		{AA2BD1CD-9589-41F1-A306-629A674F302F}.Release|x86.ActiveCfg = Release|Any CPU
+		{AA2BD1CD-9589-41F1-A306-629A674F302F}.Release|x86.Build.0 = Release|Any CPU
+		{AA2BD1CD-9589-41F1-A306-629A674F302F}.Release|x86.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
