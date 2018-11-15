@@ -10,6 +10,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Blocketje.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\GameData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ArrayHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)State\IGameState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)State\PlayingState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TheGame.cs" />
   </ItemGroup>
 </Project>

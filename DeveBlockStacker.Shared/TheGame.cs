@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using DeveBlockStacker.Shared.Data;
+using DeveBlockStacker.Shared.State;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -10,9 +12,10 @@ namespace DeveBlockStacker.Shared
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private Texture2D squareImage;
-        private readonly bool[,] gridje;
-        private readonly int gridHeight = 11;
-        private readonly int gridWidth = 7;
+
+
+        public GameData gameData;
+        public IGameState currentState;
 
         public TheGame()
         {
@@ -23,7 +26,13 @@ namespace DeveBlockStacker.Shared
             graphics.PreferredBackBufferWidth = 720 / 2;
             graphics.PreferredBackBufferHeight = 1280 / 2;
 
-            gridje = new bool[gridWidth, gridHeight];
+            NewGame();
+        }
+
+        public void NewGame()
+        {
+            gameData = new GameData();
+            currentState = new PlayingState(gameData);
         }
 
         protected override void Initialize()
@@ -48,6 +57,8 @@ namespace DeveBlockStacker.Shared
                 Exit();
             }
 
+            currentState.Update(gameData);
+
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -62,23 +73,26 @@ namespace DeveBlockStacker.Shared
 
             Random r = new Random();
 
-            for (int y = gridHeight - 1; y >= 0; y--)
+            for (int y = gameData.GridHeight - 1; y >= 0; y--)
             {
-                for (int x = gridWidth - 1; x >= 0; x--)
+                for (int x = gameData.GridWidth - 1; x >= 0; x--)
                 {
-                    float widthOfBlockje = graphics.PreferredBackBufferWidth / gridWidth;
-                    float heightOfBlockje = graphics.PreferredBackBufferHeight / gridHeight;
+                    float widthOfBlockje = graphics.PreferredBackBufferWidth / gameData.GridWidth;
+                    float heightOfBlockje = graphics.PreferredBackBufferHeight / gameData.GridHeight;
 
                     float yyy = graphics.PreferredBackBufferHeight - ((1 + y) * heightOfBlockje);
                     var blocketje = new Blocketje(squareImage, x * widthOfBlockje, yyy, widthOfBlockje, heightOfBlockje, 3);
 
-                    if (r.Next(2) == 0)
+                    if (gameData.Gridje[x, y] == true)
                     {
-                        blocketje.Draw(spriteBatch, Color.Blue);
-                    }
-                    else
-                    {
-                        blocketje.Draw(spriteBatch, Color.Red);
+                        if (y > 7)
+                        {
+                            blocketje.Draw(spriteBatch, Color.Red);
+                        }
+                        else
+                        {
+                            blocketje.Draw(spriteBatch, Color.Blue);
+                        }
                     }
                 }
             }
