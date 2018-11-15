@@ -23,8 +23,10 @@ namespace DeveBlockStacker.Shared
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
+#if !ANDROID
             graphics.PreferredBackBufferWidth = 720 / 2;
             graphics.PreferredBackBufferHeight = 1280 / 2;
+#endif
 
             inputStatifier = new InputStatifier();
 
