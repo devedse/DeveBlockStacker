@@ -1,4 +1,5 @@
 ﻿using DeveBlockStacker.Shared.Data;
+using DeveBlockStacker.Shared.GameState;
 using DeveBlockStacker.Shared.State;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -16,6 +17,7 @@ namespace DeveBlockStacker.Shared
 
         public GameData gameData;
         public IGameState currentState;
+        public InputStatifier inputStatifier;
 
         public TheGame()
         {
@@ -25,6 +27,8 @@ namespace DeveBlockStacker.Shared
 
             graphics.PreferredBackBufferWidth = 720 / 2;
             graphics.PreferredBackBufferHeight = 1280 / 2;
+
+            inputStatifier = new InputStatifier();
 
             NewGame();
         }
@@ -52,12 +56,13 @@ namespace DeveBlockStacker.Shared
 
         protected override void Update(GameTime gameTime)
         {
+            inputStatifier.BeforeUpdate();
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
                 Exit();
             }
 
-            currentState.Update(gameData);
+            currentState = currentState.Update(inputStatifier, gameData);
 
             // TODO: Add your update logic here
 
@@ -66,7 +71,7 @@ namespace DeveBlockStacker.Shared
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();

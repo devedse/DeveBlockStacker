@@ -1,6 +1,8 @@
 ﻿using DeveBlockStacker.Shared.Data;
+using DeveBlockStacker.Shared.State;
+using Microsoft.Xna.Framework.Input;
 
-namespace DeveBlockStacker.Shared.State
+namespace DeveBlockStacker.Shared.GameState
 {
     public class PlayingState : IGameState
     {
@@ -18,11 +20,11 @@ namespace DeveBlockStacker.Shared.State
                 curPos = 6;
                 curDir = -1;
                 width = 4;
-                framesPerStep = 50;
+                framesPerStep = 5;
             }
         }
 
-        public void Update(GameData gameData)
+        public IGameState Update(InputStatifier inputStatifier, GameData gameData)
         {
             frameTimer++;
 
@@ -42,6 +44,14 @@ namespace DeveBlockStacker.Shared.State
             {
                 gameData.Gridje[x, gameData.CurrentRow] = x >= curPos && x < (curPos + width);
             }
+
+            if (inputStatifier.KeyPressed(Keys.Space))
+            {
+                gameData.CurrentRow++;
+                return new PlayingState(gameData);
+            }
+
+            return this;
         }
     }
 }
