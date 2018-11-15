@@ -25,3 +25,10 @@
 /processorParam:TextureFormat=Color
 /build:Square.png
 
+#begin SegoeUI.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:SegoeUI.spritefont
+

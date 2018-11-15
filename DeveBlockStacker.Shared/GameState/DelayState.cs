@@ -7,16 +7,19 @@ namespace DeveBlockStacker.Shared.GameState
 {
     internal class DelayState : IGameState
     {
+        private readonly GameData gameData;
+
         private readonly IGameState stateToActivate;
         private int framesDelay;
 
-        public DelayState(IGameState stateToActivate, int framesDelay)
+        public DelayState(GameData gameData, IGameState stateToActivate, int framesDelay)
         {
+            this.gameData = gameData;
             this.stateToActivate = stateToActivate;
             this.framesDelay = framesDelay;
         }
 
-        public IGameState Update(InputStatifier inputStatifier, GameData gameData)
+        public IGameState Update(InputStatifier inputStatifier)
         {
             framesDelay--;
             if (framesDelay <= 0)
@@ -26,7 +29,7 @@ namespace DeveBlockStacker.Shared.GameState
             return this;
         }
 
-        public void Draw(SpriteBatch spriteBatch, ContentDistributionThing contentDistributionThing, GameData gameData)
+        public void Draw(SpriteBatch spriteBatch, ContentDistributionThing contentDistributionThing)
         {
             NormalGridDrawwer.DrawGrid(spriteBatch, contentDistributionThing, gameData);
         }

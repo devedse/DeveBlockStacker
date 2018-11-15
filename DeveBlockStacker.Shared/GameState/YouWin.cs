@@ -9,12 +9,12 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace DeveBlockStacker.Shared.GameState
 {
-    public class GameOver : IGameState
+    public class YouWin : IGameState
     {
         private readonly GameData gameData;
         private int framesDelay;
 
-        public GameOver(GameData gameData)
+        public YouWin(GameData gameData)
         {
             this.gameData = gameData;
 
@@ -34,7 +34,7 @@ namespace DeveBlockStacker.Shared.GameState
         public void Draw(SpriteBatch spriteBatch, ContentDistributionThing contentDistributionThing)
         {
             NormalGridDrawwer.DrawGrid(spriteBatch, contentDistributionThing, gameData);
-            spriteBatch.DrawString(contentDistributionThing.SegoeUI, "You fucking suck!", new Vector2(30, 30), Color.White);
+            spriteBatch.DrawString(contentDistributionThing.SegoeUI, "Wooo flashyyy screen here!!", new Vector2(30, 30), Color.White, framesDelay / 50.0f, new Vector2(60, 60), 1.0f, SpriteEffects.None, 0);
         }
     }
 }

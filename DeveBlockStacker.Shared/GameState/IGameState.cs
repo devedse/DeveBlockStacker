@@ -6,7 +6,7 @@ namespace DeveBlockStacker.Shared.GameState
 {
     public interface IGameState
     {
-        IGameState Update(InputStatifier inputStatifier, GameData gameData);
-        void Draw(SpriteBatch spriteBatch, ContentDistributionThing contentDistributionThing, GameData gameData);
+        IGameState Update(InputStatifier inputStatifier);
+        void Draw(SpriteBatch spriteBatch, ContentDistributionThing contentDistributionThing);
     }
 }

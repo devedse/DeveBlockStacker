@@ -8,15 +8,18 @@ namespace DeveBlockStacker.Shared.GameState
 {
     public class PlayingState : IGameState
     {
+        private readonly GameData gameData;
+
         private int curPos;
         private int curDir;
         private readonly int width;
         private readonly int framesPerStep;
-
         private int frameTimer;
 
         public PlayingState(GameData gameData)
         {
+            this.gameData = gameData;
+
             if (gameData.CurrentRow >= 0)
             {
                 curPos = 6;
@@ -26,7 +29,7 @@ namespace DeveBlockStacker.Shared.GameState
             }
         }
 
-        public IGameState Update(InputStatifier inputStatifier, GameData gameData)
+        public IGameState Update(InputStatifier inputStatifier)
         {
             frameTimer++;
 
@@ -48,14 +51,13 @@ namespace DeveBlockStacker.Shared.GameState
 
             if (inputStatifier.KeyPressed(Keys.Space))
             {
-                gameData.CurrentRow++;
                 return new GravityState(gameData);
             }
 
             return this;
         }
 
-        public void Draw(SpriteBatch spriteBatch, ContentDistributionThing contentDistributionThing, GameData gameData)
+        public void Draw(SpriteBatch spriteBatch, ContentDistributionThing contentDistributionThing)
         {
             NormalGridDrawwer.DrawGrid(spriteBatch, contentDistributionThing, gameData);
         }

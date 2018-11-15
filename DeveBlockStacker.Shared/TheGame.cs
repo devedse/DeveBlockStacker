@@ -12,10 +12,8 @@ namespace DeveBlockStacker.Shared
     {
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
-        private Texture2D squareImage;
 
         private ContentDistributionThing contentDistributionThing;
-        private GameData gameData;
         private IGameState currentState;
         private InputStatifier inputStatifier;
 
@@ -36,8 +34,8 @@ namespace DeveBlockStacker.Shared
         public void NewGame()
         {
             contentDistributionThing = new ContentDistributionThing(graphics);
-            gameData = new GameData();
-            currentState = new PlayingState(gameData);
+            //var gameData = new GameData();
+            currentState = new NewGameState();
         }
 
         protected override void Initialize()
@@ -63,7 +61,7 @@ namespace DeveBlockStacker.Shared
                 Exit();
             }
 
-            currentState = currentState.Update(inputStatifier, gameData);
+            currentState = currentState.Update(inputStatifier);
 
             // TODO: Add your update logic here
 
@@ -77,7 +75,7 @@ namespace DeveBlockStacker.Shared
             // TODO: Add your drawing code here
             spriteBatch.Begin();
 
-            currentState.Draw(spriteBatch, contentDistributionThing, gameData);
+            currentState.Draw(spriteBatch, contentDistributionThing);
 
             //spriteBatch.Draw(squareImage, new Rectangle(0, 0, 100, 100), Color.Black);
             //spriteBatch.Draw(squareImage, new Rectangle(110, 0, 100, 100), Color.Red);

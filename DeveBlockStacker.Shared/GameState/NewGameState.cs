@@ -1,24 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using DeveBlockStacker.Shared.Data;
-using DeveBlockStacker.Shared.Drawwers;
+﻿using DeveBlockStacker.Shared.Data;
 using DeveBlockStacker.Shared.State;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace DeveBlockStacker.Shared.GameState
 {
-    public class GameOver : IGameState
+    public class NewGameState : IGameState
     {
         private readonly GameData gameData;
         private int framesDelay;
 
-        public GameOver(GameData gameData)
+        public NewGameState()
         {
-            this.gameData = gameData;
+            this.gameData = new GameData();
 
-            framesDelay = 500;
+            framesDelay = 30;
         }
 
         public IGameState Update(InputStatifier inputStatifier)
@@ -26,15 +22,14 @@ namespace DeveBlockStacker.Shared.GameState
             framesDelay--;
             if (framesDelay <= 0)
             {
-                return new NewGameState();
+                return new PlayingState(gameData);
             }
             return this;
         }
 
         public void Draw(SpriteBatch spriteBatch, ContentDistributionThing contentDistributionThing)
         {
-            NormalGridDrawwer.DrawGrid(spriteBatch, contentDistributionThing, gameData);
-            spriteBatch.DrawString(contentDistributionThing.SegoeUI, "You fucking suck!", new Vector2(30, 30), Color.White);
+            spriteBatch.DrawString(contentDistributionThing.SegoeUI, "Helloooo!!! :)", new Vector2(60, framesDelay), Color.White);
         }
     }
 }

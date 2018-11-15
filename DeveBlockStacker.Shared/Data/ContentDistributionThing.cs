@@ -7,6 +7,7 @@ namespace DeveBlockStacker.Shared.Data
     public class ContentDistributionThing
     {
         public Texture2D SquareImage { get; private set; }
+        public SpriteFont SegoeUI { get; private set; }
 
         public int ScreenWidth => graphics.PreferredBackBufferWidth;
         public int ScreenHeight => graphics.PreferredBackBufferHeight;
@@ -21,6 +22,7 @@ namespace DeveBlockStacker.Shared.Data
         public void LoadContent(ContentManager content)
         {
             SquareImage = content.Load<Texture2D>("Square");
+            SegoeUI = content.Load<SpriteFont>("SegoeUI");
         }
     }
 }
