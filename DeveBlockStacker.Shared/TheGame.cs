@@ -14,10 +14,10 @@ namespace DeveBlockStacker.Shared
         private SpriteBatch spriteBatch;
         private Texture2D squareImage;
 
-
-        public GameData gameData;
-        public IGameState currentState;
-        public InputStatifier inputStatifier;
+        private ContentDistributionThing contentDistributionThing;
+        private GameData gameData;
+        private IGameState currentState;
+        private InputStatifier inputStatifier;
 
         public TheGame()
         {
@@ -35,6 +35,7 @@ namespace DeveBlockStacker.Shared
 
         public void NewGame()
         {
+            contentDistributionThing = new ContentDistributionThing(graphics);
             gameData = new GameData();
             currentState = new PlayingState(gameData);
         }
@@ -51,7 +52,7 @@ namespace DeveBlockStacker.Shared
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            squareImage = Content.Load<Texture2D>("Square");
+            contentDistributionThing.LoadContent(Content);
         }
 
         protected override void Update(GameTime gameTime)
@@ -76,31 +77,7 @@ namespace DeveBlockStacker.Shared
             // TODO: Add your drawing code here
             spriteBatch.Begin();
 
-            Random r = new Random();
-
-            for (int y = gameData.GridHeight - 1; y >= 0; y--)
-            {
-                for (int x = gameData.GridWidth - 1; x >= 0; x--)
-                {
-                    float widthOfBlockje = graphics.PreferredBackBufferWidth / gameData.GridWidth;
-                    float heightOfBlockje = graphics.PreferredBackBufferHeight / gameData.GridHeight;
-
-                    float yyy = graphics.PreferredBackBufferHeight - ((1 + y) * heightOfBlockje);
-                    var blocketje = new Blocketje(squareImage, x * widthOfBlockje, yyy, widthOfBlockje, heightOfBlockje, 3);
-
-                    if (gameData.Gridje[x, y] == true)
-                    {
-                        if (y > 7)
-                        {
-                            blocketje.Draw(spriteBatch, Color.Red);
-                        }
-                        else
-                        {
-                            blocketje.Draw(spriteBatch, Color.Blue);
-                        }
-                    }
-                }
-            }
+            currentState.Draw(spriteBatch, contentDistributionThing, gameData);
 
             //spriteBatch.Draw(squareImage, new Rectangle(0, 0, 100, 100), Color.Black);
             //spriteBatch.Draw(squareImage, new Rectangle(110, 0, 100, 100), Color.Red);

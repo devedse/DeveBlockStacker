@@ -1,5 +1,7 @@
 ﻿using DeveBlockStacker.Shared.Data;
+using DeveBlockStacker.Shared.Drawwers;
 using DeveBlockStacker.Shared.State;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace DeveBlockStacker.Shared.GameState
 {
@@ -22,6 +24,11 @@ namespace DeveBlockStacker.Shared.GameState
                 return stateToActivate;
             }
             return this;
+        }
+
+        public void Draw(SpriteBatch spriteBatch, ContentDistributionThing contentDistributionThing, GameData gameData)
+        {
+            NormalGridDrawwer.DrawGrid(spriteBatch, contentDistributionThing, gameData);
         }
     }
 }

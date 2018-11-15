@@ -10,8 +10,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Blocketje.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\ContentDistributionThing.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\GameData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Drawwers\NormalGridDrawwer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GameState\DelayState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameState\GameOver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GameState\GravityState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ArrayHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GameState\IGameState.cs" />

@@ -1,5 +1,7 @@
 ﻿using DeveBlockStacker.Shared.Data;
+using DeveBlockStacker.Shared.Drawwers;
 using DeveBlockStacker.Shared.State;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace DeveBlockStacker.Shared.GameState
@@ -39,7 +41,6 @@ namespace DeveBlockStacker.Shared.GameState
                 frameTimer = 0;
             }
 
-
             for (int x = 0; x < gameData.GridWidth; x++)
             {
                 gameData.Gridje[x, gameData.CurrentRow] = x >= curPos && x < (curPos + width);
@@ -52,6 +53,11 @@ namespace DeveBlockStacker.Shared.GameState
             }
 
             return this;
+        }
+
+        public void Draw(SpriteBatch spriteBatch, ContentDistributionThing contentDistributionThing, GameData gameData)
+        {
+            NormalGridDrawwer.DrawGrid(spriteBatch, contentDistributionThing, gameData);
         }
     }
 }

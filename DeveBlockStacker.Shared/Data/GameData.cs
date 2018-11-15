@@ -1,4 +1,6 @@
-﻿namespace DeveBlockStacker.Shared.Data
+﻿using Microsoft.Xna.Framework;
+
+namespace DeveBlockStacker.Shared.Data
 {
     public class GameData
     {
@@ -6,6 +8,7 @@
         public bool[,] Gridje { get; }
         public int GridHeight => 11;
         public int GridWidth => 7;
+
 
         public GameData()
         {
