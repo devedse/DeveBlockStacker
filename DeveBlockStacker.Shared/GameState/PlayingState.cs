@@ -48,7 +48,7 @@ namespace DeveBlockStacker.Shared.GameState
             if (inputStatifier.KeyPressed(Keys.Space))
             {
                 gameData.CurrentRow++;
-                return new PlayingState(gameData);
+                return new GravityState(gameData);
             }
 
             return this;
