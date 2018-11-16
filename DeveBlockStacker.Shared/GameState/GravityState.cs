@@ -41,23 +41,21 @@ namespace DeveBlockStacker.Shared.GameState
 
                 if (!didSomething)
                 {
-                    if (gameData.CurrentRow == gameData.GridHeight - 1)
+                    var blocksOnLastRow = BlocksOnLastRow();
+                    if (blocksOnLastRow == 0)
                     {
-                        if (IsThereABlockOnLastRow())
-                        {
-                            //You win
-                            return new YouWin(gameData);
-                        }
-                        else
-                        {
-                            //You loose
-                            return new GameOver(gameData);
-                        }
+                        //You loose
+                        return new GameOver(gameData);
+                    }
+                    else if (gameData.CurrentRow == gameData.GridHeight - 1)
+                    {
+                        //You win
+                        return new YouWin(gameData);
                     }
                     else
                     {
                         gameData.CurrentRow++;
-                        return new DelayState(gameData, new PlayingState(gameData), 30);
+                        return new DelayState(gameData, new PlayingState(gameData, blocksOnLastRow), 30);
                     }
                 }
 
@@ -67,16 +65,17 @@ namespace DeveBlockStacker.Shared.GameState
             return this;
         }
 
-        public bool IsThereABlockOnLastRow()
+        public int BlocksOnLastRow()
         {
+            int count = 0;
             for (int x = 0; x < gameData.GridWidth; x++)
             {
-                if (gameData.Gridje[x, gameData.GridHeight - 1])
+                if (gameData.Gridje[x, gameData.CurrentRow])
                 {
-                    return true;
+                    count++;
                 }
             }
-            return false;
+            return count;
         }
 
         public void Draw(SpriteBatch spriteBatch, ContentDistributionThing contentDistributionThing)

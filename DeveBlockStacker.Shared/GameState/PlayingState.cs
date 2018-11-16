@@ -3,6 +3,7 @@ using DeveBlockStacker.Shared.Drawwers;
 using DeveBlockStacker.Shared.State;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace DeveBlockStacker.Shared.GameState
 {
@@ -16,17 +17,33 @@ namespace DeveBlockStacker.Shared.GameState
         private readonly int framesPerStep;
         private int frameTimer;
 
-        public PlayingState(GameData gameData)
+        public PlayingState(GameData gameData, int maxWidth = int.MaxValue)
         {
             this.gameData = gameData;
 
-            if (gameData.CurrentRow >= 0)
+            var random = new Random();
+
+            if (gameData.CurrentRow < 3)
             {
-                curPos = 6;
-                curDir = -1;
                 width = 4;
-                framesPerStep = 5;
             }
+            else if (gameData.CurrentRow < 6)
+            {
+                width = 3;
+            }
+            else if (gameData.CurrentRow < 9)
+            {
+                width = 2;
+            }
+            else
+            {
+                width = 1;
+            }
+
+            width = Math.Min(maxWidth, width);
+            curPos = random.Next(-width + 1, gameData.GridWidth - 1);
+            framesPerStep = 5;
+            curDir = random.Next(0, 1) == 1 ? -1 : 1;
         }
 
         public IGameState Update(InputStatifier inputStatifier)
@@ -35,7 +52,7 @@ namespace DeveBlockStacker.Shared.GameState
 
             if (frameTimer >= framesPerStep)
             {
-                if ((curPos <= 0 && curDir == -1) || (curPos + width >= gameData.GridWidth && curDir == 1))
+                if ((curPos <= -width + 1 && curDir == -1) || (curPos + 1 >= gameData.GridWidth && curDir == 1))
                 {
                     curDir *= -1;
                 }
