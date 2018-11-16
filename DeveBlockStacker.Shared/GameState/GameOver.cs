@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using DeveBlockStacker.Shared.Data;
+﻿using DeveBlockStacker.Shared.Data;
 using DeveBlockStacker.Shared.Drawwers;
 using DeveBlockStacker.Shared.State;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace DeveBlockStacker.Shared.GameState
 {
@@ -13,6 +11,9 @@ namespace DeveBlockStacker.Shared.GameState
     {
         private readonly GameData gameData;
         private int framesDelay;
+
+        private readonly string gameOverString = $"Youuuuu...{Environment.NewLine}SUCKKKKK{Environment.NewLine}{Environment.NewLine}      :'(";
+        private Vector2 measuredString;
 
         public GameOver(GameData gameData)
         {
@@ -33,8 +34,18 @@ namespace DeveBlockStacker.Shared.GameState
 
         public void Draw(SpriteBatch spriteBatch, ContentDistributionThing contentDistributionThing)
         {
+            if (measuredString == Vector2.Zero)
+            {
+                measuredString = contentDistributionThing.SegoeUI70.MeasureString(gameOverString);
+            }
+
             NormalGridDrawwer.DrawGrid(spriteBatch, contentDistributionThing, gameData);
-            spriteBatch.DrawString(contentDistributionThing.SegoeUI20, "You fucking suck!", new Vector2(30, 30), Color.White);
+
+            var pos = new Vector2(contentDistributionThing.ScreenWidth / 2, contentDistributionThing.ScreenHeight / 2 + (contentDistributionThing.ScreenHeight / 5.0f * (float)Math.Sin(framesDelay / 20.0f)));
+
+            var scale = contentDistributionThing.ScreenWidth / (measuredString.X * 1.3f);
+
+            spriteBatch.DrawString(contentDistributionThing.SegoeUI70, gameOverString, pos, Color.White, 0, measuredString / 2, scale + ((1.0f + (float)Math.Sin(framesDelay / 6.0f)) * 0.15f), SpriteEffects.None, 0);
         }
     }
 }

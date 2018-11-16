@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System.Diagnostics;
 
 namespace DeveBlockStacker.Shared.Data
 {
@@ -9,10 +10,12 @@ namespace DeveBlockStacker.Shared.Data
         public int GridHeight => 11;
         public int GridWidth => 7;
 
+        public Stopwatch Stopwatch { get; }
 
         public GameData()
         {
             Gridje = new bool[GridWidth, GridHeight];
+            Stopwatch = Stopwatch.StartNew();
         }
     }
 }
