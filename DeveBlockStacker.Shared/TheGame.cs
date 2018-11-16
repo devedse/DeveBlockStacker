@@ -4,7 +4,6 @@ using DeveBlockStacker.Shared.State;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
 
 namespace DeveBlockStacker.Shared
 {
@@ -17,23 +16,19 @@ namespace DeveBlockStacker.Shared
         private IGameState currentState;
         private InputStatifier inputStatifier;
 
-#if ANDROID
+        public TheGame() : this(720 / 2, 1280 / 2)
+        {
+
+        }
+
         public TheGame(int widthScreen, int heightScreen)
-#else
-        public TheGame()
-#endif
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
-#if ANDROID
             graphics.PreferredBackBufferWidth = widthScreen;
             graphics.PreferredBackBufferHeight = heightScreen;
-#else
-            graphics.PreferredBackBufferWidth = 720 / 2;
-            graphics.PreferredBackBufferHeight = 1280 / 2;
-#endif
 
             inputStatifier = new InputStatifier();
 

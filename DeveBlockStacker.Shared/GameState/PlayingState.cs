@@ -43,7 +43,7 @@ namespace DeveBlockStacker.Shared.GameState
             width = Math.Min(maxWidth, width);
             curPos = random.Next(-width + 1, gameData.GridWidth - 1);
             framesPerStep = 5;
-            curDir = random.Next(0, 1) == 1 ? -1 : 1;
+            curDir = random.Next(0, 2) == 0 ? -1 : 1;
         }
 
         public IGameState Update(InputStatifier inputStatifier)

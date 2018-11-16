@@ -34,7 +34,7 @@ namespace DeveBlockStacker.Shared.GameState
         public void Draw(SpriteBatch spriteBatch, ContentDistributionThing contentDistributionThing)
         {
             NormalGridDrawwer.DrawGrid(spriteBatch, contentDistributionThing, gameData);
-            spriteBatch.DrawString(contentDistributionThing.SegoeUI, "Wooo flashyyy screen here!!", new Vector2(30, 30), Color.White, framesDelay / 50.0f, new Vector2(60, 60), 1.0f, SpriteEffects.None, 0);
+            spriteBatch.DrawString(contentDistributionThing.SegoeUI20, "Wooo flashyyy screen here!!", new Vector2(30, 30), Color.White, framesDelay / 50.0f, new Vector2(60, 60), 1.0f, SpriteEffects.None, 0);
         }
     }
 }

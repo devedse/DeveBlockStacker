@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="deveblockstacker_android">
 	<uses-sdk android:minSdkVersion="26" android:targetSdkVersion="27" />
-	<application android:allowBackup="true" android:icon="@drawable/icon" android:label="DeveBlockStacker.Android" android:roundIcon="@drawable/icon" android:supportsRtl="true" android:theme="@style/Theme.Splash"></application>
+	<application android:allowBackup="true" android:icon="@drawable/iconhighres" android:label="DeveBlockStacker.Android" android:roundIcon="@drawable/iconhighres" android:supportsRtl="true" android:theme="@style/Theme.Splash"></application>
 </manifest>

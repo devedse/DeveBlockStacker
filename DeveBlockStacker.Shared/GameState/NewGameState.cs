@@ -29,7 +29,7 @@ namespace DeveBlockStacker.Shared.GameState
 
         public void Draw(SpriteBatch spriteBatch, ContentDistributionThing contentDistributionThing)
         {
-            spriteBatch.DrawString(contentDistributionThing.SegoeUI, "Helloooo!!! :)", new Vector2(60, framesDelay), Color.White);
+            spriteBatch.DrawString(contentDistributionThing.SegoeUI70, "Helloooo!!! :)", new Vector2(60, framesDelay), Color.White);
         }
     }
 }

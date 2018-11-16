@@ -34,7 +34,7 @@ namespace DeveBlockStacker.Shared.GameState
         public void Draw(SpriteBatch spriteBatch, ContentDistributionThing contentDistributionThing)
         {
             NormalGridDrawwer.DrawGrid(spriteBatch, contentDistributionThing, gameData);
-            spriteBatch.DrawString(contentDistributionThing.SegoeUI, "You fucking suck!", new Vector2(30, 30), Color.White);
+            spriteBatch.DrawString(contentDistributionThing.SegoeUI20, "You fucking suck!", new Vector2(30, 30), Color.White);
         }
     }
 }
