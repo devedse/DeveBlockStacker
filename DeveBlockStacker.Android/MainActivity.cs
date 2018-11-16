@@ -12,14 +12,17 @@ namespace DeveBlockStacker.Android
         , Theme = "@style/Theme.Splash"
         , AlwaysRetainTaskState = true
         , LaunchMode = LaunchMode.SingleInstance
-        , ScreenOrientation = ScreenOrientation.Landscape | ScreenOrientation.ReverseLandscape
+        , ScreenOrientation = ScreenOrientation.Portrait
         , ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.Keyboard | ConfigChanges.KeyboardHidden | ConfigChanges.ScreenSize)]
     public class MainActivity : Microsoft.Xna.Framework.AndroidGameActivity
     {
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-            var g = new TheGame();
+
+            var metrics = Resources.DisplayMetrics;
+            var g = new TheGame(metrics.WidthPixels, metrics.HeightPixels);
+
             SetContentView((View)g.Services.GetService(typeof(View)));
             g.Run();
         }

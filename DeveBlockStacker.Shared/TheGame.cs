@@ -17,13 +17,20 @@ namespace DeveBlockStacker.Shared
         private IGameState currentState;
         private InputStatifier inputStatifier;
 
+#if ANDROID
+        public TheGame(int widthScreen, int heightScreen)
+#else
         public TheGame()
+#endif
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
-#if !ANDROID
+#if ANDROID
+            graphics.PreferredBackBufferWidth = widthScreen;
+            graphics.PreferredBackBufferHeight = heightScreen;
+#else
             graphics.PreferredBackBufferWidth = 720 / 2;
             graphics.PreferredBackBufferHeight = 1280 / 2;
 #endif
