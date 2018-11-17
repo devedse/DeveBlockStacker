@@ -13,6 +13,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Data\ContentDistributionThing.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\GameData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Drawwers\NormalGridDrawwer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Drawwers\TextContainer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GameState\DelayState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GameState\YouWin.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GameState\GameOver.cs" />
@@ -21,6 +22,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ArrayHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GameState\IGameState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GameState\PlayingState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)State\SaveGame.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)State\SaveGameLoaderSaver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)State\InputStatifier.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TheGame.cs" />
   </ItemGroup>

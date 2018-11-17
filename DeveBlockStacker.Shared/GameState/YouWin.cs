@@ -4,6 +4,7 @@ using DeveBlockStacker.Shared.State;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Threading.Tasks;
 
 namespace DeveBlockStacker.Shared.GameState
 {
@@ -18,12 +19,34 @@ namespace DeveBlockStacker.Shared.GameState
         private readonly string timeString;
         private Vector2 measuredTimeString;
 
+        private string previousHighscoreString;
+        private Vector2 measuredPreviousHighScoreString;
+
         public YouWin(GameData gameData)
         {
             this.gameData = gameData;
+            gameData.Stopwatch.Stop();
             timeString = $"Time taken: {gameData.Stopwatch.Elapsed}";
 
             framesDelay = 500;
+
+            Task.Run(async () =>
+            {
+                var saveGame = await SaveGameLoaderSaver.LoadSaveGame();
+                if (saveGame == null || saveGame.BestTime > gameData.Stopwatch.Elapsed)
+                {
+                    saveGame = new SaveGame()
+                    {
+                        BestTime = gameData.Stopwatch.Elapsed
+                    };
+                    previousHighscoreString = "NEW HIGH SCORE!";
+                    await SaveGameLoaderSaver.SaveSaveGame(saveGame);
+                }
+                else
+                {
+                    previousHighscoreString = $"Previous high score: {saveGame.BestTime}";
+                }
+            });
         }
 
         public IGameState Update(InputStatifier inputStatifier)
@@ -48,6 +71,11 @@ namespace DeveBlockStacker.Shared.GameState
                 measuredTimeString = contentDistributionThing.SegoeUI70.MeasureString(timeString);
             }
 
+            if (previousHighscoreString != null && measuredPreviousHighScoreString == Vector2.Zero)
+            {
+                measuredPreviousHighScoreString = contentDistributionThing.SegoeUI70.MeasureString(previousHighscoreString);
+            }
+
             NormalGridDrawwer.DrawGrid(spriteBatch, contentDistributionThing, gameData);
 
 
@@ -58,9 +86,16 @@ namespace DeveBlockStacker.Shared.GameState
             spriteBatch.DrawString(contentDistributionThing.SegoeUI70, winString, pos, Color.White, framesDelay / 50.0f, measuredString / 2, scale * (2 + (float)Math.Sin(framesDelay / 15.0f)), SpriteEffects.None, 0);
 
 
-            var scaleTimeString = contentDistributionThing.ScreenWidth / (measuredTimeString.X * 1.2f);
-            var posTimeString = new Vector2(contentDistributionThing.ScreenWidth / 2, contentDistributionThing.ScreenHeight - (measuredTimeString.Y * scaleTimeString / 2.0f) - 10);
+            var scaleTimeString = contentDistributionThing.ScreenWidth / (measuredTimeString.X * 1.4f);
+            var posTimeString = new Vector2(contentDistributionThing.ScreenWidth / 2, 5 + (measuredTimeString.Y * scaleTimeString / 2.0f));
             spriteBatch.DrawString(contentDistributionThing.SegoeUI70, timeString, posTimeString, Color.White, 0, measuredTimeString / 2, scaleTimeString, SpriteEffects.None, 0);
+
+            if (measuredPreviousHighScoreString != Vector2.Zero)
+            {
+                var posPrev = new Vector2(contentDistributionThing.ScreenWidth / 2, posTimeString.Y + (measuredTimeString.Y * scaleTimeString / 2.0f) + measuredPreviousHighScoreString.Y * scale / 2.0f);
+                spriteBatch.DrawString(contentDistributionThing.SegoeUI70, previousHighscoreString, posPrev, Color.White, 0, measuredPreviousHighScoreString / 2, scaleTimeString, SpriteEffects.None, 0);
+
+            }
         }
     }
 }
