@@ -8,7 +8,6 @@ namespace DeveBlockStacker.Shared.GameState
 {
     public class NewGameState : IGameState
     {
-        private readonly GameData gameData;
         private int framesDelay;
 
         private static readonly string n = Environment.NewLine;
@@ -18,8 +17,6 @@ namespace DeveBlockStacker.Shared.GameState
 
         public NewGameState()
         {
-            gameData = new GameData();
-
             framesDelay = 400;
         }
 
@@ -28,7 +25,7 @@ namespace DeveBlockStacker.Shared.GameState
             framesDelay--;
             if (framesDelay <= 0)
             {
-                return new PlayingState(gameData);
+                return new PlayingState(new GameData());
             }
             return this;
         }
