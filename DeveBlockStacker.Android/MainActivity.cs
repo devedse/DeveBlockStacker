@@ -6,7 +6,7 @@ using DeveBlockStacker.Shared;
 
 namespace DeveBlockStacker.Android
 {
-    [Activity(Label = "DeveBlockStacker.Android"
+    [Activity(Label = "DeveBlockStacker"
         , MainLauncher = true
         , Icon = "@drawable/iconhighres"
         , Theme = "@style/Theme.Splash"

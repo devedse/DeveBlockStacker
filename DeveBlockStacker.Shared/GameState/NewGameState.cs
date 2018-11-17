@@ -11,14 +11,16 @@ namespace DeveBlockStacker.Shared.GameState
         private readonly GameData gameData;
         private int framesDelay;
 
-        private readonly string helloString = $"Hello{Environment.NewLine}Welcome to the best game ever!{Environment.NewLine}Have fun{Environment.NewLine}{Environment.NewLine}By Devedse";
+        private static readonly string n = Environment.NewLine;
+
+        private readonly string helloString = $"Hello{n}Welcome to the best game EU!{n}My friend says this game is 5 out of 7!{n}{n}I stopped playing WoW for this game{n}#Gamermagazine2019{n}{n}Haven't been outside for 2 years since the release{n}#TheRealTrump{n}{n}I kinda miss my dog :'({n}#Keanu{n}{n}Made by Devedse";
         private Vector2 measuredString;
 
         public NewGameState()
         {
             gameData = new GameData();
 
-            framesDelay = 300;
+            framesDelay = 400;
         }
 
         public IGameState Update(InputStatifier inputStatifier)
