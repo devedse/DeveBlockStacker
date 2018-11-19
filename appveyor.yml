@@ -53,7 +53,7 @@ before_build:
   - if not exist output\net4 mkdir output\net4
   - if not exist output\Portable mkdir output\Portable
   - dir
-  - nuget restore DeveBlockStacker\DeveBlockStacker.sln
+  - nuget restore DeveBlockStacker.sln
 build: 
   project: DeveBlockStacker.sln 
   verbosity: normal
