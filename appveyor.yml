@@ -55,7 +55,7 @@ before_build:
   - dir
   - nuget restore DeveBlockStacker\DeveBlockStacker.sln
 build: 
-  project: DeveBlockStacker\DeveBlockStacker.sln 
+  project: DeveBlockStacker.sln 
   verbosity: normal
 after_build:
   - ps: |
