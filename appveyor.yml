@@ -29,7 +29,7 @@ install:
   - ps: |
       $tempDir="$pwd\temp"
       $installerUrl="https://github.com/MonoGame/MonoGame/releases/download/v3.7/MonoGameSetup.exe"
-      $installerFile="$tempDir\MonoGameSetup.zip"
+      $installerFile="$tempDir\MonoGameSetup.exe"
       $installerExtracted="$tempDir\MonoGameSetup"
       $programFiles = "${env:ProgramFiles(x86)}\"
       
@@ -39,8 +39,8 @@ install:
       }
       Invoke-WebRequest $installerUrl -OutFile $installerFile
       
-      Write-Host "Extracting MonoGame to $installerExtracted..."
-      7z x -y $installerFile -o"$installerExtracted"
+      Write-Host "Installing monogame..."
+      & "$installerFile" /SD
       Write-Host "Copying the MonoGame content pipeline to $programFiles..."
       Copy-Item "$installerExtracted\`$PROGRAMFILES\MSBuild\MonoGame" "$programFiles\MSBuild" -Recurse 
 
