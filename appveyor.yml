@@ -42,61 +42,13 @@ build:
   project: DeveBlockStacker.sln 
   verbosity: normal
 after_build:
-  - ps: |
-      $ErrorActionPreference = "Stop"
-      
-      $nugetVersion = "$env:APPVEYOR_BUILD_VERSION"
-      
-      Write-Host "Copying the output files..."
-      copy DeveBlockStacker\Jitter\bin\net4\Release\Jitter.dll output\net4\
-      copy DeveBlockStacker\Jitter\bin\net4\Release\Jitter.pdb output\net4\
-      copy DeveBlockStacker\Jitter\bin\net4\Release\Jitter.xml output\net4\
-      copy DeveBlockStacker\Jitter\bin\Portable\Release\Jitter.dll output\Portable\
-      copy DeveBlockStacker\Jitter\bin\Portable\Release\Jitter.pdb output\Portable\
-      copy DeveBlockStacker\Jitter\bin\Portable\Release\Jitter.xml output\Portable\
-      
-      Write-Host "Setting .nuspec version tag to $nugetVersion..."
-      $content = (Get-Content nuget\Jitter.nuspec)
-      $content = $content -replace '\$version\$', $nugetVersion
-      $content | Out-File nuget\Jitter.nuspec
-      nuget pack nuget\Jitter.nuspec -OutputDirectory output
-
-      Write-Host "Setting component.yaml version tag to $nugetVersion..."
-      $content = (Get-Content component\component.yaml)
-      $content = $content -replace '\$version\$', $nugetVersion
-      $content | Out-File component\component.yaml
-      xamarin-component package ./component/
-      mv component\*.xam output
-
-test_script:
-  - ps: |
-      $ErrorActionPreference = "Stop"
-      
-      Write-Host "Building the samples..."
-      
-      nuget restore samples\JitterDemo\JitterDemo.sln 
-      msbuild samples\JitterDemo\JitterDemo.sln /p:Configuration=$env:configuration /p:Platform="Any CPU"
-      If ($LastExitCode -ne 0) {
-        exit $LastExitCode
-      }
-      
-      nuget restore samples\JitterOpenGLDemo\JitterOpenGLDemo.sln 
-      msbuild samples\JitterOpenGLDemo\JitterOpenGLDemo.sln /p:Configuration=$env:configuration /p:Platform="Any CPU"
-      If ($LastExitCode -ne 0) {
-        exit $LastExitCode
-      }
-      
-      nuget restore samples\JitterPhoneDemo\SimpleJitterPhoneDemo.sln 
-      msbuild samples\JitterPhoneDemo\SimpleJitterPhoneDemo.sln /p:Configuration=$env:configuration /p:Platform="x86"
-      If ($LastExitCode -ne 0) {
-        exit $LastExitCode
-      }
-      
-      nuget restore samples\JitterPortableSample\JitterSample.sln 
-      msbuild samples\JitterPortableSample\JitterSample.sln /p:Configuration=$env:configuration /p:Platform="Any CPU"
-      If ($LastExitCode -ne 0) {
-        exit $LastExitCode
-      }
+  - cmd: |
+    cd DeveBlockStacker.Android
+    dir
+    cd bin
+    dir
+    cd ..
+    cd ..
       
 # artifacts
 artifacts: 
