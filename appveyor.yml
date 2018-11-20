@@ -43,13 +43,13 @@ build:
   verbosity: normal
 after_build:
   - cmd: |
-    cd DeveBlockStacker.Android
-    dir
-    cd bin
-    dir
-    cd ..
-    cd ..
-      
+      cd DeveBlockStacker.Android
+      dir
+      cd bin
+      dir
+      cd ..
+      cd ..
+
 # artifacts
 artifacts: 
   - path: output\
