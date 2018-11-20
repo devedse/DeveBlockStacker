@@ -37,9 +37,7 @@ before_build:
   - nuget restore
 build_script:
   - msbuild "/t:SignAndroidPackage" "/p:Configuration=Release" "/p:AndroidKeyStore=true" "/p:AndroidSigningKeyAlias=DevedseCert" "/p:AndroidSigningKeyPass=%keystore-password%" "/p:AndroidSigningKeyStore=DevedseCert.keystore" "/p:AndroidSigningStorePass=%keystore-password%"  "DeveBlockStacker.Android\DeveBlockStacker.Android.csproj"
-
 after_build:
   - ps: Scripts\UploadToHockeyApp.ps1
-
-  artifacts:
+artifacts:
   - path: DeveBlockStacker.Android\bin\Android\AnyCPU\Release\deveblockstacker_android.deveblockstacker_android-Signed.apk
