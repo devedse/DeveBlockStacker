@@ -36,4 +36,4 @@ before_build:
 build_script:
   - msbuild "/t:SignAndroidPackage" "/p:Configuration=Release" "/p:AndroidKeyStore=true" "/p:AndroidSigningKeyAlias=DevedseCert" "/p:AndroidSigningKeyPass=%keystore-password%" "/p:AndroidSigningKeyStore=DevedseCert.keystore" "/p:AndroidSigningStorePass=%keystore-password%"  "DeveBlockStacker.Android\DeveBlockStacker.Android.csproj"
 artifacts:
-  - path: YourAppName.Droid\bin\Release\com.yourappname-Signed.apk
+  - path: DeveBlockStacker.Android\bin\Release\deveblockstacker_android.deveblockstacker_android-Signed.apk
