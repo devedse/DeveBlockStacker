@@ -1,9 +1,8 @@
 # build variables
 os: Visual Studio 2017
-configuration: Release
-platform: Any CPU
 environment:
-  LibraryVersion: 0.2.0
+  keystore-password:
+    secure: 3/2CEw0mJamPNFXQqYbdQQ== # YourPassword for keystore
 xamarin:
   email: 
     secure: +SUXZSPLHwp39+Yh09d2xxVGsEgHtlSD4NT1Og5h3sg=
@@ -13,11 +12,11 @@ xamarin:
   ios: true
   
 # versioning
-version: $(LibraryVersion).{build}
+version: 0.1.{build}
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
-  assembly_version: $(LibraryVersion).0
+  assembly_version: '{version}'
   assembly_file_version: '{version}'
   assembly_informational_version: '{version}-{branch}'
 
@@ -33,27 +32,8 @@ branches:
   only:
     - master
 before_build:
-  - if not exist output mkdir output
-  - if not exist output\net4 mkdir output\net4
-  - if not exist output\Portable mkdir output\Portable
-  - dir
-  - nuget restore DeveBlockStacker.sln
-build: 
-  project: DeveBlockStacker.sln 
-  verbosity: normal
-after_build:
-  - cmd: |
-      cd DeveBlockStacker.Android
-      dir
-      cd bin
-      dir
-      cd ..
-      cd ..
-
-# artifacts
-artifacts: 
-  - path: output\
-    name: Jitter-$(APPVEYOR_BUILD_VERSION) 
-    type: zip 
-  - path: output\JitterPhysics*.nupkg
-  - path: output\JitterPhysics*.xam
+  - nuget restore
+build_script:
+  - msbuild "/t:SignAndroidPackage" "/p:Configuration=Release" "/p:Platform=Any CPU" "/p:AndroidKeyStore=true" "/p:AndroidSigningKeyAlias=DevedseCert" "/p:AndroidSigningKeyPass=%keystore-password%" "/p:AndroidSigningKeyStore=DevedseCert.keystore" "/p:AndroidSigningStorePass=%keystore-password%"  "DeveBlockStacker.Android\DeveBlockStacker.Android.csproj"
+artifacts:
+  - path: YourAppName.Droid\bin\Release\com.yourappname-Signed.apk
