@@ -27,6 +27,7 @@ install:
   - cinst 7zip -x86
   - cinst 7zip.commandline -x86
   - cinst xamarin-component -version 1.1.0.7
+  - ps: Install-Product node stable
   - ps: Scripts\InstallMonoGame.ps1
 
 # build
@@ -39,5 +40,6 @@ build_script:
   - msbuild "/t:SignAndroidPackage" "/p:Configuration=Release" "/p:AndroidKeyStore=true" "/p:AndroidSigningKeyAlias=DevedseCert" "/p:AndroidSigningKeyPass=%keystore-password%" "/p:AndroidSigningKeyStore=DevedseCert.keystore" "/p:AndroidSigningStorePass=%keystore-password%"  "DeveBlockStacker.Android\DeveBlockStacker.Android.csproj"
 after_build:
   - ps: Scripts\UploadToHockeyApp.ps1
+
 artifacts:
   - path: DeveBlockStacker.Android\bin\Android\AnyCPU\Release\deveblockstacker_android.deveblockstacker_android-Signed.apk
