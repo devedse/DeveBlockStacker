@@ -12,7 +12,7 @@ xamarin:
     secure: Tvdf5rZl6IOCwZbvyj9B2w==
   android: true
   ios: true
-  
+
 # versioning
 version: 0.1.{build}
 assembly_info:
