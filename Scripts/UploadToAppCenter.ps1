@@ -1,1 +1,0 @@
-appcenter apps list --token $env:AppCenterApiKey --disable-telemetry

@@ -30,7 +30,6 @@ install:
   - ps: Install-Product node stable
   - ps: Scripts\InstallMonoGame.ps1
   - cmd: npm install -g appcenter-cli
-  - ps: appcenter apps list --token $env:AppCenterApiKey
 
 # build
 branches:
@@ -38,10 +37,13 @@ branches:
     - master
 before_build:
   - nuget restore
+  - ps: Scripts\UpdateAndroidManifestVersion.ps1 -androidManifestPath "DeveBlockStacker.Android\Properties\AndroidManifest.xml" -version $env.APPVEYOR_BUILD_VERSION -buildNumber $env.APPVEYOR_BUILD_NUMBER
+
 build_script:
   - msbuild "/t:SignAndroidPackage" "/p:Configuration=Release" "/p:AndroidKeyStore=true" "/p:AndroidSigningKeyAlias=DevedseCert" "/p:AndroidSigningKeyPass=%keystore-password%" "/p:AndroidSigningKeyStore=DevedseCert.keystore" "/p:AndroidSigningStorePass=%keystore-password%"  "DeveBlockStacker.Android\DeveBlockStacker.Android.csproj"
+
 after_build:
-  - cmd: Scripts\UploadToAppCenter.ps1
+  - ps: appcenter distribute release -g Public -f deveblockstacker_android.deveblockstacker_android-Signed.apk -a Devedse/DeveBlockStacker.Android -r "Automatic release test" --token $env:AppCenterApiKey
 
 artifacts:
   - path: DeveBlockStacker.Android\bin\Android\AnyCPU\Release\deveblockstacker_android.deveblockstacker_android-Signed.apk
