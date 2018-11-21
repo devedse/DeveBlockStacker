@@ -1,13 +1,17 @@
 param (
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory=$false)]
     [string]$androidManifestPath,
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory=$false)]
     [string]$version,
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory=$false)]
     [string]$buildNumber
 )
 
 $ErrorActionPreference = "Stop"
+
+Write-Host "Updating AndroidManifest file: $androidManifestPath"
+Write-Host "android:versionName: $version"
+Write-Host "android:versionCode: $buildNumber"
 
 #$ManifestFile = Get-ChildItem -Path $pwd -Filter AndroidManifest.xml -Recurse
 $fileXml = [xml] (Get-Content $androidManifestPath )
