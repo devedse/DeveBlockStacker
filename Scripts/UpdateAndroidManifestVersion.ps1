@@ -1,12 +1,15 @@
 param (
     [Parameter(Mandatory=$false)]
-    [string]$androidManifestPath
+    [string]$androidManifestPath,
+    [Parameter(Mandatory=$false)]
+    [string]$version,
+    [Parameter(Mandatory=$false)]
+    [string]$buildNumber
 )
 
 $ErrorActionPreference = "Stop"
 
-$version = $env.APPVEYOR_BUILD_VERSION
-$buildNumber = $env.APPVEYOR_BUILD_NUMBER
+Write-Host "Testje: $($env.APPVEYOR_BUILD_VERSION)  en $($env.APPVEYOR_BUILD_ID) en $($env.APPVEYOR_BUILD_NUMBER)"
 
 Write-Host "Updating AndroidManifest file: $androidManifestPath"
 Write-Host "android:versionName: $version"

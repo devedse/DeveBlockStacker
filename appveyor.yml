@@ -37,7 +37,7 @@ branches:
     - master
 before_build:
   - nuget restore
-  - ps: Scripts\UpdateAndroidManifestVersion.ps1 -androidManifestPath ".\DeveBlockStacker.Android\Properties\AndroidManifest.xml"
+  - ps: Scripts\UpdateAndroidManifestVersion.ps1 -androidManifestPath ".\DeveBlockStacker.Android\Properties\AndroidManifest.xml" -version $env:APPVEYOR_BUILD_VERSION -buildNumber $env:APPVEYOR_BUILD_NUMBER
 
 build_script:
   - msbuild "/t:SignAndroidPackage" "/p:Configuration=Release" "/p:AndroidKeyStore=true" "/p:AndroidSigningKeyAlias=DevedseCert" "/p:AndroidSigningKeyPass=%keystore-password%" "/p:AndroidSigningKeyStore=DevedseCert.keystore" "/p:AndroidSigningStorePass=%keystore-password%"  "DeveBlockStacker.Android\DeveBlockStacker.Android.csproj"
