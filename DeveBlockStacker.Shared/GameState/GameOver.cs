@@ -3,6 +3,7 @@ using DeveBlockStacker.Shared.Drawwers;
 using DeveBlockStacker.Shared.State;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Threading.Tasks;
 
@@ -42,7 +43,7 @@ namespace DeveBlockStacker.Shared.GameState
         public IGameState Update(InputStatifier inputStatifier)
         {
             framesDelay--;
-            if (framesDelay <= 0)
+            if (framesDelay <= 0 || inputStatifier.IsTouchTapped() || inputStatifier.KeyPressed(Keys.Space))
             {
                 return new NewGameState();
             }
