@@ -30,6 +30,7 @@ install:
   - ps: Install-Product node stable
   - ps: Scripts\InstallMonoGame.ps1
   - cmd: npm install -g appcenter-cli
+  - ps: appcenter apps list --token $env:AppCenterApiKey
 
 # build
 branches:
