@@ -1,0 +1,1 @@
+appcenter apps list --token %AppCenterApiKeys%
