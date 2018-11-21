@@ -16,36 +16,31 @@ namespace DeveBlockStacker.Shared
         private IGameState currentState;
         private InputStatifier inputStatifier;
 
-        public TheGame() : this(720 / 2, 1280 / 2)
-        {
-
-        }
-
-        public TheGame(int widthScreen, int heightScreen)
+        public TheGame()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-
-            graphics.PreferredBackBufferWidth = widthScreen;
-            graphics.PreferredBackBufferHeight = heightScreen;
 
             inputStatifier = new InputStatifier();
 
             NewGame();
         }
 
+        public TheGame(int widthScreen, int heightScreen) : this()
+        {
+            graphics.PreferredBackBufferWidth = widthScreen;
+            graphics.PreferredBackBufferHeight = heightScreen;
+        }
+
         public void NewGame()
         {
             contentDistributionThing = new ContentDistributionThing(graphics);
-            //var gameData = new GameData();
             currentState = new NewGameState();
         }
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
             base.Initialize();
         }
 
@@ -53,7 +48,6 @@ namespace DeveBlockStacker.Shared
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
             contentDistributionThing.LoadContent(Content);
         }
 
@@ -67,8 +61,6 @@ namespace DeveBlockStacker.Shared
 
             currentState = currentState.Update(inputStatifier);
 
-            // TODO: Add your update logic here
-
             base.Update(gameTime);
         }
 
@@ -76,13 +68,10 @@ namespace DeveBlockStacker.Shared
         {
             GraphicsDevice.Clear(Color.Black);
 
-            // TODO: Add your drawing code here
             spriteBatch.Begin();
 
             currentState.Draw(spriteBatch, contentDistributionThing);
 
-            //spriteBatch.Draw(squareImage, new Rectangle(0, 0, 100, 100), Color.Black);
-            //spriteBatch.Draw(squareImage, new Rectangle(110, 0, 100, 100), Color.Red);
             spriteBatch.End();
 
             base.Draw(gameTime);

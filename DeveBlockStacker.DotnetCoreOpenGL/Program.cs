@@ -8,7 +8,7 @@ namespace DeveBlockStacker.DotnetCoreOpenGL
         [STAThread]
         public static void Main()
         {
-            using (var game = new TheGame())
+            using (var game = new TheGame(720 / 2, 1280 / 2))
             {
                 game.Run();
             }
