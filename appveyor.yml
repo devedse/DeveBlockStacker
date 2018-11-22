@@ -49,6 +49,8 @@ after_build:
         dir
         cd bin
         dir
+        cd obj
+        dir
 
 artifacts:
   - path: DeveBlockStacker.Android\bin\Android\AnyCPU\Release\deveblockstacker_android.deveblockstacker_android-Signed.apk
