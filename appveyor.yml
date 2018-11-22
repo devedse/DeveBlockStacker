@@ -37,7 +37,7 @@ before_build:
   - nuget restore
 
 build_script:
-  - msbuild "/p:Configuration=Release" /p:AppxBundlePlatforms="x86|x64|ARM" /p:AppxPackageDir="\Staging\AppxPackages\" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload "DeveBlockStacker.UWP\DeveBlockStacker.UWP.csproj"
+  - msbuild "/p:Configuration=Release" /p:Platform="x86" /p:AppxBundlePlatforms="x86|x64|ARM" /p:AppxPackageDir="\Staging\AppxPackages\" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload "DeveBlockStacker.UWP\DeveBlockStacker.UWP.csproj"
   - msbuild "/t:SignAndroidPackage" "/p:Configuration=Release" "/p:AndroidKeyStore=true" "/p:AndroidSigningKeyAlias=DevedseCert" "/p:AndroidSigningKeyPass=%keystore-password%" "/p:AndroidSigningKeyStore=DevedseCert.keystore" "/p:AndroidSigningStorePass=%keystore-password%"  "DeveBlockStacker.Android\DeveBlockStacker.Android.csproj"
  # - msbuild "/p:Configuration=Release" "DeveBlockStacker.UWP\DeveBlockStacker.UWP.csproj"
 
