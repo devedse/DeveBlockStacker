@@ -54,3 +54,6 @@ after_build:
 
 artifacts:
   - path: DeveBlockStacker.Android\bin\Android\AnyCPU\Release\deveblockstacker_android.deveblockstacker_android-Signed.apk
+  - path: DeveBlockStacker.UWP\bin\WindowsUniversal\x86\Release\DeveBlockStacker.UWP_1.0.0.0_x86.appx
+  - path: DeveBlockStacker.UWP\bin\WindowsUniversal\x86\Release\ARM\DeveBlockStacker.UWP\DeveBlockStacker.UWP_1.0.0.0_ARM.appx
+  - path: DeveBlockStacker.UWP\bin\WindowsUniversal\x86\Release\x64\DeveBlockStacker.UWP\DeveBlockStacker.UWP_1.0.0.0_x64.appx
