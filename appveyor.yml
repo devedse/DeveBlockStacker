@@ -51,4 +51,4 @@ artifacts:
   - path: DeveBlockStacker.UWP\bin\WindowsUniversal\x86\Release\ARM\DeveBlockStacker.UWP\DeveBlockStacker.UWP_1.0.0.0_ARM.appx
   - path: DeveBlockStacker.UWP\bin\WindowsUniversal\x86\Release\x64\DeveBlockStacker.UWP\DeveBlockStacker.UWP_1.0.0.0_x64.appx
   - path: DeveBlockStacker.UWP\bin\WindowsUniversal\x86\Release\Upload\DeveBlockStacker.UWP_1.0.0.0\DeveBlockStacker.UWP_1.0.0.0_x86_x64_ARM.appxbundle
-  - path: **\*.appxbundle
+  - path: "**\*.appxbundle"
