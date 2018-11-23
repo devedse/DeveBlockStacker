@@ -66,7 +66,7 @@ namespace DeveBlockStacker.Shared.GameState
                 gameData.Gridje[x, gameData.CurrentRow] = x >= curPos && x < (curPos + width);
             }
 
-            if (inputStatifier.KeyPressed(Keys.Space) || inputStatifier.IsTouchTapped())
+            if (inputStatifier.IsTouchTapped() || inputStatifier.KeyPressed(Keys.Space) || inputStatifier.GamepadButtonPressed(Buttons.A))
             {
                 return new GravityState(gameData);
             }

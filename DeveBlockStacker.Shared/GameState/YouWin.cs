@@ -53,7 +53,7 @@ namespace DeveBlockStacker.Shared.GameState
         public IGameState Update(InputStatifier inputStatifier)
         {
             framesDelay--;
-            if (framesDelay <= 0 || inputStatifier.IsTouchTapped() || inputStatifier.KeyPressed(Keys.Space))
+            if (framesDelay <= 0 || inputStatifier.IsTouchTapped() || inputStatifier.KeyPressed(Keys.Space) || inputStatifier.GamepadButtonPressed(Buttons.A))
             {
                 return new NewGameState();
             }

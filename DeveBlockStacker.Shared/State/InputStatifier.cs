@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
 
 namespace DeveBlockStacker.Shared.State
@@ -8,13 +9,19 @@ namespace DeveBlockStacker.Shared.State
         public KeyboardState CurrentKeyboardState { get; private set; } = new KeyboardState();
         public KeyboardState PreviousKeyboardState { get; private set; } = new KeyboardState();
 
-        public TouchCollection PreviousTouchState {get; private set; } = new TouchCollection();
-        public TouchCollection CurrentTouchState {get; private set; } = new TouchCollection();
+        public GamePadState CurrentGamePadState { get; private set; } = new GamePadState();
+        public GamePadState PreviousGamePadState { get; private set; } = new GamePadState();
+
+        public TouchCollection PreviousTouchState { get; private set; } = new TouchCollection();
+        public TouchCollection CurrentTouchState { get; private set; } = new TouchCollection();
 
         public void BeforeUpdate()
         {
             PreviousKeyboardState = CurrentKeyboardState;
             CurrentKeyboardState = Keyboard.GetState();
+
+            PreviousGamePadState = CurrentGamePadState;
+            CurrentGamePadState = GamePad.GetState(PlayerIndex.One);
 
             PreviousTouchState = CurrentTouchState;
             CurrentTouchState = TouchPanel.GetState();
@@ -35,6 +42,11 @@ namespace DeveBlockStacker.Shared.State
                 }
             }
             return false;
+        }
+
+        public bool GamepadButtonPressed(Buttons button)
+        {
+            return CurrentGamePadState.IsButtonDown(button) && PreviousGamePadState.IsButtonUp(button);
         }
     }
 }
