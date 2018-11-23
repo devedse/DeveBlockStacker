@@ -44,11 +44,8 @@ build_script:
 
 after_build:
   - ps: appcenter distribute release -g Production -f "DeveBlockStacker.Android\bin\Android\AnyCPU\Release\deveblockstacker_android.deveblockstacker_android-Signed.apk" -a Devedse/DeveBlockStacker.Android -r "$env:APPVEYOR_REPO_COMMIT_MESSAGE" --token $env:AppCenterApiKey
+  - ps: appcenter distribute release -g Production -f "DeveBlockStacker.UWP\bin\WindowsUniversal\x86\Release\Upload\DeveBlockStacker.UWP_$($env:APPVEYOR_BUILD_VERSION).0\DeveBlockStacker.UWP_0.1.54.0_x86_x64_ARM.appxbundle" -a Devedse/DeveBlockStacker.UWP -r "$env:APPVEYOR_REPO_COMMIT_MESSAGE" --token $env:AppCenterApiKey
 
 artifacts:
   - path: DeveBlockStacker.Android\bin\Android\AnyCPU\Release\deveblockstacker_android.deveblockstacker_android-Signed.apk
-  - path: DeveBlockStacker.UWP\bin\WindowsUniversal\x86\Release\DeveBlockStacker.UWP_1.0.0.0_x86.appx
-  - path: DeveBlockStacker.UWP\bin\WindowsUniversal\x86\Release\ARM\DeveBlockStacker.UWP\DeveBlockStacker.UWP_1.0.0.0_ARM.appx
-  - path: DeveBlockStacker.UWP\bin\WindowsUniversal\x86\Release\x64\DeveBlockStacker.UWP\DeveBlockStacker.UWP_1.0.0.0_x64.appx
-  - path: DeveBlockStacker.UWP\bin\WindowsUniversal\x86\Release\Upload\DeveBlockStacker.UWP_1.0.0.0\DeveBlockStacker.UWP_1.0.0.0_x86_x64_ARM.appxbundle
-  - path: '**\*.appxbundle'
+  - path: '**\Upload\**\*.appxbundle'
