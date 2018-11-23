@@ -20,7 +20,7 @@
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>DeveBlockStacker.UWP_TemporaryKey.pfx</PackageCertificateKeyFile>
     <MonoGamePlatform>WindowsStoreApp</MonoGamePlatform>
-    <PackageCertificateThumbprint>DCDB626D6B5A27675BC21FE08773E5B9CE38F56A</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>4D149223C227F93FB0E003BC5384474868D31139</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
