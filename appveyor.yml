@@ -34,6 +34,7 @@ branches:
     - master
 before_build:
   - ps: Scripts\UpdateAndroidManifestVersion.ps1 -androidManifestPath ".\DeveBlockStacker.Android\Properties\AndroidManifest.xml" -version $env:APPVEYOR_BUILD_VERSION -buildNumber $env:APPVEYOR_BUILD_NUMBER
+  - ps: Scripts\UpdateAppxManifestVersion.ps1 -appxManifestPath ".\DeveBlockStacker.UWP\Package.appxmanifest" -version $env:APPVEYOR_BUILD_VERSION
   - nuget restore
 
 build_script:
@@ -43,14 +44,6 @@ build_script:
 
 after_build:
   - ps: appcenter distribute release -g Production -f "DeveBlockStacker.Android\bin\Android\AnyCPU\Release\deveblockstacker_android.deveblockstacker_android-Signed.apk" -a Devedse/DeveBlockStacker.Android -r "$env:APPVEYOR_REPO_COMMIT_MESSAGE" --token $env:AppCenterApiKey
-  - ps: |
-        dir
-        cd DeveBlockStacker.UWP
-        dir
-        cd bin
-        dir
-        cd obj
-        dir
 
 artifacts:
   - path: DeveBlockStacker.Android\bin\Android\AnyCPU\Release\deveblockstacker_android.deveblockstacker_android-Signed.apk
