@@ -1,6 +1,7 @@
 ﻿using DeveBlockStacker.Shared.Data;
 using DeveBlockStacker.Shared.Drawwers;
 using DeveBlockStacker.Shared.State;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace DeveBlockStacker.Shared.GameState
@@ -78,9 +79,9 @@ namespace DeveBlockStacker.Shared.GameState
             return count;
         }
 
-        public void Draw(SpriteBatch spriteBatch, ContentDistributionThing contentDistributionThing)
+        public void Draw(SpriteBatch spriteBatch, ContentDistributionThing contentDistributionThing, GameTime time)
         {
-            NormalGridDrawwer.DrawGrid(spriteBatch, contentDistributionThing, gameData);
+            NormalGridDrawwer.DrawGrid(spriteBatch, contentDistributionThing, gameData, time);
         }
     }
 }

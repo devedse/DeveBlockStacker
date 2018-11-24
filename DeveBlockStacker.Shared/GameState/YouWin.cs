@@ -60,7 +60,7 @@ namespace DeveBlockStacker.Shared.GameState
             return this;
         }
 
-        public void Draw(SpriteBatch spriteBatch, ContentDistributionThing contentDistributionThing)
+        public void Draw(SpriteBatch spriteBatch, ContentDistributionThing contentDistributionThing, GameTime time)
         {
             if (measuredString == Vector2.Zero)
             {
@@ -77,7 +77,7 @@ namespace DeveBlockStacker.Shared.GameState
                 measuredPreviousHighScoreString = contentDistributionThing.SegoeUI70.MeasureString(previousHighscoreString);
             }
 
-            NormalGridDrawwer.DrawGrid(spriteBatch, contentDistributionThing, gameData);
+            NormalGridDrawwer.DrawGrid(spriteBatch, contentDistributionThing, gameData, time);
 
 
             var pos = new Vector2(contentDistributionThing.ScreenWidth / 2, contentDistributionThing.ScreenHeight / 2 + (contentDistributionThing.ScreenHeight / 5.0f * (float)Math.Sin(framesDelay / 50.0f)));

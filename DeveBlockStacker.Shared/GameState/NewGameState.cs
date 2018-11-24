@@ -31,7 +31,7 @@ namespace DeveBlockStacker.Shared.GameState
             return this;
         }
 
-        public void Draw(SpriteBatch spriteBatch, ContentDistributionThing contentDistributionThing)
+        public void Draw(SpriteBatch spriteBatch, ContentDistributionThing contentDistributionThing, GameTime time)
         {
             if (measuredString == Vector2.Zero)
             {

@@ -37,18 +37,18 @@ namespace DeveBlockStacker.Shared
             Gap = gap;
         }
 
-        public void Draw(SpriteBatch spriteBatch, Color color)
+        public void Draw(SpriteBatch spriteBatch, Color color, Vector2 offset)
         {
             float realWidth = Width / 2.0f - Gap / 2.0f;
             float realHeight = Height / 2.0f - Gap / 2.0f;
 
-            int drawX = (int)(X + Gap / 2.0f);
-            int drawY = (int)(Y + Gap / 2.0f);
+            int drawX = (int)(X + offset.X + Gap / 2.0f);
+            int drawY = (int)(Y + offset.Y + Gap / 2.0f);
             int drawWidth = (int)(realWidth - Gap / 2.0f);
             int drawHeight = (int)(realHeight - Gap / 2.0f);
 
-            int drawXRight = (int)(X + Width / 2.0f + Gap / 2.0f);
-            int drawYBottom = (int)(Y + Height / 2.0f + Gap / 2.0f);
+            int drawXRight = (int)(X + offset.X + Width / 2.0f + Gap / 2.0f);
+            int drawYBottom = (int)(Y + offset.Y + Height / 2.0f + Gap / 2.0f);
 
             spriteBatch.Draw(squareTexture, new Rectangle(drawX, drawY, drawWidth, drawHeight), color);
             spriteBatch.Draw(squareTexture, new Rectangle(drawXRight, drawY, drawWidth, drawHeight), color);

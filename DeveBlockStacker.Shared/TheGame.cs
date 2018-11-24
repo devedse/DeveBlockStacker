@@ -15,7 +15,7 @@ namespace DeveBlockStacker.Shared
         private ContentDistributionThing contentDistributionThing;
         private IGameState currentState;
         private InputStatifier inputStatifier;
-
+      
         public TheGame()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -68,9 +68,11 @@ namespace DeveBlockStacker.Shared
         {
             GraphicsDevice.Clear(Color.Black);
 
+
+
             spriteBatch.Begin();
 
-            currentState.Draw(spriteBatch, contentDistributionThing);
+            currentState.Draw(spriteBatch, contentDistributionThing, gameTime);
 
             spriteBatch.End();
 

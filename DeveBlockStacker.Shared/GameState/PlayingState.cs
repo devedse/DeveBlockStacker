@@ -1,6 +1,7 @@
 ﻿using DeveBlockStacker.Shared.Data;
 using DeveBlockStacker.Shared.Drawwers;
 using DeveBlockStacker.Shared.State;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -68,15 +69,24 @@ namespace DeveBlockStacker.Shared.GameState
 
             if (inputStatifier.IsTouchTapped() || inputStatifier.KeyPressed(Keys.Space) || inputStatifier.GamepadButtonPressed(Buttons.A))
             {
+                NormalGridDrawwer.GLOBAL_CAMERA_SHAKE.Start();
+                for (int y = gameData.GridHeight - 1; y >= 0; y--)
+                {
+                    for (int x = gameData.GridWidth - 1; x >= 0; x--)
+                    {
+                        NormalGridDrawwer.LOCAL_BLOCK_SHAKE[x, y].Start();
+                    }
+                }
+
                 return new GravityState(gameData);
             }
 
             return this;
         }
 
-        public void Draw(SpriteBatch spriteBatch, ContentDistributionThing contentDistributionThing)
+        public void Draw(SpriteBatch spriteBatch, ContentDistributionThing contentDistributionThing, GameTime time)
         {
-            NormalGridDrawwer.DrawGrid(spriteBatch, contentDistributionThing, gameData);
+            NormalGridDrawwer.DrawGrid(spriteBatch, contentDistributionThing, gameData, time);
         }
     }
 }
