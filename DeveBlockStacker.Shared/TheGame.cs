@@ -24,6 +24,21 @@ namespace DeveBlockStacker.Shared
 
             inputStatifier = new InputStatifier();
 
+            graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
+            graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
+
+#if ANDROID
+            //To remove the Battery bar
+            graphics.IsFullScreen = true;
+#endif
+#if WINDOWS_UAP
+            if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+            {
+                //To remove the Battery bar
+                graphics.IsFullScreen = true;
+            }
+#endif
+
             NewGame();
         }
 
