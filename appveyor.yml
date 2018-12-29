@@ -6,7 +6,7 @@ environment:
   AppCenterApiKey:
     secure: cgQ14sQzDhZ0jq54rl5KiQMRSok+NpcCAb3NSoknIiRI41L1OA4XqZWQ46ag1RA+
 xamarin:
-  email: 
+  email:
     secure: +SUXZSPLHwp39+Yh09d2xxVGsEgHtlSD4NT1Og5h3sg=
   password:
     secure: Tvdf5rZl6IOCwZbvyj9B2w==
@@ -48,4 +48,12 @@ after_build:
 
 artifacts:
   - path: DeveBlockStacker.Android\bin\Android\AnyCPU\Release\deveblockstacker_android.deveblockstacker_android-Signed.apk
+    name: Android_Release
   - path: '**\Upload\**\*.appxbundle'
+    name: UWP_Release
+
+deploy:
+- provider: GitHub
+  auth_token:
+    secure: do7S++r1rE5E3IZujCoMONsWYJNF7eoRoPyJbxSD851I850OlEq0gsHH/Tji7o00
+  artifact: Android_Release,UWP_Release
