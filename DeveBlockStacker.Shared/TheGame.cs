@@ -16,7 +16,7 @@ namespace DeveBlockStacker.Shared
         private IGameState currentState;
         private InputStatifier inputStatifier;
 
-        public TheGame()
+        public TheGame() : base()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
