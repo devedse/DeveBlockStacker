@@ -44,7 +44,7 @@ build_script:
  # - msbuild "/p:Configuration=Release" "DeveBlockStacker.UWP\DeveBlockStacker.UWP.csproj"
 
 after_build:
-  - ps: appcenter distribute release -g Production -f "DeveBlockStacker.Android\bin\Android\AnyCPU\Release\deveblockstacker_android.deveblockstacker_android-Signed.apk" -a Devedse/DeveBlockStacker.Android -r "$env:APPVEYOR_REPO_COMMIT_MESSAGE" --token $env:AppCenterApiKey
+  #- ps: appcenter distribute release -g Production -f "DeveBlockStacker.Android\bin\Android\AnyCPU\Release\deveblockstacker_android.deveblockstacker_android-Signed.apk" -a Devedse/DeveBlockStacker.Android -r "$env:APPVEYOR_REPO_COMMIT_MESSAGE" --token $env:AppCenterApiKey
   - ps: appcenter distribute release -g Collaborators -f "DeveBlockStacker.UWP\bin\WindowsUniversal\x86\Release\Upload\DeveBlockStacker.UWP_$($env:APPVEYOR_BUILD_VERSION).0\DeveBlockStacker.UWP_$($env:APPVEYOR_BUILD_VERSION).0_x86_x64_ARM.appxbundle" -a Devedse/DeveBlockStacker.UWP -r "$env:APPVEYOR_REPO_COMMIT_MESSAGE" --token $env:AppCenterApiKey
 
 artifacts:
