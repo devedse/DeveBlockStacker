@@ -13,7 +13,7 @@ namespace DeveBlockStacker.Android
         , AlwaysRetainTaskState = true
         , LaunchMode = LaunchMode.SingleInstance
         , ScreenOrientation = ScreenOrientation.SensorPortrait
-        , ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.Keyboard | ConfigChanges.KeyboardHidden | ConfigChanges.ScreenSize )]
+        , ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.Keyboard | ConfigChanges.KeyboardHidden | ConfigChanges.ScreenSize)]
     public class MainActivity : Microsoft.Xna.Framework.AndroidGameActivity
     {
         private void FixUiOptions()
@@ -34,8 +34,7 @@ namespace DeveBlockStacker.Android
 
             FixUiOptions();
 
-            var metrics = Resources.DisplayMetrics;
-            var g = new TheGame(metrics.WidthPixels, metrics.HeightPixels);
+            var g = new TheGame();
 
             SetContentView((View)g.Services.GetService(typeof(View)));
             g.Run();
