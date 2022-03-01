@@ -1,4 +1,4 @@
-﻿using DeveBlockStacker.Shared;
+﻿using DeveBlockStacker.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
