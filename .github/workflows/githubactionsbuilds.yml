@@ -30,6 +30,54 @@ jobs:
     - name: Train Intellicode Model
       uses: microsoft/vs-intellicode@v1
 
+  build_linux_DesktopGL:
+    needs: generate_version_number
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+    - name: dotnet restore
+      run: dotnet restore DeveBlockStacker.DesktopGL\DeveBlockStacker.DesktopGL.csproj
+    - name: dotnet build
+      run: dotnet build DeveBlockStacker.DesktopGL\DeveBlockStacker.DesktopGL.csproj -c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
+    - name: dotnet test
+      run: dotnet test DeveBlockStacker.sln -c Release --no-build --verbosity normal
+
+  build_windows_DesktopGL:
+    needs: generate_version_number
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+    - name: dotnet restore
+      run: dotnet restore DeveBlockStacker.DesktopGL\DeveBlockStacker.DesktopGL.csproj
+    - name: dotnet build
+      run: dotnet build DeveBlockStacker.DesktopGL\DeveBlockStacker.DesktopGL.csproj -c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
+    - name: dotnet test
+      run: dotnet test DeveBlockStacker.sln -c Release --no-build --verbosity normal
+
+  build_windows_WindowsDX:
+    needs: generate_version_number
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+    - name: dotnet restore
+      run: dotnet restore DeveBlockStacker.WindowsDX\DeveBlockStacker.WindowsDX.csproj
+    - name: dotnet build
+      run: dotnet build DeveBlockStacker.WindowsDX\DeveBlockStacker.WindowsDX.csproj -c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
+    - name: dotnet test
+      run: dotnet test DeveBlockStacker.sln -c Release --no-build --verbosity normal
+
   build_linux:
     needs: generate_version_number
     runs-on: ubuntu-latest
