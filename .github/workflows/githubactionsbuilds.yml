@@ -50,12 +50,6 @@ jobs:
         dotnet-version: |
           3.1.x
           6.0.x
-    - name: Install Segoe UI
-      run: |
-        chmod +x ./Scripts/installsegoefont.sh
-        ./Scripts/installsegoefont.sh -y
-    - name: Install Microsoft Fonts
-      run: sudo apt-get install ttf-mscorefonts-installer
     - name: dotnet restore
       run: dotnet restore DeveBlockStacker.DesktopGL/DeveBlockStacker.DesktopGL.csproj
     - name: dotnet build
