@@ -25,7 +25,7 @@ namespace DeveBlockStacker.Core.Tests.Helpers
             var array = new bool[5, 10];
 
             //Act
-            var height = ArrayHelper.Width(array);
+            var height = ArrayHelper.Height(array);
 
             //Assert
             Assert.Equal(10, height);
