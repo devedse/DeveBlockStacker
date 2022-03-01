@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using DeveBlockStacker.Core.HelperObjects;
+using System;
 
 namespace DeveBlockStacker.Core
 {
@@ -16,10 +17,15 @@ namespace DeveBlockStacker.Core
         private readonly ContentDistributionThing _contentDistributionThing;
         private IGameState _currentState;
         private readonly InputStatifier _inputStatifier;
-
+        private readonly Platform _platform;
         private IntSize _desiredScreenSize;
 
-        public TheGame() : base()
+        public TheGame() : this(Platform.Desktop)
+        {
+
+        }
+
+        public TheGame(Platform platform) : base()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -29,9 +35,10 @@ namespace DeveBlockStacker.Core
 
             _contentDistributionThing = new ContentDistributionThing(_graphics);
             _currentState = new NewGameState();
+            _platform = platform;
         }
 
-        public TheGame(IntSize desiredScreenSize) : this()
+        public TheGame(IntSize desiredScreenSize, Platform platform) : this(platform)
         {
             _desiredScreenSize = desiredScreenSize;
         }
@@ -44,21 +51,25 @@ namespace DeveBlockStacker.Core
                 _graphics.PreferredBackBufferHeight = _desiredScreenSize.Height;
             }
 
-#if ANDROID
-            graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
-            graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
-             //To remove the Battery bar
-            graphics.IsFullScreen = true;
-#endif
-#if WINDOWS_UAP
-            if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+            if (_platform == Platform.Android)
             {
-                graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
-                graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
+                _graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
+                _graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
                 //To remove the Battery bar
-                graphics.IsFullScreen = true;
+                _graphics.IsFullScreen = true;
+
             }
-#endif
+
+            if (_platform == Platform.UWP)
+            {
+                //if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+                //{
+                //}
+                _graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
+                _graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
+                //To remove the Battery bar
+                _graphics.IsFullScreen = true;
+            }
 
             _graphics.SupportedOrientations = DisplayOrientation.Portrait | DisplayOrientation.PortraitDown;
             _graphics.ApplyChanges();

@@ -12,11 +12,7 @@ namespace DeveBlockStacker.Core.State
         {
             get
             {
-#if WINDOWS_UAP
-                var folder = Windows.Storage.ApplicationData.Current.LocalFolder.Path;
-#else
                 var folder = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-#endif
                 var totPath = Path.Combine(folder, SaveGameFileName);
                 return totPath;
             }

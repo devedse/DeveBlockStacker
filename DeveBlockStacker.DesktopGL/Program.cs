@@ -1,4 +1,5 @@
 ﻿using DeveBlockStacker.Core;
+using DeveBlockStacker.Core.HelperObjects;
 using System;
 
 namespace DeveBlockStacker.DesktopGL
@@ -8,7 +9,7 @@ namespace DeveBlockStacker.DesktopGL
         [STAThread]
         public static void Main()
         {
-            using (var game = new TheGame(new(720 / 2, 1280 / 2)))
+            using (var game = new TheGame(new(720 / 2, 1280 / 2), Platform.Desktop))
             {
                 game.Run();
             }

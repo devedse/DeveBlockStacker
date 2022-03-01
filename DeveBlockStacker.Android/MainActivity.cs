@@ -3,6 +3,7 @@ using Android.Content.PM;
 using Android.OS;
 using Android.Views;
 using DeveBlockStacker.Core;
+using DeveBlockStacker.Core.HelperObjects;
 
 namespace DeveBlockStacker.Android
 {
@@ -18,14 +19,21 @@ namespace DeveBlockStacker.Android
     {
         private void FixUiOptions()
         {
-            int uiOptions = (int)Window.DecorView.SystemUiVisibility;
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.R)
+            {
+                Window.SetDecorFitsSystemWindows(false);
+            }
+            else
+            {
+                //int uiOptions = (int)Window.DecorView.SystemUiVisibility;
 
-            uiOptions |= (int)SystemUiFlags.LowProfile;
-            //uiOptions |= (int)SystemUiFlags.Fullscreen;
-            //uiOptions |= (int)SystemUiFlags.HideNavigation;
-            //uiOptions |= (int)SystemUiFlags.ImmersiveSticky;
+                //uiOptions |= (int)SystemUiFlags.LowProfile;
+                ////uiOptions |= (int)SystemUiFlags.Fullscreen;
+                ////uiOptions |= (int)SystemUiFlags.HideNavigation;
+                ////uiOptions |= (int)SystemUiFlags.ImmersiveSticky;
 
-            Window.DecorView.SystemUiVisibility = (StatusBarVisibility)uiOptions;
+                //Window.DecorView.SystemUiVisibility = (StatusBarVisibility)uiOptions;
+            }
         }
 
         protected override void OnCreate(Bundle bundle)
@@ -34,7 +42,7 @@ namespace DeveBlockStacker.Android
 
             FixUiOptions();
 
-            var g = new TheGame();
+            var g = new TheGame(Platform.Android);
 
             SetContentView((View)g.Services.GetService(typeof(View)));
             g.Run();
