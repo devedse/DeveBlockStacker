@@ -1,17 +1,19 @@
 ﻿using System;
 using Foundation;
 using UIKit;
+using DeveBlockStacker.Core;
+using DeveBlockStacker.Core.HelperObjects;
 
 namespace DeveBlockStacker.iOS
 {
-    [Register("AppDelegate")]
+ [Register("AppDelegate")]
     class Program : UIApplicationDelegate
     {
-        private static Game1 game;
+        private static TheGame game;
 
         internal static void RunGame()
         {
-            game = new Game1();
+            game = new TheGame(Platform.Android);
             game.Run();
         }
 

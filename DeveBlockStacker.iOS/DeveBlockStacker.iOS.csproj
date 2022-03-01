@@ -10,9 +10,6 @@
     <RootNamespace>DeveBlockStacker.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
     <AssemblyName>DeveBlockStacker.iOS</AssemblyName>
-    <MonoGamePlatform>iOS</MonoGamePlatform>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -104,36 +101,40 @@
     <CodesignKey>iPhone Distribution</CodesignKey>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MonoGame.Framework, Version=3.7.1.189, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MonoGame.Framework.iOS.3.7.1.189\lib\XamariniOS\MonoGame.Framework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
-    <MonoGameContentReference Include="Content\Content.mgcb" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Default.png" />
     <BundleResource Include="GameThumbnail.png" />
   </ItemGroup>
+  <ItemGroup>
+    <MonoGameContentReference Include="..\DeveBlockStacker.Content\Content\Content.mgcb">
+      <Link>Content\Content.mgcb</Link>
+    </MonoGameContentReference>
+  </ItemGroup>
+  <ItemGroup>
+    <InterfaceDefinition Include="LaunchScreen.storyboard" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.0.1641" />
+    <PackageReference Include="MonoGame.Framework.iOS" Version="3.8.0.1641" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DeveBlockStacker.Core\DeveBlockStacker.Core.csproj">
+      <Project>{dfb4f56f-a4de-4bac-8690-92206e6f8dcd}</Project>
+      <Name>DeveBlockStacker.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
-  <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
-  <Import Project="..\packages\MonoGame.Framework.iOS.3.7.1.189\build\MonoGame.Framework.iOS.targets" Condition="Exists('..\packages\MonoGame.Framework.iOS.3.7.1.189\build\MonoGame.Framework.iOS.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\MonoGame.Framework.iOS.3.7.1.189\build\MonoGame.Framework.iOS.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MonoGame.Framework.iOS.3.7.1.189\build\MonoGame.Framework.iOS.targets'))" />
-  </Target>
 </Project>
