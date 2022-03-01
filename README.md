@@ -3,9 +3,9 @@ This is a block stacker game written in MonoGame that works on multiple platform
 
 ## Build status
 
-| Travis (Linux/Osx build) | AppVeyor (Windows build) |
-|:------------------------:|:------------------------:|
-| [![Build Status](https://travis-ci.org/devedse/DeveBlockStacker.svg?branch=master)](https://travis-ci.org/devedse/DeveBlockStacker) | [![Build status](https://ci.appveyor.com/api/projects/status/datwgk9gb4gmpodi?svg=true)](https://ci.appveyor.com/project/devedse/DeveBlockStacker) |
+| GitHubActions Builds | (DEPRECATED) Travis (Linux/Osx build) | (DEPRECATED) AppVeyor (Windows build) |
+|:--------------------:|:-------------------------------------:|:-------------------------------------:|
+| [![Build Status](https://travis-ci.org/devedse/DeveBlockStacker.svg?branch=master)](https://travis-ci.org/devedse/DeveBlockStacker) | [![Build status](https://ci.appveyor.com/api/projects/status/datwgk9gb4gmpodi?svg=true)](https://ci.appveyor.com/project/devedse/DeveBlockStacker) | [![GitHubActions Builds](https://github.com/devedse/DeveBlockStacker/workflows/GitHubActionsBuilds/badge.svg)](https://github.com/devedse/DeveBlockStacker/actions/workflows/githubactionsbuilds.yml) |
 
 ## Releases
 
