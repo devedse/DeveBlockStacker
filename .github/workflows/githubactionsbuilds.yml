@@ -52,9 +52,10 @@ jobs:
           6.0.x
     - name: Install Segoe UI
       run: |
-        wget https://raw.githubusercontent.com/mrbvrz/segoe-ui-linux/master/install.sh
-        chmod +x install.sh
-        ./install.sh
+        chmod +x ./Scripts/installsegoefont.sh
+        ./Scripts/installsegoefont.sh -y
+    - name: Install Microsoft Fonts
+      run: sudo apt-get install ttf-mscorefonts-installer
     - name: dotnet restore
       run: dotnet restore DeveBlockStacker.DesktopGL/DeveBlockStacker.DesktopGL.csproj
     - name: dotnet build
