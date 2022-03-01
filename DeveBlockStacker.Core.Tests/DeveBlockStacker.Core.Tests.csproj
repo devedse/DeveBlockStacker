@@ -20,4 +20,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DeveBlockStacker.Core\DeveBlockStacker.Core.csproj" />
+  </ItemGroup>
+
 </Project>
