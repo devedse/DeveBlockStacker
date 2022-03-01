@@ -2,13 +2,13 @@ using Android.App;
 using Android.Content.PM;
 using Android.OS;
 using Android.Views;
-using DeveBlockStacker.Shared;
+using DeveBlockStacker.Core;
 
 namespace DeveBlockStacker.Android
 {
     [Activity(Label = "DeveBlockStacker"
         , MainLauncher = true
-        , Icon = "@drawable/iconhighres"
+        , Icon = "@drawable/icon"
         , Theme = "@style/Theme.Splash"
         , AlwaysRetainTaskState = true
         , LaunchMode = LaunchMode.SingleInstance
