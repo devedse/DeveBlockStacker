@@ -29,7 +29,7 @@ jobs:
       run: dotnet build DeveBlockStacker.sln -c Release /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}} # Project needs to build before training a model.
     - name: Train Intellicode Model
       uses: microsoft/vs-intellicode@v1
-  
+
   build_linux:
     needs: generate_version_number
     runs-on: ubuntu-latest
@@ -39,11 +39,11 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x
-    - name: Install dependencies
+    - name: dotnet restore
       run: dotnet restore DeveBlockStacker.sln
-    - name: Build
+    - name: dotnet build
       run: dotnet build DeveBlockStacker.sln -c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
-    - name: Test
+    - name: dotnet test
       run: dotnet test DeveBlockStacker.sln -c Release --no-build --verbosity normal
 
   build_windows:
@@ -54,9 +54,7 @@ jobs:
     - name: Setup .NET Core @ Latest
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 6.0.x
-      env:
-        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}        
+        dotnet-version: 6.0.x     
     - uses: actions/setup-java@v1
       with:
         java-version: '15' # The JDK version to make available on the path.
@@ -66,13 +64,13 @@ jobs:
       run: |
         dotnet tool install --global dotnet-sonarscanner
         dotnet tool install --global dotnet-reportgenerator-globaltool
-    - name: Install dependencies
+    - name: dotnet restore
       run: dotnet restore DeveBlockStacker.sln
     - name: SonarQube begin
       run: dotnet-sonarscanner begin /k:"DeveBlockStacker" /o:"devedse-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login=${{secrets.SONARQUBETOKEN}} /d:sonar.cs.opencover.reportsPaths=".\DeveBlockStacker.Tests\TestResults\Coverage\coverage.opencover.xml" /d:sonar.coverage.exclusions="DeveBlockStacker.ConsoleApp/**/*.cs,DeveBlockStacker.Tests/**/*.cs"
-    - name: Build
+    - name: dotnet build
       run: dotnet build DeveBlockStacker.sln -c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
-    - name: Test
+    - name: dotnet test
       run: dotnet test DeveBlockStacker.sln --verbosity normal --no-build -c Release /p:CollectCoverage=true /p:CoverletOutputFormat=\`"cobertura,opencover\`" /p:CoverletOutput=./TestResults/Coverage/
     - name: SonarQube end
       env:
