@@ -55,7 +55,7 @@ jobs:
     - name: dotnet build
       run: dotnet build DeveBlockStacker.DesktopGL/DeveBlockStacker.DesktopGL.csproj -c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
     - name: dotnet test
-      run: dotnet test DeveBlockStacker.Core.Tests/DeveBlockStacker.Core.Tests.csproj -c Release --no-build --verbosity normal
+      run: dotnet test DeveBlockStacker.Core.Tests/DeveBlockStacker.Core.Tests.csproj -c Release --verbosity normal
 
   build_windows_DesktopGL:
     needs: generate_version_number
@@ -73,7 +73,7 @@ jobs:
     - name: dotnet build
       run: dotnet build DeveBlockStacker.DesktopGL/DeveBlockStacker.DesktopGL.csproj -c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
     - name: dotnet test
-      run: dotnet test DeveBlockStacker.Core.Tests/DeveBlockStacker.Core.Tests.csproj -c Release --no-build --verbosity normal
+      run: dotnet test DeveBlockStacker.Core.Tests/DeveBlockStacker.Core.Tests.csproj -c Release --verbosity normal
 
   build_windows_WindowsDX:
     needs: generate_version_number
@@ -91,7 +91,27 @@ jobs:
     - name: dotnet build
       run: dotnet build DeveBlockStacker.WindowsDX/DeveBlockStacker.WindowsDX.csproj -c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
     - name: dotnet test
-      run: dotnet test DeveBlockStacker.Core.Tests/DeveBlockStacker.Core.Tests.csproj -c Release --no-build --verbosity normal
+      run: dotnet test DeveBlockStacker.Core.Tests/DeveBlockStacker.Core.Tests.csproj -c Release --verbosity normal
+
+  build_windows_Android:
+    needs: generate_version_number
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: |
+          3.1.x
+          6.0.x
+    - name: dotnet restore
+      run: dotnet restore DeveBlockStacker.Android/DeveBlockStacker.Android.csproj
+    - name: dotnet build
+      run: |
+        #dotnet build DeveBlockStacker.Android/DeveBlockStacker.Android.csproj -c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
+        msbuild "/t:SignAndroidPackage" "/p:Configuration=Release" "/p:AndroidKeyStore=true" "/p:AndroidSigningKeyAlias=DevedseCert" "/p:AndroidSigningKeyPass=${{secrets.ANDROIDKEYSTOREPASSWORD}}" "/p:AndroidSigningKeyStore=DevedseCert.keystore" "/p:AndroidSigningStorePass=${{secrets.ANDROIDKEYSTOREPASSWORD}}" "DeveBlockStacker.Android\DeveBlockStacker.Android.csproj"
+    - name: dotnet test
+      run: dotnet test DeveBlockStacker.Core.Tests/DeveBlockStacker.Core.Tests.csproj -c Release --verbosity normal
 
   build_linux:
     needs: generate_version_number
