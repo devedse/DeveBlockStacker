@@ -1,5 +1,4 @@
-﻿using DeveBlockStacker.Core.State;
-using DeveBlockStacker.Core.Data;
+﻿using DeveBlockStacker.Core.Data;
 using DeveBlockStacker.Core.Drawwers;
 using DeveBlockStacker.Core.State;
 using Microsoft.Xna.Framework;
