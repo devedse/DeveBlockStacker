@@ -104,6 +104,8 @@ jobs:
         dotnet-version: |
           3.1.x
           6.0.x
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1.1
     - name: dotnet restore
       run: dotnet restore DeveBlockStacker.Android/DeveBlockStacker.Android.csproj
     - name: dotnet build
@@ -112,27 +114,6 @@ jobs:
         msbuild "/t:SignAndroidPackage" "/p:Configuration=Release" "/p:AndroidKeyStore=true" "/p:AndroidSigningKeyAlias=DevedseCert" "/p:AndroidSigningKeyPass=${{secrets.ANDROIDKEYSTOREPASSWORD}}" "/p:AndroidSigningKeyStore=DevedseCert.keystore" "/p:AndroidSigningStorePass=${{secrets.ANDROIDKEYSTOREPASSWORD}}" "DeveBlockStacker.Android\DeveBlockStacker.Android.csproj"
     - name: dotnet test
       run: dotnet test DeveBlockStacker.Core.Tests/DeveBlockStacker.Core.Tests.csproj -c Release --verbosity normal
-
-  build_android2:
-
-    runs-on: macos-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Set default Xamarin SDK versions
-      run: |
-        $VM_ASSETS/select-xamarin-sdk-v2.sh --mono=6.10 --android=10.2
-
-    - name: Setup .NET Core SDK 5.0.x
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: '5.0.x'
-
-    - name: Install dependencies
-      run: nuget restore DeveBlockStacker.sln
-
-    - name: Build
-      run: msbuild DeveBlockStacker.Android/DeveBlockStacker.Android.csproj /t:PackageForAndroid /p:Configuration=Debug
 
   build_linux:
     needs: generate_version_number
