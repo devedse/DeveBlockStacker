@@ -38,7 +38,9 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: |
+          3.1.x
+          6.0.x
     - name: dotnet restore
       run: dotnet restore .\DeveBlockStacker.DesktopGL\DeveBlockStacker.DesktopGL.csproj
     - name: dotnet build
@@ -54,7 +56,9 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: |
+          3.1.x
+          6.0.x
     - name: dotnet restore
       run: dotnet restore .\DeveBlockStacker.DesktopGL\DeveBlockStacker.DesktopGL.csproj
     - name: dotnet build
@@ -70,7 +74,9 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: |
+          3.1.x
+          6.0.x
     - name: dotnet restore
       run: dotnet restore .\DeveBlockStacker.WindowsDX\DeveBlockStacker.WindowsDX.csproj
     - name: dotnet build
