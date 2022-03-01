@@ -46,7 +46,7 @@ jobs:
     - name: dotnet build
       run: dotnet build .\DeveBlockStacker.DesktopGL\DeveBlockStacker.DesktopGL.csproj -c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
     - name: dotnet test
-      run: dotnet test DeveBlockStacker.sln -c Release --no-build --verbosity normal
+      run: dotnet test .\DeveBlockStacker.Tests\DeveBlockStacker.Tests.csproj -c Release --no-build --verbosity normal
 
   build_windows_DesktopGL:
     needs: generate_version_number
@@ -64,7 +64,7 @@ jobs:
     - name: dotnet build
       run: dotnet build .\DeveBlockStacker.DesktopGL\DeveBlockStacker.DesktopGL.csproj -c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
     - name: dotnet test
-      run: dotnet test DeveBlockStacker.sln -c Release --no-build --verbosity normal
+      run: dotnet test .\DeveBlockStacker.Tests\DeveBlockStacker.Tests.csproj -c Release --no-build --verbosity normal
 
   build_windows_WindowsDX:
     needs: generate_version_number
@@ -82,7 +82,7 @@ jobs:
     - name: dotnet build
       run: dotnet build .\DeveBlockStacker.WindowsDX\DeveBlockStacker.WindowsDX.csproj -c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
     - name: dotnet test
-      run: dotnet test DeveBlockStacker.sln -c Release --no-build --verbosity normal
+      run: dotnet test .\DeveBlockStacker.Tests\DeveBlockStacker.Tests.csproj -c Release --no-build --verbosity normal
 
   build_linux:
     needs: generate_version_number
