@@ -111,7 +111,7 @@ jobs:
           ./DeveBlockStacker/bin/Release/*.snupkg
 
   release_github:
-    needs: [generate_version_number, intellicode, build_windows, build_linux, build_docker]
+    needs: [generate_version_number, intellicode, build_windows, build_linux]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
     steps:
