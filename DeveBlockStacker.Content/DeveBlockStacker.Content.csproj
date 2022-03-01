@@ -5,8 +5,4 @@
     <ApplicationIcon></ApplicationIcon>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="MonoGame.Content.Builder" Version="3.7.0.9" />
-  </ItemGroup>
-
 </Project>

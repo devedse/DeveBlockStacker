@@ -35,17 +35,17 @@ branches:
     - master
 before_build:
   - ps: Scripts\UpdateAndroidManifestVersion.ps1 -androidManifestPath ".\DeveBlockStacker.Android\Properties\AndroidManifest.xml" -version $env:APPVEYOR_BUILD_VERSION -buildNumber $env:APPVEYOR_BUILD_NUMBER
-  - ps: Scripts\UpdateAppxManifestVersion.ps1 -appxManifestPath ".\DeveBlockStacker.UWP\Package.appxmanifest" -version $env:APPVEYOR_BUILD_VERSION
+  - ps: Scripts\UpdateAppxManifestVersion.ps1 -appxManifestPath ".\DeveBlockStacker.WindowsUWP\Package.appxmanifest" -version $env:APPVEYOR_BUILD_VERSION
   - nuget restore
 
 build_script:
-  - msbuild "/p:Configuration=Release" /p:Platform="x86" /p:AppxBundlePlatforms="x86|x64|ARM" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload "DeveBlockStacker.UWP\DeveBlockStacker.UWP.csproj"
+  - msbuild "/p:Configuration=Release" /p:Platform="x86" /p:AppxBundlePlatforms="x86|x64|ARM" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload "DeveBlockStacker.WindowsUWP\DeveBlockStacker.WindowsUWP.csproj"
   - msbuild "/t:SignAndroidPackage" "/p:Configuration=Release" "/p:AndroidKeyStore=true" "/p:AndroidSigningKeyAlias=DevedseCert" "/p:AndroidSigningKeyPass=%keystore-password%" "/p:AndroidSigningKeyStore=DevedseCert.keystore" "/p:AndroidSigningStorePass=%keystore-password%"  "DeveBlockStacker.Android\DeveBlockStacker.Android.csproj"
- # - msbuild "/p:Configuration=Release" "DeveBlockStacker.UWP\DeveBlockStacker.UWP.csproj"
+ # - msbuild "/p:Configuration=Release" "DeveBlockStacker.WindowsUWP\DeveBlockStacker.WindowsUWP.csproj"
 
 after_build:
   - ps: appcenter distribute release -s Production -f "DeveBlockStacker.Android\bin\Android\AnyCPU\Release\deveblockstacker_android.deveblockstacker_android-Signed.apk" -a Devedse/DeveBlockStacker.Android -r "$env:APPVEYOR_REPO_COMMIT_MESSAGE" --token $env:AppCenterApiKey
-  - ps: appcenter distribute release -g Collaborators -f "DeveBlockStacker.UWP\bin\WindowsUniversal\x86\Release\Upload\DeveBlockStacker.UWP_$($env:APPVEYOR_BUILD_VERSION).0\DeveBlockStacker.UWP_$($env:APPVEYOR_BUILD_VERSION).0_x86_x64_ARM.appxbundle" -a Devedse/DeveBlockStacker.UWP -r "$env:APPVEYOR_REPO_COMMIT_MESSAGE" --token $env:AppCenterApiKey
+  - ps: appcenter distribute release -g Collaborators -f "DeveBlockStacker.WindowsUWP\bin\WindowsUniversal\x86\Release\Upload\DeveBlockStacker.WindowsUWP_$($env:APPVEYOR_BUILD_VERSION).0\DeveBlockStacker.WindowsUWP_$($env:APPVEYOR_BUILD_VERSION).0_x86_x64_ARM.appxbundle" -a Devedse/DeveBlockStacker.WindowsUWP -r "$env:APPVEYOR_REPO_COMMIT_MESSAGE" --token $env:AppCenterApiKey
 # Getting the name of the group for appcenter can be done using https://openapi.appcenter.ms/#/distribute/stores_list then get the "service_connection_id"
 
 artifacts:

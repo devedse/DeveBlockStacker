@@ -3,21 +3,34 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDisplayName</key>
-	<string>DeveBlockStacker.iOS</string>
+	<string>DeveBlockStacker</string>
 	<key>CFBundleIconFiles</key>
 	<array>
-		<string>GameThumbnail.png</string>
+		<string>monogameicon.png</string>
 	</array>
-	<key>CFBundleIdentifier</key>
-	<string>project.MonoGame.DeveBlockStacker.iOS</string>
 	<key>MinimumOSVersion</key>
 	<string>7.0</string>
+	<key>UIDeviceFamily</key>
+	<array>
+		<integer>1</integer>
+		<integer>2</integer>
+	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array/>
+	<key>CFBundleIdentifier</key>
+	<string>DeveBlockStacker</string>
+	<key>CFBundleVersion</key>
+	<string>0.1</string>
+	<key>NSMainNibFile</key>
+	<string></string>
+	<key>NSMainNibFile~ipad</key>
+	<string></string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
 </dict>
 </plist>

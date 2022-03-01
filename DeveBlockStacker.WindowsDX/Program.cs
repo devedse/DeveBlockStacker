@@ -2,7 +2,7 @@
 using DeveBlockStacker.Core.HelperObjects;
 using System;
 
-namespace DeveBlockStacker.DesktopGL
+namespace DeveBlockStacker.WindowsDX
 {
     public static class Program
     {
