@@ -7,8 +7,8 @@ namespace DeveBlockStacker.Core.Data
     public class ContentDistributionThing
     {
         public Texture2D SquareImage { get; private set; }
-        public SpriteFont SegoeUI20 { get; private set; }
-        public SpriteFont SegoeUI70 { get; private set; }
+        public SpriteFont SecularOne20 { get; private set; }
+        public SpriteFont SecularOne72 { get; private set; }
 
         public int ScreenWidth => graphics.PreferredBackBufferWidth;
         public int ScreenHeight => graphics.PreferredBackBufferHeight;
@@ -23,8 +23,8 @@ namespace DeveBlockStacker.Core.Data
         public void LoadContent(ContentManager content)
         {
             SquareImage = content.Load<Texture2D>("Square");
-            SegoeUI20 = content.Load<SpriteFont>("SegoeUI20");
-            SegoeUI70 = content.Load<SpriteFont>("SegoeUI72");
+            SecularOne20 = content.Load<SpriteFont>("SecularOne20");
+            SecularOne72 = content.Load<SpriteFont>("SecularOne72");
         }
     }
 }

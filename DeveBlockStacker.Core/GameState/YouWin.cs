@@ -64,17 +64,17 @@ namespace DeveBlockStacker.Core.GameState
         {
             if (measuredString == Vector2.Zero)
             {
-                measuredString = contentDistributionThing.SegoeUI70.MeasureString(winString);
+                measuredString = contentDistributionThing.SecularOne72.MeasureString(winString);
             }
 
             if (measuredTimeString == Vector2.Zero)
             {
-                measuredTimeString = contentDistributionThing.SegoeUI70.MeasureString(timeString);
+                measuredTimeString = contentDistributionThing.SecularOne72.MeasureString(timeString);
             }
 
             if (previousHighscoreString != null && measuredPreviousHighScoreString == Vector2.Zero)
             {
-                measuredPreviousHighScoreString = contentDistributionThing.SegoeUI70.MeasureString(previousHighscoreString);
+                measuredPreviousHighScoreString = contentDistributionThing.SecularOne72.MeasureString(previousHighscoreString);
             }
 
             NormalGridDrawwer.DrawGrid(spriteBatch, contentDistributionThing, gameData);
@@ -84,17 +84,17 @@ namespace DeveBlockStacker.Core.GameState
 
             var scale = contentDistributionThing.ScreenHeight / (measuredString.X * 1.9f);
 
-            spriteBatch.DrawString(contentDistributionThing.SegoeUI70, winString, pos, Color.White, framesDelay / 50.0f, measuredString / 2, scale * (2 + (float)Math.Sin(framesDelay / 15.0f)), SpriteEffects.None, 0);
+            spriteBatch.DrawString(contentDistributionThing.SecularOne72, winString, pos, Color.White, framesDelay / 50.0f, measuredString / 2, scale * (2 + (float)Math.Sin(framesDelay / 15.0f)), SpriteEffects.None, 0);
 
 
             var scaleTimeString = contentDistributionThing.ScreenWidth / (measuredTimeString.X * 1.4f);
             var posTimeString = new Vector2(contentDistributionThing.ScreenWidth / 2, 5 + (measuredTimeString.Y * scaleTimeString / 2.0f));
-            spriteBatch.DrawString(contentDistributionThing.SegoeUI70, timeString, posTimeString, Color.White, 0, measuredTimeString / 2, scaleTimeString, SpriteEffects.None, 0);
+            spriteBatch.DrawString(contentDistributionThing.SecularOne72, timeString, posTimeString, Color.White, 0, measuredTimeString / 2, scaleTimeString, SpriteEffects.None, 0);
 
             if (measuredPreviousHighScoreString != Vector2.Zero)
             {
                 var posPrev = new Vector2(contentDistributionThing.ScreenWidth / 2, posTimeString.Y + (measuredTimeString.Y * scaleTimeString / 2.0f) + measuredPreviousHighScoreString.Y * scale / 2.0f);
-                spriteBatch.DrawString(contentDistributionThing.SegoeUI70, previousHighscoreString, posPrev, Color.White, 0, measuredPreviousHighScoreString / 2, scaleTimeString, SpriteEffects.None, 0);
+                spriteBatch.DrawString(contentDistributionThing.SecularOne72, previousHighscoreString, posPrev, Color.White, 0, measuredPreviousHighScoreString / 2, scaleTimeString, SpriteEffects.None, 0);
 
             }
         }

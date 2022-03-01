@@ -35,14 +35,14 @@ namespace DeveBlockStacker.Core.GameState
         {
             if (measuredString == Vector2.Zero)
             {
-                measuredString = contentDistributionThing.SegoeUI70.MeasureString(helloString);
+                measuredString = contentDistributionThing.SecularOne72.MeasureString(helloString);
             }
 
 
             var pos = new Vector2(contentDistributionThing.ScreenWidth / 2, contentDistributionThing.ScreenHeight / 2 - contentDistributionThing.ScreenHeight / 10f + (contentDistributionThing.ScreenHeight / 5.0f * (float)Math.Sin(framesDelay / 20.0f)));
             var scale = contentDistributionThing.ScreenWidth / (measuredString.X * 1.3f);
 
-            spriteBatch.DrawString(contentDistributionThing.SegoeUI70, helloString, pos, Color.White, 0, measuredString / 2, scale, SpriteEffects.None, 0);
+            spriteBatch.DrawString(contentDistributionThing.SecularOne72, helloString, pos, Color.White, 0, measuredString / 2, scale, SpriteEffects.None, 0);
         }
     }
 }

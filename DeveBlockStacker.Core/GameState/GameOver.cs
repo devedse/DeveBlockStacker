@@ -54,12 +54,12 @@ namespace DeveBlockStacker.Core.GameState
         {
             if (measuredString == Vector2.Zero)
             {
-                measuredString = contentDistributionThing.SegoeUI70.MeasureString(gameOverString);
+                measuredString = contentDistributionThing.SecularOne72.MeasureString(gameOverString);
             }
 
             if (previousHighscoreString != null && measuredPreviousHighScoreString == Vector2.Zero)
             {
-                measuredPreviousHighScoreString = contentDistributionThing.SegoeUI70.MeasureString(previousHighscoreString);
+                measuredPreviousHighScoreString = contentDistributionThing.SecularOne72.MeasureString(previousHighscoreString);
             }
 
             NormalGridDrawwer.DrawGrid(spriteBatch, contentDistributionThing, gameData);
@@ -68,13 +68,13 @@ namespace DeveBlockStacker.Core.GameState
 
             var scale = contentDistributionThing.ScreenWidth / (measuredString.X * 1.3f);
 
-            spriteBatch.DrawString(contentDistributionThing.SegoeUI70, gameOverString, pos, Color.White, 0, measuredString / 2, scale + ((1.0f + (float)Math.Sin(framesDelay / 6.0f)) * 0.15f), SpriteEffects.None, 0);
+            spriteBatch.DrawString(contentDistributionThing.SecularOne72, gameOverString, pos, Color.White, 0, measuredString / 2, scale + ((1.0f + (float)Math.Sin(framesDelay / 6.0f)) * 0.15f), SpriteEffects.None, 0);
 
             if (measuredPreviousHighScoreString != Vector2.Zero)
             {
                 var scalePrev = contentDistributionThing.ScreenWidth / (measuredPreviousHighScoreString.X * 1.3f);
                 var posPrev = new Vector2(contentDistributionThing.ScreenWidth / 2, 5 + measuredPreviousHighScoreString.Y * scale / 2.0f);
-                spriteBatch.DrawString(contentDistributionThing.SegoeUI70, previousHighscoreString, posPrev, Color.White, 0, measuredPreviousHighScoreString / 2, scalePrev, SpriteEffects.None, 0);
+                spriteBatch.DrawString(contentDistributionThing.SecularOne72, previousHighscoreString, posPrev, Color.White, 0, measuredPreviousHighScoreString / 2, scalePrev, SpriteEffects.None, 0);
             }
         }
     }

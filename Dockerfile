@@ -1,4 +1,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:6.0-bullseye-slim-amd64 AS build
+#Also install dotnet 3.1
+RUN curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin -Channel 3.1 -InstallDir /usr/share/dotnet
+
 WORKDIR /src
 COPY ["DeveBlockStacker.Core/DeveBlockStacker.Core.csproj", "DeveBlockStacker.Core/"]
 COPY ["DeveBlockStacker.DesktopGL/DeveBlockStacker.DesktopGL.csproj", "DeveBlockStacker.DesktopGL/"]
