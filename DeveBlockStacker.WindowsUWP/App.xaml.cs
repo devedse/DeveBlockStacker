@@ -18,7 +18,7 @@ using Windows.UI.Xaml.Navigation;
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=402347&clcid=0x409
 
-namespace DeveBlockStacker.UWP
+namespace DeveBlockStacker.WindowsUWP
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.

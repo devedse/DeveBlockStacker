@@ -7,8 +7,8 @@
     <ProjectGuid>{4271BFD8-3C63-4D04-919E-D0E8618A3F2D}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DeveBlockStacker.UWP</RootNamespace>
-    <AssemblyName>DeveBlockStacker.UWP</AssemblyName>
+    <RootNamespace>DeveBlockStacker.WindowsUWP</RootNamespace>
+    <AssemblyName>DeveBlockStacker.WindowsUWP</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.19041.0</TargetPlatformVersion>
@@ -17,7 +17,7 @@
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>DeveBlockStacker.UWP_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>DeveBlockStacker.WindowsUWP_TemporaryKey.pfx</PackageCertificateKeyFile>
     <PackageCertificateThumbprint>4D149223C227F93FB0E003BC5384474868D31139</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
@@ -105,10 +105,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <MonoGameContentReference Include="..\DeveBlockStacker.Content\Content\Content.mgcb">
-      <Link>Content\Content.mgcb</Link>
-    </MonoGameContentReference>
-    <None Include="DeveBlockStacker.UWP_TemporaryKey.pfx" />
+    <None Include="DeveBlockStacker.WindowsUWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\LargeTile.scale-100.png" />
@@ -156,6 +153,11 @@
     </PackageReference>
     <PackageReference Include="MonoGame.Framework.WindowsUniversal" Version="3.8.0.1641" />
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.0.1641" />
+  </ItemGroup>
+  <ItemGroup>
+    <MonoGameContentReference Include="..\DeveBlockStacker.Content\Content\Content.mgcb">
+      <Link>Content\Content.mgcb</Link>
+    </MonoGameContentReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DeveBlockStacker.Core\DeveBlockStacker.Core.csproj">

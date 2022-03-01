@@ -17,7 +17,7 @@ namespace DeveBlockStacker.Core
         private IGameState _currentState;
         private readonly InputStatifier _inputStatifier;
 
-        private IntSize? _desiredScreenSize;
+        private IntSize _desiredScreenSize;
 
         public TheGame() : base()
         {
