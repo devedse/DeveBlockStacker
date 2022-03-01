@@ -72,7 +72,6 @@ function cekfont(){
 
 function continueFont(){
     echo -e "$LGREEN Do you want to install Segoe-UI Font? (y)es, (n)o :"
-  esac
 }
 
 function fontinstall(){
