@@ -75,24 +75,6 @@ jobs:
     - name: dotnet test
       run: dotnet test DeveBlockStacker.Core.Tests/DeveBlockStacker.Core.Tests.csproj -c Release --verbosity normal
 
-  build_linux_WindowsDX:
-    needs: generate_version_number
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: |
-          3.1.x
-          6.0.x
-    - name: dotnet restore
-      run: dotnet restore DeveBlockStacker.WindowsDX/DeveBlockStacker.WindowsDX.csproj
-    - name: dotnet build
-      run: dotnet build DeveBlockStacker.WindowsDX/DeveBlockStacker.WindowsDX.csproj -c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
-    - name: dotnet test
-      run: dotnet test DeveBlockStacker.Core.Tests/DeveBlockStacker.Core.Tests.csproj -c Release --verbosity normal
-
   build_windows_WindowsDX:
     needs: generate_version_number
     runs-on: windows-latest
@@ -124,6 +106,13 @@ jobs:
           6.0.x
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v1.1
+    - name: Set Android version
+      uses: damienaicheh/update-android-version-manifest-action@v1.0.0
+      with:
+        android-manifest-path: ./DeveBlockStacker.Android/Properties/AndroidManifest.xml
+        version-name: 1.0.${{needs.generate_version_number.outputs.build_number}}
+        version-code: ${{needs.generate_version_number.outputs.build_number}}
+        print-file: true
     - name: Restore NuGet packages
       run: |
         nuget restore DeveBlockStacker.Core/DeveBlockStacker.Core.csproj
@@ -143,31 +132,6 @@ jobs:
       with:
         name: DeveBlockStackerAndroid7z
         path: ./Scripts/Output/DeveBlockStacker.Android.7z
-
-  build_linux_Android:
-    needs: generate_version_number
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: |
-          3.1.x
-          6.0.x
-    - name: Add msbuild to PATH
-      uses: microsoft/setup-msbuild@v1.1
-    - name: Restore NuGet packages
-      run: |
-        nuget restore DeveBlockStacker.Core/DeveBlockStacker.Core.csproj
-        nuget restore DeveBlockStacker.Android/DeveBlockStacker.Android.csproj
-        nuget restore DeveBlockStacker.iOS/DeveBlockStacker.iOS.csproj
-    - name: Build Android
-      run: |
-        #dotnet build DeveBlockStacker.Android/DeveBlockStacker.Android.csproj -c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
-        msbuild "/t:SignAndroidPackage" "/p:Configuration=Release" "/p:AndroidKeyStore=true" "/p:AndroidSigningKeyAlias=DevedseCert" "/p:AndroidSigningKeyPass=${{secrets.ANDROIDKEYSTOREPASSWORD}}" "/p:AndroidSigningKeyStore=DevedseCert.keystore" "/p:AndroidSigningStorePass=${{secrets.ANDROIDKEYSTOREPASSWORD}}" "DeveBlockStacker.Android\DeveBlockStacker.Android.csproj"
-    - name: dotnet test
-      run: dotnet test DeveBlockStacker.Core.Tests/DeveBlockStacker.Core.Tests.csproj -c Release --verbosity normal
 
   build_macos_Android:
     needs: generate_version_number
@@ -196,6 +160,40 @@ jobs:
       run: MSBuild /t:SignAndroidPackage /p:Configuration=Release /p:AndroidPackageFormat=apk /p:AndroidKeyStore=true /p:AndroidSigningKeyAlias=DevedseCert /p:AndroidSigningKeyPass=${{ secrets.ANDROIDKEYSTOREPASSWORD }} /p:AndroidSigningKeyStore=DevedseCert.keystore /p:AndroidSigningStorePass=${{ secrets.ANDROIDKEYSTOREPASSWORD }} ./DeveBlockStacker.Android/DeveBlockStacker.Android.csproj
     - name: dotnet test
       run: dotnet test DeveBlockStacker.Core.Tests/DeveBlockStacker.Core.Tests.csproj -c Release --verbosity normal
+
+  build_windows_WindowsUWP:
+    needs: generate_version_number
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: |
+          3.1.x
+          6.0.x
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1.1
+    - name: Set WindowsUWP version
+      run: Scripts\UpdateAppxManifestVersion.ps1 -appxManifestPath ".\DeveBlockStacker.WindowsUWP\Package.appxmanifest" -version 1.0.${{needs.generate_version_number.outputs.build_number}}
+      shell: powershell
+    - name: Restore NuGet packages
+      run: |
+        nuget restore DeveBlockStacker.Core/DeveBlockStacker.Core.csproj
+        nuget restore DeveBlockStacker.WindowsUWP/DeveBlockStacker.WindowsUWP.csproj
+    - name: Build WindowsUWP
+      run: |
+        msbuild "/p:Configuration=Release" /p:Platform="x86" /p:AppxBundlePlatforms="x86|x64|ARM" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload "DeveBlockStacker.WindowsUWP\DeveBlockStacker.WindowsUWP.csproj"
+    - name: dotnet test
+      run: dotnet test DeveBlockStacker.Core.Tests/DeveBlockStacker.Core.Tests.csproj -c Release --verbosity normal
+    - name: Package sources
+      run: |
+        7z a -t7z -m0=LZMA2 -mmt=on -mx9 -md=1536m -mfb=273 -ms=on -mqs=on -sccUTF-8 "./Scripts/Output/DeveBlockStacker.WindowsUWP.7z" "DeveBlockStacker.WindowsUWP\*" '-x!*.pdb'
+      shell: powershell
+    - uses: actions/upload-artifact@v2
+      with:
+        name: DeveBlockStackerWindowsUWP7z
+        path: ./Scripts/Output/DeveBlockStacker.WindowsUWP.7z
 
   build_linux:
     needs: generate_version_number
