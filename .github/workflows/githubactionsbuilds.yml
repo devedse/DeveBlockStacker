@@ -282,9 +282,6 @@ jobs:
       with:
         tag_name: 1.0.${{needs.generate_version_number.outputs.build_number}}
         files: |
-          ./artifacts/DeveBlockStacker7z/DeveBlockStacker.7z
-          ./artifacts/DeveBlockStackerZip/DeveBlockStacker.zip
-          ./artifacts/DeveBlockStackerNuGet/*.nupkg
-          ./artifacts/DeveBlockStackerNuGet/*.snupkg
+          ./artifacts/DeveBlockStackerCore7z/DeveBlockStacker.Core.7z
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
