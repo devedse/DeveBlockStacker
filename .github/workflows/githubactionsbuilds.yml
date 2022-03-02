@@ -106,18 +106,12 @@ jobs:
           6.0.x
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v1.1
-    - name: dotnet restore
+    - name: Restore NuGet packages
       run: |
-        dotnet restore DeveBlockStacker.Android/DeveBlockStacker.Android.csproj
-        dotnet restore DeveBlockStacker.Core/DeveBlockStacker.Core.csproj
-    - uses: nuget/setup-nuget@v1
-      with:
-        nuget-version: 'latest'
-    - name: Restore NuGet packages
-      run: nuget restore
+        nuget restore DeveBlockStacker.Core/DeveBlockStacker.Core.csproj
+        nuget restore DeveBlockStacker.Android/DeveBlockStacker.Android.csproj
+        nuget restore DeveBlockStacker.iOS/DeveBlockStacker.iOS.csproj
 
-    - name: Restore NuGet packages
-      run: nuget restore DeveBlockStacker.sln
     - name: dotnet build
       run: |
         #dotnet build DeveBlockStacker.Android/DeveBlockStacker.Android.csproj -c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
@@ -130,39 +124,39 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v2
 
-      # - uses: nuget/setup-nuget@v1
-      #   with:
-      #     nuget-version: 'latest'
+    # - uses: nuget/setup-nuget@v1
+    #   with:
+    #     nuget-version: 'latest'
 
-      # - name: Setup Android signing
-      #   run: (echo ${{ secrets.KEYSTORE }} | base64 --decode) > ./DeveBlockStacker.Android/keystore.jks
-        
-      - name: Set iOS version
-        run: |
-          /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString 1.0.${{needs.generate_version_number.outputs.build_number}}" ./DeveBlockStacker.iOS/Info.plist
-          /usr/libexec/PlistBuddy -c "Set :CFBundleVersion ${{needs.generate_version_number.outputs.build_number}}" ./DeveBlockStacker.iOS/Info.plist
-      # - name: Set Android version
-      #   uses: damienaicheh/update-android-version-manifest-action@v1.0.0
-      #   with:
-      #     android-manifest-path: ./DeveBlockStacker.Android/Properties/AndroidManifest.xml
-      #     version-name: 1.0.${{needs.generate_version_number.outputs.build_number}}
-      #     version-code: ${{needs.generate_version_number.outputs.build_number}}
-      #     print-file: true
+    # - name: Setup Android signing
+    #   run: (echo ${{ secrets.KEYSTORE }} | base64 --decode) > ./DeveBlockStacker.Android/keystore.jks
+      
+    - name: Set iOS version
+      run: |
+        /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString 1.0.${{needs.generate_version_number.outputs.build_number}}" ./DeveBlockStacker.iOS/Info.plist
+        /usr/libexec/PlistBuddy -c "Set :CFBundleVersion ${{needs.generate_version_number.outputs.build_number}}" ./DeveBlockStacker.iOS/Info.plist
+    # - name: Set Android version
+    #   uses: damienaicheh/update-android-version-manifest-action@v1.0.0
+    #   with:
+    #     android-manifest-path: ./DeveBlockStacker.Android/Properties/AndroidManifest.xml
+    #     version-name: 1.0.${{needs.generate_version_number.outputs.build_number}}
+    #     version-code: ${{needs.generate_version_number.outputs.build_number}}
+    #     print-file: true
 
-      - name: Restore NuGet packages
-        run: |
-          nuget restore DeveBlockStacker.Core/DeveBlockStacker.Core.csproj
-          nuget restore DeveBlockStacker.Android/DeveBlockStacker.Android.csproj
-          nuget restore DeveBlockStacker.iOS/DeveBlockStacker.iOS.csproj
-        
-      - name: Build Android
-        run: MSBuild /t:SignAndroidPackage /p:Configuration=Release /p:AndroidPackageFormat=apk /p:AndroidKeyStore=true /p:AndroidSigningKeyAlias=DevedseCert /p:AndroidSigningKeyPass=${{ secrets.ANDROIDKEYSTOREPASSWORD }} /p:AndroidSigningKeyStore=DevedseCert.keystore /p:AndroidSigningStorePass=${{ secrets.ANDROIDKEYSTOREPASSWORD }} ./DeveBlockStacker.Android/DeveBlockStacker.Android.csproj
-    
-      - name: Build iOS
-        run: MSBuild /t:Build /p:Configuration=Release /p:Platform=iPhone /p:BuildIpa=true ./DeveBlockStacker.iOS/DeveBlockStacker.iOS.csproj    
+    - name: Restore NuGet packages
+      run: |
+        nuget restore DeveBlockStacker.Core/DeveBlockStacker.Core.csproj
+        nuget restore DeveBlockStacker.Android/DeveBlockStacker.Android.csproj
+        nuget restore DeveBlockStacker.iOS/DeveBlockStacker.iOS.csproj
+      
+    - name: Build Android
+      run: MSBuild /t:SignAndroidPackage /p:Configuration=Release /p:AndroidPackageFormat=apk /p:AndroidKeyStore=true /p:AndroidSigningKeyAlias=DevedseCert /p:AndroidSigningKeyPass=${{ secrets.ANDROIDKEYSTOREPASSWORD }} /p:AndroidSigningKeyStore=DevedseCert.keystore /p:AndroidSigningStorePass=${{ secrets.ANDROIDKEYSTOREPASSWORD }} ./DeveBlockStacker.Android/DeveBlockStacker.Android.csproj
+  
+    - name: Build iOS
+      run: MSBuild /t:Build /p:Configuration=Release /p:Platform=iPhone /p:BuildIpa=true ./DeveBlockStacker.iOS/DeveBlockStacker.iOS.csproj    
 
   build_linux:
     needs: generate_version_number
