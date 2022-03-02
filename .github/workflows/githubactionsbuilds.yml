@@ -75,6 +75,24 @@ jobs:
     - name: dotnet test
       run: dotnet test DeveBlockStacker.Core.Tests/DeveBlockStacker.Core.Tests.csproj -c Release --verbosity normal
 
+  build_linux_WindowsDX:
+    needs: generate_version_number
+    runs-on: linux-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: |
+          3.1.x
+          6.0.x
+    - name: dotnet restore
+      run: dotnet restore DeveBlockStacker.WindowsDX/DeveBlockStacker.WindowsDX.csproj
+    - name: dotnet build
+      run: dotnet build DeveBlockStacker.WindowsDX/DeveBlockStacker.WindowsDX.csproj -c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
+    - name: dotnet test
+      run: dotnet test DeveBlockStacker.Core.Tests/DeveBlockStacker.Core.Tests.csproj -c Release --verbosity normal
+
   build_windows_WindowsDX:
     needs: generate_version_number
     runs-on: windows-latest
@@ -111,8 +129,32 @@ jobs:
         nuget restore DeveBlockStacker.Core/DeveBlockStacker.Core.csproj
         nuget restore DeveBlockStacker.Android/DeveBlockStacker.Android.csproj
         nuget restore DeveBlockStacker.iOS/DeveBlockStacker.iOS.csproj
+    - name: Build Android
+      run: |
+        #dotnet build DeveBlockStacker.Android/DeveBlockStacker.Android.csproj -c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
+        msbuild "/t:SignAndroidPackage" "/p:Configuration=Release" "/p:AndroidKeyStore=true" "/p:AndroidSigningKeyAlias=DevedseCert" "/p:AndroidSigningKeyPass=${{secrets.ANDROIDKEYSTOREPASSWORD}}" "/p:AndroidSigningKeyStore=DevedseCert.keystore" "/p:AndroidSigningStorePass=${{secrets.ANDROIDKEYSTOREPASSWORD}}" "DeveBlockStacker.Android\DeveBlockStacker.Android.csproj"
+    - name: dotnet test
+      run: dotnet test DeveBlockStacker.Core.Tests/DeveBlockStacker.Core.Tests.csproj -c Release --verbosity normal
 
-    - name: dotnet build
+  build_linux_Android:
+    needs: generate_version_number
+    runs-on: linux-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: |
+          3.1.x
+          6.0.x
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1.1
+    - name: Restore NuGet packages
+      run: |
+        nuget restore DeveBlockStacker.Core/DeveBlockStacker.Core.csproj
+        nuget restore DeveBlockStacker.Android/DeveBlockStacker.Android.csproj
+        nuget restore DeveBlockStacker.iOS/DeveBlockStacker.iOS.csproj
+    - name: Build Android
       run: |
         #dotnet build DeveBlockStacker.Android/DeveBlockStacker.Android.csproj -c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
         msbuild "/t:SignAndroidPackage" "/p:Configuration=Release" "/p:AndroidKeyStore=true" "/p:AndroidSigningKeyAlias=DevedseCert" "/p:AndroidSigningKeyPass=${{secrets.ANDROIDKEYSTOREPASSWORD}}" "/p:AndroidSigningKeyStore=DevedseCert.keystore" "/p:AndroidSigningStorePass=${{secrets.ANDROIDKEYSTOREPASSWORD}}" "DeveBlockStacker.Android\DeveBlockStacker.Android.csproj"
@@ -122,57 +164,42 @@ jobs:
   build_macos_Android:
     needs: generate_version_number
     runs-on: macos-latest
-
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-
-    # - uses: nuget/setup-nuget@v1
-    #   with:
-    #     nuget-version: 'latest'
-
-    # - name: Setup Android signing
-    #   run: (echo ${{ secrets.KEYSTORE }} | base64 --decode) > ./DeveBlockStacker.Android/keystore.jks
-      
-    - name: Set iOS version
-      run: |
-        /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString 1.0.${{needs.generate_version_number.outputs.build_number}}" ./DeveBlockStacker.iOS/Info.plist
-        /usr/libexec/PlistBuddy -c "Set :CFBundleVersion ${{needs.generate_version_number.outputs.build_number}}" ./DeveBlockStacker.iOS/Info.plist
-    # - name: Set Android version
-    #   uses: damienaicheh/update-android-version-manifest-action@v1.0.0
-    #   with:
-    #     android-manifest-path: ./DeveBlockStacker.Android/Properties/AndroidManifest.xml
-    #     version-name: 1.0.${{needs.generate_version_number.outputs.build_number}}
-    #     version-code: ${{needs.generate_version_number.outputs.build_number}}
-    #     print-file: true
-
+    - uses: actions/checkout@v2
+    - name: Set Android version
+      uses: damienaicheh/update-android-version-manifest-action@v1.0.0
+      with:
+        android-manifest-path: ./DeveBlockStacker.Android/Properties/AndroidManifest.xml
+        version-name: 1.0.${{needs.generate_version_number.outputs.build_number}}
+        version-code: ${{needs.generate_version_number.outputs.build_number}}
+        print-file: true
     - name: Restore NuGet packages
       run: |
         nuget restore DeveBlockStacker.Core/DeveBlockStacker.Core.csproj
         nuget restore DeveBlockStacker.Android/DeveBlockStacker.Android.csproj
-        nuget restore DeveBlockStacker.iOS/DeveBlockStacker.iOS.csproj
-      
+        nuget restore DeveBlockStacker.iOS/DeveBlockStacker.iOS.csproj      
     - name: Build Android
       run: MSBuild /t:SignAndroidPackage /p:Configuration=Release /p:AndroidPackageFormat=apk /p:AndroidKeyStore=true /p:AndroidSigningKeyAlias=DevedseCert /p:AndroidSigningKeyPass=${{ secrets.ANDROIDKEYSTOREPASSWORD }} /p:AndroidSigningKeyStore=DevedseCert.keystore /p:AndroidSigningStorePass=${{ secrets.ANDROIDKEYSTOREPASSWORD }} ./DeveBlockStacker.Android/DeveBlockStacker.Android.csproj
-  
-    - name: Build iOS
-      run: MSBuild /t:Build /p:Configuration=Release /p:Platform=iPhone /p:BuildIpa=true ./DeveBlockStacker.iOS/DeveBlockStacker.iOS.csproj    
+    - name: dotnet test
+      run: dotnet test DeveBlockStacker.Core.Tests/DeveBlockStacker.Core.Tests.csproj -c Release --verbosity normal
 
   build_linux:
     needs: generate_version_number
-    runs-on: ubuntu-latest
+    runs-on: linux-latest
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: |
+          3.1.x
+          6.0.x
     - name: dotnet restore
-      run: dotnet restore DeveBlockStacker.sln
+      run: dotnet restore DeveBlockStacker.Core/DeveBlockStacker.Core.csproj
     - name: dotnet build
-      run: dotnet build DeveBlockStacker.sln -c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
+      run: dotnet build DeveBlockStacker.Core/DeveBlockStacker.Core.csproj -c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
     - name: dotnet test
-      run: dotnet test DeveBlockStacker.sln -c Release --no-build --verbosity normal
+      run: dotnet test DeveBlockStacker.Core.Tests/DeveBlockStacker.Core.Tests.csproj -c Release --verbosity normal
 
   build_windows:
     needs: generate_version_number
@@ -193,19 +220,17 @@ jobs:
         dotnet tool install --global dotnet-sonarscanner
         dotnet tool install --global dotnet-reportgenerator-globaltool
     - name: dotnet restore
-      run: dotnet restore DeveBlockStacker.sln
+      run: dotnet restore DeveBlockStacker.Core/DeveBlockStacker.Core.csproj
     - name: SonarQube begin
       run: dotnet-sonarscanner begin /k:"DeveBlockStacker" /o:"devedse-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login=${{secrets.SONARQUBETOKEN}} /d:sonar.cs.opencover.reportsPaths=".\DeveBlockStacker.Tests\TestResults\Coverage\coverage.opencover.xml" /d:sonar.coverage.exclusions="DeveBlockStacker.ConsoleApp/**/*.cs,DeveBlockStacker.Tests/**/*.cs"
     - name: dotnet build
-      run: dotnet build DeveBlockStacker.sln -c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
+      run: dotnet build DeveBlockStacker.Core/DeveBlockStacker.Core.csproj-c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
     - name: dotnet test
-      run: dotnet test DeveBlockStacker.sln --verbosity normal --no-build -c Release /p:CollectCoverage=true /p:CoverletOutputFormat=\`"cobertura,opencover\`" /p:CoverletOutput=./TestResults/Coverage/
+      run: dotnet test DeveBlockStacker.Core.Tests/DeveBlockStacker.Core.Tests.csproj --verbosity normal -c Release /p:CollectCoverage=true /p:CoverletOutputFormat=\`"cobertura,opencover\`" /p:CoverletOutput=./TestResults/Coverage/
     - name: SonarQube end
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: dotnet-sonarscanner end /d:sonar.login=${{secrets.SONARQUBETOKEN}}
-    - name: Pack
-      run: dotnet pack DeveBlockStacker\DeveBlockStacker.csproj --verbosity normal --no-build -c Release /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
     - name: Run CodeCov #codecov -f ".\DeveBlockStacker.Tests\TestResults\Coverage\coverage.opencover.xml"
       uses: codecov/codecov-action@v2
       with:
@@ -216,25 +241,15 @@ jobs:
         #fail_ci_if_error: true # optional (default = false)
         verbose: true # optional (default = false)
 
-    - name: Run GoPackage.ps1 script
-      run: .\Scripts\GoPackage.ps1
+    - name: Package sources
+      run: |
+        7z a -t7z -m0=LZMA2 -mmt=on -mx9 -md=1536m -mfb=273 -ms=on -mqs=on -sccUTF-8 "./Scripts/Output/DeveBlockStacker.Core.7z" "DeveBlockStacker.Core\bin\Release\netstandard2.0\*" '-x!*.pdb'
       shell: powershell
-  
 
     - uses: actions/upload-artifact@v2
       with:
-        name: DeveBlockStacker7z
-        path: ./Scripts/Output/DeveBlockStacker.7z
-    - uses: actions/upload-artifact@v2
-      with:
-        name: DeveBlockStackerZip
-        path: ./Scripts/Output/DeveBlockStacker.zip
-    - uses: actions/upload-artifact@v2
-      with:
-        name: DeveBlockStackerNuGet
-        path: |
-          ./DeveBlockStacker/bin/Release/*.nupkg
-          ./DeveBlockStacker/bin/Release/*.snupkg
+        name: DeveBlockStackerCore7z
+        path: ./Scripts/Output/DeveBlockStacker.Core.7z
 
   release_github:
     needs: [generate_version_number, intellicode, build_windows, build_linux]
