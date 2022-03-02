@@ -38,6 +38,107 @@ jobs:
     - name: Run Build
       run: |
         docker build -f Dockerfile -t test123 .
+  build_linux:
+    needs: generate_version_number
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: |
+          3.1.x
+          6.0.x
+    - name: dotnet restore
+      run: dotnet restore DeveBlockStacker.Core/DeveBlockStacker.Core.csproj
+    - name: dotnet build
+      run: dotnet build DeveBlockStacker.Core/DeveBlockStacker.Core.csproj -c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
+    - name: dotnet test
+      run: dotnet test DeveBlockStacker.Core.Tests/DeveBlockStacker.Core.Tests.csproj -c Release --verbosity normal
+
+  build_windows:
+    needs: generate_version_number
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core @ Latest
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x     
+    - uses: actions/setup-java@v1
+      with:
+        java-version: '15' # The JDK version to make available on the path.
+        java-package: jdk # (jre, jdk, or jdk+fx) - defaults to jdk
+        architecture: x64 # (x64 or x86) - defaults to x64
+    - name: Install tools
+      run: |
+        dotnet tool install --global dotnet-sonarscanner
+        dotnet tool install --global dotnet-reportgenerator-globaltool
+    - name: dotnet restore
+      run: dotnet restore DeveBlockStacker.Core/DeveBlockStacker.Core.csproj
+    - name: SonarQube begin
+      run: dotnet-sonarscanner begin /k:"DeveBlockStacker" /o:"devedse-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login=${{secrets.SONARQUBETOKEN}} /d:sonar.cs.opencover.reportsPaths=".\DeveBlockStacker.Tests\TestResults\Coverage\coverage.opencover.xml" /d:sonar.coverage.exclusions="DeveBlockStacker.Tests/**/*.cs"
+    - name: dotnet build
+      run: dotnet build DeveBlockStacker.Core/DeveBlockStacker.Core.csproj -c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
+    - name: dotnet test
+      run: dotnet test DeveBlockStacker.Core.Tests/DeveBlockStacker.Core.Tests.csproj --verbosity normal -c Release /p:CollectCoverage=true /p:CoverletOutputFormat=\`"cobertura,opencover\`" /p:CoverletOutput=./TestResults/Coverage/
+    - name: SonarQube end
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: dotnet-sonarscanner end /d:sonar.login=${{secrets.SONARQUBETOKEN}}
+    - name: Run CodeCov #codecov -f ".\DeveBlockStacker.Tests\TestResults\Coverage\coverage.opencover.xml"
+      uses: codecov/codecov-action@v2
+      with:
+        #token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+        files: .\DeveBlockStacker.Tests\TestResults\Coverage\coverage.opencover.xml # optional
+        #flags: unittests # optional
+        #name: codecov-umbrella # optional
+        #fail_ci_if_error: true # optional (default = false)
+        verbose: true # optional (default = false)
+    - uses: actions/upload-artifact@v2
+      with:
+        name: DeveBlockStacker_build_windows_Core
+        path: ./DeveBlockStacker.Core/bin/Release/netstandard2.0/*
+
+  release_github:
+    needs: [generate_version_number, intellicode, build_windows, build_linux]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+    - name: Download all artifacts
+      uses: actions/download-artifact@v2
+      with:
+        path: ./artifacts/
+
+    - name: Display structure of downloaded files
+      run: |
+        cd ./artifacts/
+        ls -R
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      with:
+        tag_name: 1.0.${{needs.generate_version_number.outputs.build_number}}
+        release_name: 1.0.${{needs.generate_version_number.outputs.build_number}}
+        body: |
+          ${{ github.event.head_commit.message }}
+        draft: false
+        prerelease: false
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: 1.0.${{needs.generate_version_number.outputs.build_number}}
+        files: |
+          ./artifacts/DeveBlockStackerCore7z/DeveBlockStacker.Core.7z
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+
+
+
 
   build_linux_DesktopGL:
     needs: generate_version_number
@@ -121,17 +222,17 @@ jobs:
     - name: Build Android
       run: |
         #dotnet build DeveBlockStacker.Android/DeveBlockStacker.Android.csproj -c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
-        msbuild "/t:SignAndroidPackage" "/p:Configuration=Release" "/p:AndroidKeyStore=true" "/p:AndroidSigningKeyAlias=DevedseCert" "/p:AndroidSigningKeyPass=${{secrets.ANDROIDKEYSTOREPASSWORD}}" "/p:AndroidSigningKeyStore=DevedseCert.keystore" "/p:AndroidSigningStorePass=${{secrets.ANDROIDKEYSTOREPASSWORD}}" "DeveBlockStacker.Android\DeveBlockStacker.Android.csproj"
+        msbuild /t:SignAndroidPackage /p:Configuration=Release /p:AndroidPackageFormat=aab /p:AndroidKeyStore=true /p:AndroidSigningKeyAlias=DevedseCert /p:AndroidSigningKeyPass=${{secrets.ANDROIDKEYSTOREPASSWORD}} /p:AndroidSigningKeyStore=DevedseCert.keystore /p:AndroidSigningStorePass=${{secrets.ANDROIDKEYSTOREPASSWORD}} DeveBlockStacker.Android\DeveBlockStacker.Android.csproj
     - name: dotnet test
       run: dotnet test DeveBlockStacker.Core.Tests/DeveBlockStacker.Core.Tests.csproj -c Release --verbosity normal
-    - name: Package sources
-      run: |
-        7z a -t7z -m0=LZMA2 -mmt=on -mx9 -md=1536m -mfb=273 -ms=on -mqs=on -sccUTF-8 "./Scripts/Output/DeveBlockStacker.Android.7z" "DeveBlockStacker.Android\*" '-x!*.pdb'
-      shell: powershell
+    # - name: Package sources
+    #   run: |
+    #     7z a -t7z -m0=LZMA2 -mmt=on -mx9 -md=1536m -mfb=273 -ms=on -mqs=on -sccUTF-8 "./Scripts/Output/DeveBlockStacker.Android.7z" "DeveBlockStacker.Android\*" '-x!*.pdb'
+    #   shell: powershell
     - uses: actions/upload-artifact@v2
       with:
-        name: DeveBlockStackerAndroid7z
-        path: ./Scripts/Output/DeveBlockStacker.Android.7z
+        name: DeveBlockStacker_build_windows_Android_aab
+        path: ./DeveBlockStacker.Android/bin/AnyCPU/Release/deveblockstacker_android.deveblockstacker_android-Signed.aab
 
   build_macos_Android:
     needs: generate_version_number
@@ -157,9 +258,13 @@ jobs:
         nuget restore DeveBlockStacker.Android/DeveBlockStacker.Android.csproj
         nuget restore DeveBlockStacker.iOS/DeveBlockStacker.iOS.csproj      
     - name: Build Android
-      run: MSBuild /t:SignAndroidPackage /p:Configuration=Release /p:AndroidPackageFormat=apk /p:AndroidKeyStore=true /p:AndroidSigningKeyAlias=DevedseCert /p:AndroidSigningKeyPass=${{ secrets.ANDROIDKEYSTOREPASSWORD }} /p:AndroidSigningKeyStore=DevedseCert.keystore /p:AndroidSigningStorePass=${{ secrets.ANDROIDKEYSTOREPASSWORD }} ./DeveBlockStacker.Android/DeveBlockStacker.Android.csproj
+      run: MSBuild /t:SignAndroidPackage /p:Configuration=Release /p:AndroidPackageFormat=aab /p:AndroidKeyStore=true /p:AndroidSigningKeyAlias=DevedseCert /p:AndroidSigningKeyPass=${{ secrets.ANDROIDKEYSTOREPASSWORD }} /p:AndroidSigningKeyStore=DevedseCert.keystore /p:AndroidSigningStorePass=${{ secrets.ANDROIDKEYSTOREPASSWORD }} ./DeveBlockStacker.Android/DeveBlockStacker.Android.csproj
     - name: dotnet test
       run: dotnet test DeveBlockStacker.Core.Tests/DeveBlockStacker.Core.Tests.csproj -c Release --verbosity normal
+    - uses: actions/upload-artifact@v2
+      with:
+        name: DeveBlockStacker_build_macos_Android_aab
+        path: ./DeveBlockStacker.Android/bin/AnyCPU/Release/deveblockstacker_android.deveblockstacker_android-Signed.aab
 
   build_windows_WindowsUWP:
     needs: generate_version_number
@@ -192,108 +297,27 @@ jobs:
       shell: powershell
     - uses: actions/upload-artifact@v2
       with:
-        name: DeveBlockStackerWindowsUWP7z
+        name: DeveBlockStacker_build_windows_WindowsUWP_StorePackageThing
         path: ./Scripts/Output/DeveBlockStacker.WindowsUWP.7z
 
-  build_linux:
-    needs: generate_version_number
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: |
-          3.1.x
-          6.0.x
-    - name: dotnet restore
-      run: dotnet restore DeveBlockStacker.Core/DeveBlockStacker.Core.csproj
-    - name: dotnet build
-      run: dotnet build DeveBlockStacker.Core/DeveBlockStacker.Core.csproj -c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
-    - name: dotnet test
-      run: dotnet test DeveBlockStacker.Core.Tests/DeveBlockStacker.Core.Tests.csproj -c Release --verbosity normal
-
-  build_windows:
-    needs: generate_version_number
-    runs-on: windows-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET Core @ Latest
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 6.0.x     
-    - uses: actions/setup-java@v1
-      with:
-        java-version: '15' # The JDK version to make available on the path.
-        java-package: jdk # (jre, jdk, or jdk+fx) - defaults to jdk
-        architecture: x64 # (x64 or x86) - defaults to x64
-    - name: Install tools
-      run: |
-        dotnet tool install --global dotnet-sonarscanner
-        dotnet tool install --global dotnet-reportgenerator-globaltool
-    - name: dotnet restore
-      run: dotnet restore DeveBlockStacker.Core/DeveBlockStacker.Core.csproj
-    - name: SonarQube begin
-      run: dotnet-sonarscanner begin /k:"DeveBlockStacker" /o:"devedse-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login=${{secrets.SONARQUBETOKEN}} /d:sonar.cs.opencover.reportsPaths=".\DeveBlockStacker.Tests\TestResults\Coverage\coverage.opencover.xml" /d:sonar.coverage.exclusions="DeveBlockStacker.Tests/**/*.cs"
-    - name: dotnet build
-      run: dotnet build DeveBlockStacker.Core/DeveBlockStacker.Core.csproj -c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
-    - name: dotnet test
-      run: dotnet test DeveBlockStacker.Core.Tests/DeveBlockStacker.Core.Tests.csproj --verbosity normal -c Release /p:CollectCoverage=true /p:CoverletOutputFormat=\`"cobertura,opencover\`" /p:CoverletOutput=./TestResults/Coverage/
-    - name: SonarQube end
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: dotnet-sonarscanner end /d:sonar.login=${{secrets.SONARQUBETOKEN}}
-    - name: Run CodeCov #codecov -f ".\DeveBlockStacker.Tests\TestResults\Coverage\coverage.opencover.xml"
-      uses: codecov/codecov-action@v2
-      with:
-        #token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
-        files: .\DeveBlockStacker.Tests\TestResults\Coverage\coverage.opencover.xml # optional
-        #flags: unittests # optional
-        #name: codecov-umbrella # optional
-        #fail_ci_if_error: true # optional (default = false)
-        verbose: true # optional (default = false)
-
-    - name: Package sources
-      run: |
-        7z a -t7z -m0=LZMA2 -mmt=on -mx9 -md=1536m -mfb=273 -ms=on -mqs=on -sccUTF-8 "./Scripts/Output/DeveBlockStacker.Core.7z" "DeveBlockStacker.Core\bin\Release\netstandard2.0\*" '-x!*.pdb'
-      shell: powershell
-
-    - uses: actions/upload-artifact@v2
-      with:
-        name: DeveBlockStackerCore7z
-        path: ./Scripts/Output/DeveBlockStacker.Core.7z
-
-  release_github:
-    needs: [generate_version_number, intellicode, build_windows, build_linux]
+  release_windows_Android:
+    needs: [generate_version_number, build_windows_Android]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
     steps:
-    - name: Download all artifacts
+    - name: Download artifacts
       uses: actions/download-artifact@v2
       with:
-        path: ./artifacts/
-
-    - name: Display structure of downloaded files
-      run: |
-        cd ./artifacts/
-        ls -R
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        path: ./artifacts/DeveBlockStacker_Build_macos_Android_aab/
+        name: DeveBlockStacker_Build_macos_Android_aab
+    - name: Upload to Google Play
+      uses: r0adkll/upload-google-play@v1
       with:
-        tag_name: 1.0.${{needs.generate_version_number.outputs.build_number}}
-        release_name: 1.0.${{needs.generate_version_number.outputs.build_number}}
-        body: |
-          ${{ github.event.head_commit.message }}
-        draft: false
-        prerelease: false
-    - name: Release
-      uses: softprops/action-gh-release@v1
-      with:
-        tag_name: 1.0.${{needs.generate_version_number.outputs.build_number}}
-        files: |
-          ./artifacts/DeveBlockStackerCore7z/DeveBlockStacker.Core.7z
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        serviceAccountJson: ${{ secrets.ANDROIDGOOGLEPLAYSTORESERVICEACCOUNTJSON }}
+        packageName: deveblockstacker_android.deveblockstacker_android
+        releaseFile: ./artifacts/DeveBlockStacker_Build_macos_Android_aab/deveblockstacker_android.deveblockstacker_android-Signed.aab
+        track: production
+        #inAppUpdatePriority: 2
+        #userFraction: 0.33
+        #whatsNewDirectory: distribution/whatsnew
+        #mappingFile: app/build/outputs/mapping/release/mapping.txt
