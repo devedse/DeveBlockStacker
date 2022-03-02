@@ -77,7 +77,7 @@ jobs:
 
   build_linux_WindowsDX:
     needs: generate_version_number
-    runs-on: linux-latest
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET Core
@@ -146,7 +146,7 @@ jobs:
 
   build_linux_Android:
     needs: generate_version_number
-    runs-on: linux-latest
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET Core
@@ -199,7 +199,7 @@ jobs:
 
   build_linux:
     needs: generate_version_number
-    runs-on: linux-latest
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET Core
