@@ -153,17 +153,10 @@ jobs:
       #     print-file: true
 
       - name: Restore NuGet packages
-        run: nuget restore DeveBlockStacker.Core/DeveBlockStacker.Core.csproj
-      - name: Restore NuGet packages
-        run: nuget restore DeveBlockStacker.Android/DeveBlockStacker.Android.csproj
-      - name: Restore NuGet packages
-        run: nuget restore DeveBlockStacker.iOS/DeveBlockStacker.iOS.csproj
-
-      - name: Restore NuGet packages
-        run: nuget restore
-
-      - name: Restore NuGet packages
-        run: nuget restore DeveBlockStacker.sln
+        run: |
+          nuget restore DeveBlockStacker.Core/DeveBlockStacker.Core.csproj
+          nuget restore DeveBlockStacker.Android/DeveBlockStacker.Android.csproj
+          nuget restore DeveBlockStacker.iOS/DeveBlockStacker.iOS.csproj
         
       - name: Build Android
         run: MSBuild /t:SignAndroidPackage /p:Configuration=Release /p:AndroidPackageFormat=apk /p:AndroidKeyStore=true /p:AndroidSigningKeyAlias=DevedseCert /p:AndroidSigningKeyPass=${{ secrets.ANDROIDKEYSTOREPASSWORD }} /p:AndroidSigningKeyStore=DevedseCert.keystore /p:AndroidSigningStorePass=${{ secrets.ANDROIDKEYSTOREPASSWORD }} ./DeveBlockStacker.Android/DeveBlockStacker.Android.csproj
