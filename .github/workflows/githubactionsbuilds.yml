@@ -317,6 +317,7 @@ jobs:
         packageName: deveblockstacker_android.deveblockstacker_android
         releaseFiles: ./artifacts/DeveBlockStacker_build_windows_Android_aab/deveblockstacker_android.deveblockstacker_android-Signed.aab
         track: production
+        status: draft
         #inAppUpdatePriority: 2
         #userFraction: 0.33
         #whatsNewDirectory: distribution/whatsnew
