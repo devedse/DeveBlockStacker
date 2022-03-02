@@ -315,7 +315,7 @@ jobs:
       with:
         serviceAccountJson: ${{ secrets.ANDROIDGOOGLEPLAYSTORESERVICEACCOUNTJSON }}
         packageName: deveblockstacker_android.deveblockstacker_android
-        releaseFile: ./artifacts/DeveBlockStacker_Build_macos_Android_aab/deveblockstacker_android.deveblockstacker_android-Signed.aab
+        releaseFiles: ./artifacts/DeveBlockStacker_Build_macos_Android_aab/deveblockstacker_android.deveblockstacker_android-Signed.aab
         track: production
         #inAppUpdatePriority: 2
         #userFraction: 0.33
