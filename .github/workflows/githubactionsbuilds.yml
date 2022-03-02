@@ -117,6 +117,37 @@ jobs:
     - name: dotnet test
       run: dotnet test DeveBlockStacker.Core.Tests/DeveBlockStacker.Core.Tests.csproj -c Release --verbosity normal
 
+  build_macos_Android:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Android signing
+        run: (echo ${{ secrets.KEYSTORE }} | base64 --decode) > ./GitHubActions.Android/keystore.jks
+        
+      - name: Set iOS version
+        run: |
+          /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString ${{ secrets.APP_VERSION }}" ./GitHubActions.iOS/Info.plist
+          /usr/libexec/PlistBuddy -c "Set :CFBundleVersion ${{ github.run_number }}" ./GitHubActions.iOS/Info.plist
+      # - name: Set Android version
+      #   uses: damienaicheh/update-android-version-manifest-action@v1.0.0
+      #   with:
+      #     android-manifest-path: ./DeveBlockStacker.Android/Properties/AndroidManifest.xml
+      #     version-name: 1.0.${{needs.generate_version_number.outputs.build_number}}
+      #     version-code: ${{needs.generate_version_number.outputs.build_number}}
+      #     print-file: true
+
+      - name: Restore NuGet packages
+        run: nuget restore
+        
+      - name: Build Android
+        run: MSBuild /t:SignAndroidPackage /p:Configuration=Release /p:AndroidPackageFormat=apk /p:AndroidKeyStore=true /p:AndroidSigningKeyAlias=DevedseCert /p:AndroidSigningKeyPass=${{ secrets.ANDROIDKEYSTOREPASSWORD }} /p:AndroidSigningKeyStore=DevedseCert.keystore /p:AndroidSigningStorePass=${{ secrets.ANDROIDKEYSTOREPASSWORD }} ./DeveBlockStacker.Android/DeveBlockStacker.Android.csproj
+    
+      - name: Build iOS
+        run: MSBuild /t:Build /p:Configuration=Release /p:Platform=iPhone /p:BuildIpa=true ./GitHubActions.iOS/GitHubActions.iOS.csproj    
+
   build_linux:
     needs: generate_version_number
     runs-on: ubuntu-latest
