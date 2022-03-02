@@ -135,6 +135,14 @@ jobs:
         msbuild "/t:SignAndroidPackage" "/p:Configuration=Release" "/p:AndroidKeyStore=true" "/p:AndroidSigningKeyAlias=DevedseCert" "/p:AndroidSigningKeyPass=${{secrets.ANDROIDKEYSTOREPASSWORD}}" "/p:AndroidSigningKeyStore=DevedseCert.keystore" "/p:AndroidSigningStorePass=${{secrets.ANDROIDKEYSTOREPASSWORD}}" "DeveBlockStacker.Android\DeveBlockStacker.Android.csproj"
     - name: dotnet test
       run: dotnet test DeveBlockStacker.Core.Tests/DeveBlockStacker.Core.Tests.csproj -c Release --verbosity normal
+    - name: Package sources
+      run: |
+        7z a -t7z -m0=LZMA2 -mmt=on -mx9 -md=1536m -mfb=273 -ms=on -mqs=on -sccUTF-8 "./Scripts/Output/DeveBlockStacker.Android.7z" "DeveBlockStacker.Android\*" '-x!*.pdb'
+      shell: powershell
+    - uses: actions/upload-artifact@v2
+      with:
+        name: DeveBlockStackerAndroid7z
+        path: ./Scripts/Output/DeveBlockStacker.Android.7z
 
   build_linux_Android:
     needs: generate_version_number
