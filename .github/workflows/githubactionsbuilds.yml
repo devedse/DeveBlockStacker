@@ -228,7 +228,7 @@ jobs:
     - name: dotnet restore
       run: dotnet restore DeveBlockStacker.Core/DeveBlockStacker.Core.csproj
     - name: SonarQube begin
-      run: dotnet-sonarscanner begin /k:"DeveBlockStacker" /o:"devedse-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login=${{secrets.SONARQUBETOKEN}} /d:sonar.cs.opencover.reportsPaths=".\DeveBlockStacker.Tests\TestResults\Coverage\coverage.opencover.xml" /d:sonar.coverage.exclusions="DeveBlockStacker.ConsoleApp/**/*.cs,DeveBlockStacker.Tests/**/*.cs"
+      run: dotnet-sonarscanner begin /k:"DeveBlockStacker" /o:"devedse-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login=${{secrets.SONARQUBETOKEN}} /d:sonar.cs.opencover.reportsPaths=".\DeveBlockStacker.Tests\TestResults\Coverage\coverage.opencover.xml" /d:sonar.coverage.exclusions="DeveBlockStacker.Tests/**/*.cs"
     - name: dotnet build
       run: dotnet build DeveBlockStacker.Core/DeveBlockStacker.Core.csproj -c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
     - name: dotnet test
