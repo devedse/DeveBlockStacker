@@ -308,14 +308,14 @@ jobs:
     - name: Download artifacts
       uses: actions/download-artifact@v2
       with:
-        path: ./artifacts/DeveBlockStacker_Build_macos_Android_aab/
-        name: DeveBlockStacker_Build_macos_Android_aab
+        path: ./artifacts/DeveBlockStacker_build_windows_Android_aab/
+        name: DeveBlockStacker_build_windows_Android_aab
     - name: Upload to Google Play
       uses: r0adkll/upload-google-play@v1
       with:
         serviceAccountJson: ${{ secrets.ANDROIDGOOGLEPLAYSTORESERVICEACCOUNTJSON }}
         packageName: deveblockstacker_android.deveblockstacker_android
-        releaseFiles: ./artifacts/DeveBlockStacker_Build_macos_Android_aab/deveblockstacker_android.deveblockstacker_android-Signed.aab
+        releaseFiles: ./artifacts/DeveBlockStacker_build_windows_Android_aab/deveblockstacker_android.deveblockstacker_android-Signed.aab
         track: production
         #inAppUpdatePriority: 2
         #userFraction: 0.33
