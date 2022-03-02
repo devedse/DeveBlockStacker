@@ -311,13 +311,13 @@ jobs:
         path: ./artifacts/DeveBlockStacker_build_windows_Android_aab/
         name: DeveBlockStacker_build_windows_Android_aab
     - name: Upload to Google Play
-      uses: r0adkll/upload-google-play@v1
+      uses: r0adkll/upload-google-play@v1.0.15
       with:
         serviceAccountJsonPlainText: ${{ secrets.ANDROIDGOOGLEPLAYSTORESERVICEACCOUNTJSON }}
         packageName: deveblockstacker_android.deveblockstacker_android
         releaseFiles: ./artifacts/DeveBlockStacker_build_windows_Android_aab/deveblockstacker_android.deveblockstacker_android-Signed.aab
         track: production
-        status: draft
+        status: completed
         #inAppUpdatePriority: 2
         #userFraction: 0.33
         #whatsNewDirectory: distribution/whatsnew
