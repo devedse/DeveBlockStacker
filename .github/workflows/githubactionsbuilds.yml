@@ -124,8 +124,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Setup Android signing
-        run: (echo ${{ secrets.KEYSTORE }} | base64 --decode) > ./GitHubActions.Android/keystore.jks
+      # - name: Setup Android signing
+      #   run: (echo ${{ secrets.KEYSTORE }} | base64 --decode) > ./GitHubActions.Android/keystore.jks
         
       - name: Set iOS version
         run: |
