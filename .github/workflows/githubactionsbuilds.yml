@@ -118,6 +118,7 @@ jobs:
       run: dotnet test DeveBlockStacker.Core.Tests/DeveBlockStacker.Core.Tests.csproj -c Release --verbosity normal
 
   build_macos_Android:
+    needs: generate_version_number
     runs-on: macos-latest
 
     steps:
@@ -129,8 +130,8 @@ jobs:
         
       - name: Set iOS version
         run: |
-          /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString ${{ secrets.APP_VERSION }}" ./GitHubActions.iOS/Info.plist
-          /usr/libexec/PlistBuddy -c "Set :CFBundleVersion ${{ github.run_number }}" ./GitHubActions.iOS/Info.plist
+          /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString 1.0.${{needs.generate_version_number.outputs.build_number}}" ./GitHubActions.iOS/Info.plist
+          /usr/libexec/PlistBuddy -c "Set :CFBundleVersion ${{needs.generate_version_number.outputs.build_number}}" ./GitHubActions.iOS/Info.plist
       # - name: Set Android version
       #   uses: damienaicheh/update-android-version-manifest-action@v1.0.0
       #   with:
