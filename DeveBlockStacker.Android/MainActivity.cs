@@ -9,7 +9,6 @@ namespace DeveBlockStacker.Android
 {
     [Activity(Label = "DeveBlockStacker"
         , MainLauncher = true
-        , Icon = "@drawable/icon"
         , Theme = "@style/Theme.Splash"
         , AlwaysRetainTaskState = true
         , LaunchMode = LaunchMode.SingleInstance
