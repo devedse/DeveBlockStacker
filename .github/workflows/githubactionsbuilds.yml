@@ -265,6 +265,46 @@ jobs:
       with:
         name: DeveBlockStacker_build_macos_Android_aab
         path: ./DeveBlockStacker.Android/bin/AnyCPU/Release/deveblockstacker_android.deveblockstacker_android-Signed.aab
+  
+  build_windows_AndroidForFireStick:
+    needs: generate_version_number
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: |
+          3.1.x
+          6.0.x
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1.1
+    - name: Set Android version
+      uses: damienaicheh/update-android-version-manifest-action@v1.0.0
+      with:
+        android-manifest-path: ./DeveBlockStacker.Android/Properties/AndroidManifest.xml
+        version-name: 1.0.${{needs.generate_version_number.outputs.build_number}}
+        version-code: ${{needs.generate_version_number.outputs.build_number}}
+        print-file: true
+    - name: Restore NuGet packages
+      run: |
+        nuget restore DeveBlockStacker.Core/DeveBlockStacker.Core.csproj
+        nuget restore DeveBlockStacker.Android/DeveBlockStacker.Android.csproj
+        nuget restore DeveBlockStacker.iOS/DeveBlockStacker.iOS.csproj
+    - name: Build Android
+      run: |
+        #dotnet build DeveBlockStacker.Android/DeveBlockStacker.Android.csproj -c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
+        msbuild /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}} /t:SignAndroidPackage /p:Configuration=Release /p:AndroidPackageFormat=apk /p:AndroidKeyStore=true /p:AndroidSigningKeyAlias=DevedseCert /p:AndroidSigningKeyPass=${{secrets.ANDROIDKEYSTOREPASSWORD}} /p:AndroidSigningKeyStore=DevedseCert.keystore /p:AndroidSigningStorePass=${{secrets.ANDROIDKEYSTOREPASSWORD}} DeveBlockStacker.Android\DeveBlockStacker.Android.csproj
+    - name: dotnet test
+      run: dotnet test DeveBlockStacker.Core.Tests/DeveBlockStacker.Core.Tests.csproj -c Release --verbosity normal
+    # - name: Package sources
+    #   run: |
+    #     7z a -t7z -m0=LZMA2 -mmt=on -mx9 -md=1536m -mfb=273 -ms=on -mqs=on -sccUTF-8 "./Scripts/Output/DeveBlockStacker.Android.7z" "DeveBlockStacker.Android\*" '-x!*.pdb'
+    #   shell: powershell
+    - uses: actions/upload-artifact@v2
+      with:
+        name: DeveBlockStacker_build_windows_AndroidForFireStick_apk
+        path: ./DeveBlockStacker.Android/bin/AnyCPU/Release/deveblockstacker_android.deveblockstacker_android-Signed.apk
 
   build_windows_WindowsUWP:
     needs: generate_version_number
@@ -288,7 +328,7 @@ jobs:
         nuget restore DeveBlockStacker.WindowsUWP/DeveBlockStacker.WindowsUWP.csproj
     - name: Build WindowsUWP
       run: |
-        msbuild /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}} "/p:Configuration=Release" /p:Platform="x86" /p:AppxBundlePlatforms="x86|x64|ARM" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload "DeveBlockStacker.WindowsUWP\DeveBlockStacker.WindowsUWP.csproj"
+        msbuild /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}} "/p:Configuration=Release" /p:Platform="x86" /p:AppxBundlePlatforms="x86|x64|ARM" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:PackageCertificateKeyFile=DeveBlockStacker.WindowsUWP\DeveBlockStacker.WindowsUWP_TemporaryKey.pfx /p:PackageCertificatePassword="${{ secrets.WINDOWSUWPCERTIFICATEPASSWORD }}" "DeveBlockStacker.WindowsUWP\DeveBlockStacker.WindowsUWP.csproj"
     - name: dotnet test
       run: dotnet test DeveBlockStacker.Core.Tests/DeveBlockStacker.Core.Tests.csproj -c Release --verbosity normal
     - name: Package sources

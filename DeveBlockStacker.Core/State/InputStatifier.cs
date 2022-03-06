@@ -48,5 +48,10 @@ namespace DeveBlockStacker.Core.State
         {
             return CurrentGamePadState.IsButtonDown(button) && PreviousGamePadState.IsButtonUp(button);
         }
+
+        public bool UserDoesAction()
+        {
+            return IsTouchTapped() || KeyPressed(Keys.Space) || KeyPressed(Keys.Enter) || GamepadButtonPressed(Buttons.A);
+        }
     }
 }

@@ -86,7 +86,7 @@ namespace DeveBlockStacker.Core
         protected override void Update(GameTime gameTime)
         {
             _inputStatifier.BeforeUpdate();
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (_inputStatifier.CurrentGamePadState.Buttons.Back == ButtonState.Pressed || _inputStatifier.CurrentKeyboardState.IsKeyDown(Keys.Escape))
             {
                 Exit();
             }

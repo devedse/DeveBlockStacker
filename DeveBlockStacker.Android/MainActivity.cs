@@ -18,8 +18,11 @@ namespace DeveBlockStacker.Android
     {
         private void FixUiOptions()
         {
-            Window.InsetsController.Hide(WindowInsets.Type.StatusBars());
-            Window.InsetsController.Hide(WindowInsets.Type.SystemBars());
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.R)
+            {
+                Window.InsetsController.Hide(WindowInsets.Type.StatusBars());
+                Window.InsetsController.Hide(WindowInsets.Type.SystemBars());
+            }
         }
 
         protected override void OnCreate(Bundle bundle)
