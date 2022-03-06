@@ -333,7 +333,7 @@ jobs:
       run: dotnet test DeveBlockStacker.Core.Tests/DeveBlockStacker.Core.Tests.csproj -c Release --verbosity normal
     - name: Package sources
       run: |
-        7z a -t7z -m0=LZMA2 -mmt=on -mx9 -md=1536m -mfb=273 -ms=on -mqs=on -sccUTF-8 "./Scripts/Output/DeveBlockStacker.WindowsUWP.7z" "DeveBlockStacker.WindowsUWP\*" '-x!*.pdb'
+        7z a -t7z -m0=LZMA2 -mmt=on -mx9 -md=512m -mfb=273 -ms=on -mqs=on -sccUTF-8 "./Scripts/Output/DeveBlockStacker.WindowsUWP.7z" "DeveBlockStacker.WindowsUWP\*" '-x!*.pdb'
       shell: powershell
     - uses: actions/upload-artifact@v2
       with:
