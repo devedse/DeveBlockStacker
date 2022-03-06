@@ -1,4 +1,32 @@
-﻿using System;
+﻿#if NETFRAMEWORK
+using System.Threading.Tasks;
+
+namespace DeveBlockStacker.Core.State
+{
+    public static class SaveGameLoaderSaver
+    {
+        public const string SaveGameFileName = "deveblockstacker.sav";
+        public static string TotalSaveGameFileName
+        {
+            get
+            {
+                return "empty";
+            }
+        }
+
+        public static async Task<SaveGame> LoadSaveGame()
+        {
+            return null;
+        }
+
+        public static async Task SaveSaveGame(SaveGame saveGame)
+        {
+
+        }
+    }
+}
+#else
+using System;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -55,3 +83,4 @@ namespace DeveBlockStacker.Core.State
         }
     }
 }
+#endif

@@ -13,6 +13,34 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin SecularOne20.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Color
+/build:SecularOne20.spritefont
+
+#begin SecularOne20_Compressed.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:SecularOne20_Compressed.spritefont
+
+#begin SecularOne72.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Color
+/build:SecularOne72.spritefont
+
+#begin SecularOne72_Compressed.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:SecularOne72_Compressed.spritefont
+
 #begin Square.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -24,18 +52,4 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Square.png
-
-#begin SecularOne20.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:SecularOne20.spritefont
-
-#begin SecularOne72.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:SecularOne72.spritefont
 

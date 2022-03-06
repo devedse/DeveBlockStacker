@@ -16,7 +16,11 @@ namespace DeveBlockStacker.Core.GameState
         private readonly string helloString = $"Hello{n}Welcome to the best game EU!{n}My friend says this game is 5 out of 7!{n}{n}I stopped playing WoW for this game{n}#Gamermagazine2019{n}{n}Haven't been outside for 2 years since the release{n}#TheRealTrump{n}{n}I kinda miss my dog :'({n}#Keanu{n}{n}Made by Devedse";
         private Vector2 measuredHelloString;
 
+#if NETFRAMEWORK
+        private readonly string versionString = $"Version: _web_";
+#else
         private readonly string versionString = $"Version: {typeof(NewGameState).Assembly.GetName().Version}";
+#endif
         private Vector2 measuredVersionString;
 
         public NewGameState()
