@@ -15,9 +15,9 @@ using Microsoft.JSInterop;
 using Microsoft.Xna.Framework;
 using tainicom.Wasm.Canvas;
 using tainicom.Wasm.Canvas.WebGL;
-using DeveBlockStacker.Core;
+using DeveBlockStacker.Blazor;
 
-namespace DeveBlockStacker.Pages
+namespace DeveBlockStacker.Blazor.Pages
 {
     public partial class Index
     {
@@ -39,7 +39,7 @@ namespace DeveBlockStacker.Pages
             // init game
             if (_game == null)
             {
-                _game = new TheGame();
+                _game = new Game1();
                 _game.Run();
             }
 
