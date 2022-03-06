@@ -32,6 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="devedse.Xna.Framework.Blazor" Version="3.8.10000" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.0" PrivateAssets="all" />
 	  <!-- <PackageReference Include="tainicom.Wasm.Canvas" Version="3.2.10" />
@@ -41,7 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\MonoGame\MonoGame.Framework\MonoGame.Framework.Blazor.csproj" />
+    <ProjectReference Include="..\DeveBlockStacker.Core\DeveBlockStacker.Core.csproj" />
   </ItemGroup>
 
 </Project>

@@ -16,6 +16,7 @@ using Microsoft.Xna.Framework;
 using tainicom.Wasm.Canvas;
 using tainicom.Wasm.Canvas.WebGL;
 using DeveBlockStacker.Blazor;
+using DeveBlockStacker.Core;
 
 namespace DeveBlockStacker.Blazor.Pages
 {
@@ -39,7 +40,7 @@ namespace DeveBlockStacker.Blazor.Pages
             // init game
             if (_game == null)
             {
-                _game = new Game1();
+                _game = new TheGame();
                 _game.Run();
             }
 
