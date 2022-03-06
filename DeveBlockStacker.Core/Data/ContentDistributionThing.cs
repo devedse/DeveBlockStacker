@@ -23,7 +23,7 @@ namespace DeveBlockStacker.Core.Data
         public void LoadContent(ContentManager content)
         {
             SquareImage = content.Load<Texture2D>("Square");
-#if NETFRAMEWORK
+#if NETFRAMEWORK || BLAZOR
             SecularOne20 = content.Load<SpriteFont>("SecularOne20");
             SecularOne72 = content.Load<SpriteFont>("SecularOne72");
 #else

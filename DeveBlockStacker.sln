@@ -31,6 +31,7 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		DeveBlockStacker.Core.Shared\DeveBlockStacker.Core.Shared.projitems*{e08b1c3a-d674-4859-889c-54660bd51731}*SharedItemsImports = 5
 		DeveBlockStacker.Core.Shared\DeveBlockStacker.Core.Shared.projitems*{eb1b33bf-3f31-40b3-8643-83f4285cabd2}*SharedItemsImports = 13
+		DeveBlockStacker.Core.Shared\DeveBlockStacker.Core.Shared.projitems*{f788d935-7845-41bc-9820-9ff7d1feb71b}*SharedItemsImports = 5
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU

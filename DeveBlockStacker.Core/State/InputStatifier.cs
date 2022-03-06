@@ -20,8 +20,10 @@ namespace DeveBlockStacker.Core.State
             PreviousKeyboardState = CurrentKeyboardState;
             CurrentKeyboardState = Keyboard.GetState();
 
+#if !BLAZOR
             PreviousGamePadState = CurrentGamePadState;
             CurrentGamePadState = GamePad.GetState(PlayerIndex.One);
+#endif
 
             PreviousTouchState = CurrentTouchState;
             CurrentTouchState = TouchPanel.GetState();
