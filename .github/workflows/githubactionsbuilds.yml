@@ -328,7 +328,7 @@ jobs:
         nuget restore DeveBlockStacker.WindowsUWP/DeveBlockStacker.WindowsUWP.csproj
     - name: Build WindowsUWP
       run: |
-        msbuild /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}} "/p:Configuration=Release" /p:Platform="x86" /p:AppxBundlePlatforms="x86|x64|ARM" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:PackageCertificateKeyFile=DeveBlockStacker.WindowsUWP_TemporaryKey.pfx /p:PackageCertificatePassword="${{ secrets.WINDOWSUWPCERTIFICATEPASSWORD }}" "DeveBlockStacker.WindowsUWP\DeveBlockStacker.WindowsUWP.csproj"
+        msbuild /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}} "/p:Configuration=Release" /p:Platform="x86" /p:AppxBundlePlatforms="x86|x64|ARM" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload "DeveBlockStacker.WindowsUWP\DeveBlockStacker.WindowsUWP.csproj"
     - name: dotnet test
       run: dotnet test DeveBlockStacker.Core.Tests/DeveBlockStacker.Core.Tests.csproj -c Release --verbosity normal
     - name: Package sources
