@@ -1,11 +1,10 @@
-﻿using DeveBlockStacker.Core.State;
-using DeveBlockStacker.Core.Data;
+﻿using DeveBlockStacker.Core.Data;
 using DeveBlockStacker.Core.GameState;
+using DeveBlockStacker.Core.HelperObjects;
+using DeveBlockStacker.Core.State;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using DeveBlockStacker.Core.HelperObjects;
-using System;
 
 namespace DeveBlockStacker.Core
 {
@@ -18,17 +17,36 @@ namespace DeveBlockStacker.Core
         private IGameState _currentState;
         private readonly InputStatifier _inputStatifier;
         private readonly Platform _platform;
-        private IntSize _desiredScreenSize;
+
+        private IntSize _desiredScreenSize = null;
+        private IContentManagerExtension _contentManagerExtension = null;
 
         public TheGame() : this(Platform.Desktop)
         {
 
         }
 
-        public TheGame(Platform platform) : base()
+        public TheGame(Platform platform) : this(null, platform)
         {
+
+        }
+
+        public TheGame(IntSize desiredScreenSize, Platform platform) : this(null, desiredScreenSize, platform)
+        {
+        }
+
+        public TheGame(IContentManagerExtension contentManagerExtension, IntSize desiredScreenSize, Platform platform) : base()
+        {
+            _contentManagerExtension = contentManagerExtension;
+            _desiredScreenSize = desiredScreenSize;
+            _platform = platform;
+
             _graphics = new GraphicsDeviceManager(this);
+
+            //This is required for Blazor since it loads assets in a custom way
+            Content = new ExtendibleContentManager(this.Services, _contentManagerExtension);
             Content.RootDirectory = "Content";
+
             IsMouseVisible = true;
 
             _inputStatifier = new InputStatifier();
@@ -38,13 +56,9 @@ namespace DeveBlockStacker.Core
             _platform = platform;
         }
 
-        public TheGame(IntSize desiredScreenSize, Platform platform) : this(platform)
-        {
-            _desiredScreenSize = desiredScreenSize;
-        }
-
         protected override void Initialize()
         {
+#if !BLAZOR
             if (_desiredScreenSize != null)
             {
                 _graphics.PreferredBackBufferWidth = _desiredScreenSize.Width;
@@ -73,6 +87,7 @@ namespace DeveBlockStacker.Core
 
             _graphics.SupportedOrientations = DisplayOrientation.Portrait | DisplayOrientation.PortraitDown;
             _graphics.ApplyChanges();
+#endif
             base.Initialize();
         }
 

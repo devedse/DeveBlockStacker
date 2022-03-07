@@ -12,7 +12,9 @@
     <Compile Include="..\DeveBlockStacker.Core\Blocketje.cs" Link="Blocketje.cs" />
     <Compile Include="..\DeveBlockStacker.Core\TheGame.cs" Link="TheGame.cs" />
     <Compile Include="..\DeveBlockStacker.Core\Data\ContentDistributionThing.cs" Link="Data\ContentDistributionThing.cs" />
+    <Compile Include="..\DeveBlockStacker.Core\Data\ExtendibleContentManager.cs" Link="Data\ExtendibleContentManager.cs" />
     <Compile Include="..\DeveBlockStacker.Core\Data\GameData.cs" Link="Data\GameData.cs" />
+    <Compile Include="..\DeveBlockStacker.Core\Data\IContentManagerExtension.cs" Link="Data\IContentManagerExtension.cs" />
     <Compile Include="..\DeveBlockStacker.Core\Drawwers\NormalGridDrawwer.cs" Link="Drawwers\NormalGridDrawwer.cs" />
     <Compile Include="..\DeveBlockStacker.Core\Drawwers\TextContainer.cs" Link="Drawwers\TextContainer.cs" />
     <Compile Include="..\DeveBlockStacker.Core\GameState\DelayState.cs" Link="GameState\DelayState.cs" />
