@@ -5,6 +5,7 @@
 
 FROM nginx:stable-alpine AS base
 COPY ./DeveBlockStacker.Blazor/nginxconfig/nginx.conf /etc/nginx/nginx.conf
+#FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
@@ -26,3 +27,8 @@ FROM base AS final
 WORKDIR /usr/share/nginx/html
 COPY --from=publish /app/publish/wwwroot .
 CMD ["nginx", "-g", "daemon off;"]
+#FROM base AS final
+#WORKDIR /app
+#COPY --from=publish /root/.nuget/packages/microsoft.aspnetcore.components.webassembly.devserver/6.0.2/tools .
+#COPY --from=publish /app/publish .
+#ENTRYPOINT ["dotnet", "blazor-devserver.dll", "--applicationpath", "DeveBlockStacker.Blazor.dll"]

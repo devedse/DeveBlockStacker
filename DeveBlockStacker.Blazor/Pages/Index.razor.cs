@@ -3,6 +3,7 @@ using DeveBlockStacker.Core.HelperObjects;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 using Microsoft.Xna.Framework;
+using System.Reflection;
 
 namespace DeveBlockStacker.Blazor.Pages
 {
@@ -26,6 +27,12 @@ namespace DeveBlockStacker.Blazor.Pages
             // init game
             if (_game == null)
             {
+                //TODO: Remove this fix once the MonoGame Blazor library has fixed it's _isRunningOnNetCore detection
+                var field = typeof(Microsoft.Xna.Framework.Content.ContentTypeReaderManager).GetField("_isRunningOnNetCore",
+                    BindingFlags.Static |
+                    BindingFlags.NonPublic);
+                field.SetValue(null, true);
+
                 _game = new TheGame(new CustomEmbeddedResourceLoader(), new IntSize(400, 800), Platform.Desktop);
                 _game.Run();
             }
