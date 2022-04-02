@@ -432,7 +432,7 @@ jobs:
 
   release_linux_Amazon:
     needs: [generate_version_number, build_windows_AndroidForFireStick]
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     if: github.ref == 'refs/heads/master'
     steps:
     - uses: actions/checkout@v2
