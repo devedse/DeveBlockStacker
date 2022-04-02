@@ -147,7 +147,12 @@ if ($replaceapk -eq $true) {
         $outje = Test-Path -Path $apkFile -PathType Leaf
         Write-Host "File exists: $outje"
 
+        Write-Host "apkfile"
         Write-Host ($apkFile | Get-Member | Format-Table | Out-String)
+        Write-Host "header2"
+        Write-Host ($header2 | Out-String)
+        Write-Host "result_apk"
+        Write-Host ($result_apk.Headers["ETag"] | Get-Member | Format-Table | Out-String)
 
         $status = Invoke-RestMethod -Uri $testurl -Method 'Put' -Headers $header2 -InFile $apkFile
         
