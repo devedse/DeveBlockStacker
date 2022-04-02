@@ -444,7 +444,7 @@ jobs:
     - name: Build
       shell: pwsh
       run: |
-        ./Scripts/SubmitToAmazonAppStore.ps1 -clientid ${{ secrets.AMAZONSTORE_CLIENTID }} -clientsecret ${{ secrets.AMAZONSTORE_CLIENTSECRET }}
+        ./Scripts/SubmitToAmazonAppStore.ps1 -clientid ${{ secrets.AMAZONSTORE_CLIENTID }} -clientsecret ${{ secrets.AMAZONSTORE_CLIENTSECRET }} -commitdescription ${{ github.event.head_commit.message }}
 
   release_linux_MicrosoftStore:
     needs: [generate_version_number, build_windows_WindowsUWP]

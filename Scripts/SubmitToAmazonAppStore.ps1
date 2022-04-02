@@ -2,7 +2,9 @@ param (
     [Parameter(Mandatory=$true)]
     [string]$clientid,
     [Parameter(Mandatory=$true)]
-    [string]$clientsecret
+    [string]$clientsecret,
+    [Parameter(Mandatory=$true)]
+    [string]$commitdescription
 )
 
 $baseurl = "https://developer.amazon.com/api/appstore"
@@ -167,7 +169,7 @@ if ($replaceapk -eq $true) {
     $result_listings = Invoke-WebRequest "$baseurl/$apiversion/applications/$appid/edits/$($newEdit.id)/listings/en-US" -Method 'Get' -Headers $header -UseBasicParsing
     $listings = $result_listings.Content | ConvertFrom-Json
 
-    $listings.recentChanges = "Test123"
+    $listings.recentChanges = $commitdescription
 
     $header2 = @{
         "Authorization"="Bearer $token"
