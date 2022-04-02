@@ -407,7 +407,7 @@ jobs:
         name: DeveBlockStacker_build_windows_WindowsUWP_msixbundle
         path: ./DeveBlockStacker.WindowsUWP/bin/WindowsUniversal/x86/Release/Upload/DeveBlockStacker.WindowsUWP_1.0.${{needs.generate_version_number.outputs.build_number}}.0/DeveBlockStacker.WindowsUWP_1.0.${{needs.generate_version_number.outputs.build_number}}.0_x86_x64_ARM.msixbundle
 
-  release_windows_Android:
+  release_linux_Android:
     needs: [generate_version_number, build_windows_Android]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
@@ -430,7 +430,22 @@ jobs:
         #whatsNewDirectory: distribution/whatsnew
         #mappingFile: app/build/outputs/mapping/release/mapping.txt
 
-  release_windows_MicrosoftStore:
+  release_linux_Amazon:
+    needs: [generate_version_number, build_windows_AndroidForFireStick]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+    - name: Download artifacts
+      uses: actions/download-artifact@v2
+      with:
+        path: ./Scripts/apks/
+        name: DeveBlockStacker_build_windows_AndroidForFireStick_apk
+    - name: Build
+      shell: pwsh
+      run: |
+        ./Scripts/SubmitToAmazonAppStore.ps1 -clientid ${{ secrets.AMAZONSTORE_CLIENTID }} -clientsecret ${{ secrets.AMAZONSTORE_CLIENTSECRET }}
+
+  release_linux_MicrosoftStore:
     needs: [generate_version_number, build_windows_WindowsUWP]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
