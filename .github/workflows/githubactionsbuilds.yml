@@ -440,8 +440,8 @@ jobs:
       with:
         path: ./artifacts/DeveBlockStacker_build_windows_WindowsUWP_msixbundle/
         name: DeveBlockStacker_build_windows_WindowsUWP_msixbundle
-    - uses: isaacrlevin/windows-store-action
-      name: Publish to Store
+    - name: Windows Store Publish
+      uses: isaacrlevin/windows-store-action@1.0
       with:
         tenant-id: ${{ secrets.AZURE_AD_TENANT_ID }}
         client-id: ${{ secrets.AZURE_AD_APPLICATION_CLIENT_ID }}
