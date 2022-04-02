@@ -14,7 +14,7 @@ $replaceapk = $true
 
 
 $apksToReplace = @(
-    './Scripts/apks/deveblockstacker_android.deveblockstacker_android-Signed.apk'
+    'Scripts/apks/deveblockstacker_android.deveblockstacker_android-Signed.apk'
 )
 
 
@@ -140,7 +140,14 @@ if ($replaceapk -eq $true) {
             'filename'=[System.IO.Path]::GetFileName($apkFIle)
         }
 
-        $status = Invoke-RestMethod -Uri "$baseurl/$apiversion/applications/$appid/edits/$($newEdit.id)/apks/$($curapk.id)/replace" -Method 'Put' -Headers $header2 -InFile $apkFile
+
+        $testurl = "$baseurl/$apiversion/applications/$appid/edits/$($newEdit.id)/apks/$($curapk.id)/replace"
+        Write-Host "The url: $testurl"
+
+        $outje = Test-Path -Path $apkFile -PathType Leaf
+        Write-Host "File exists: $outje"
+
+        $status = Invoke-RestMethod -Uri $testurl -Method 'Put' -Headers $header2 -InFile $apkFile
         
         $index++
     }
