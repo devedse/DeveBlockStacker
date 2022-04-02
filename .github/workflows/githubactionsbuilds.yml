@@ -429,3 +429,22 @@ jobs:
         #userFraction: 0.33
         #whatsNewDirectory: distribution/whatsnew
         #mappingFile: app/build/outputs/mapping/release/mapping.txt
+
+  release_windows_MicrosoftStore:
+    needs: [generate_version_number, build_windows_WindowsUWP]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+    - name: Download artifacts
+      uses: actions/download-artifact@v2
+      with:
+        path: ./artifacts/DeveBlockStacker_build_windows_WindowsUWP_msixbundle/
+        name: DeveBlockStacker_build_windows_WindowsUWP_msixbundle
+    - uses: isaacrlevin/windows-store-action
+      name: Publish to Store
+      with:
+        tenant-id: ${{ secrets.AZURE_AD_TENANT_ID }}
+        client-id: ${{ secrets.AZURE_AD_APPLICATION_CLIENT_ID }}
+        client-secret: ${{ secrets.AZURE_AD_APPLICATION_SECRET }}
+        app-id: DeveBlockStacker #${{ secrets.STORE_APP_ID }}
+        package-path: "./artifacts/DeveBlockStacker_build_windows_WindowsUWP_msixbundle/DeveBlockStacker.WindowsUWP_1.0.${{needs.generate_version_number.outputs.build_number}}.0/DeveBlockStacker.WindowsUWP_1.0.${{needs.generate_version_number.outputs.build_number}}.0_x86_x64_ARM.msixbundle"
