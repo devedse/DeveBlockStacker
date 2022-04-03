@@ -456,6 +456,9 @@ jobs:
       with:
         path: ./artifacts/DeveBlockStacker_build_windows_WindowsUWP_msixbundle/
         name: DeveBlockStacker_build_windows_WindowsUWP_msixbundle
+    - name: List all files recursively
+      run: |
+        find
     - name: Windows Store Publish
       uses: isaacrlevin/windows-store-action@1.0
       with:
