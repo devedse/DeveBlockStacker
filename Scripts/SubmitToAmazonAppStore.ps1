@@ -138,7 +138,7 @@ if ($replaceapk -eq $true) {
         $header2 = @{
             "Authorization"="Bearer $token"
             'Content-Type'= 'application/vnd.android.package-archive'
-            'If-Match'= $result_apk.Headers["ETag"]
+            'If-Match'= $result_apk.Headers["ETag"].ToString().Trim("{").Trim("}")
             'filename'=[System.IO.Path]::GetFileName($apkFile)
         }
 
@@ -174,7 +174,7 @@ if ($replaceapk -eq $true) {
     $header2 = @{
         "Authorization"="Bearer $token"
         "Content-Type"="application/json"
-        'If-Match'= $result_listings.Headers["ETag"]
+        'If-Match'= $result_listings.Headers["ETag"].ToString().Trim("{").Trim("}")
     }
 
     $updatelisting = Invoke-RestMethod -Uri "$baseurl/$apiversion/applications/$appid/edits/$($newEdit.id)/listings/en-US" -Method 'Put' -Headers $header2 -Body ($listings | ConvertTo-Json)
@@ -189,7 +189,7 @@ if ($replaceapk -eq $true) {
     $header2 = @{
         "Authorization"="Bearer $token"
         "Content-Type"="application/json"
-        'If-Match'= $result_listings.Headers["ETag"]
+        'If-Match'= $result_listings.Headers["ETag"].ToString().Trim("{").Trim("}")
     }
     
     # ​/{apiVersion}​/applications​/{appId}​/edits​/{editId}​/commit
