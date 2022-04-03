@@ -441,7 +441,7 @@ jobs:
       with:
         path: ./Scripts/apks/
         name: DeveBlockStacker_build_windows_AndroidForFireStick_apk
-    - name: Build
+    - name: SubmitToAmazonAppStore
       shell: pwsh
       run: |
         ./Scripts/SubmitToAmazonAppStore.ps1 -clientid ${{ secrets.AMAZONSTORE_CLIENTID }} -clientsecret ${{ secrets.AMAZONSTORE_CLIENTSECRET }} -commitdescription "${{ github.event.head_commit.message }}"
