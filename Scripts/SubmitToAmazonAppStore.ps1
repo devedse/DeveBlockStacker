@@ -27,7 +27,7 @@ $body = @{
     "client_secret"= $clientsecret
     "scope"= "appstore::apps:readwrite"
 } | ConvertTo-Json
-   
+
 $header = @{
     "Content-Type"="application/json"
 } 
@@ -139,40 +139,19 @@ if ($replaceapk -eq $true) {
         Write-Host "Headers:"
         Write-Host $result_apk.Headers
 
-        $test1 = $result_apk.Headers["ETag"]
-        Write-Host "Test1: $test1"
-        $test2 = $test1.ToString().Trim("{").Trim("}")
-        Write-Host "Test2: $test2"
-        $test3 = $test1[0]
-        Write-Host "Test3: $test3"
-        $test4 = $test2[0]
-        Write-Host "Test4: $test4"
-        $test5 = "$test1"
-        Write-Host "Test5: $test5"
-        
+        $etag = $result_apk.Headers["ETag"]
+        if ($etag -is [array]) {
+            $etag = $etag[0]
+        }
 
         $header2 = @{
             "Authorization"="Bearer $token"
             'Content-Type'= 'application/vnd.android.package-archive'
-            'If-Match'= $test4
+            'If-Match'= $etag
             'filename'=[System.IO.Path]::GetFileName($apkFile)
         }
 
-
-        $testurl = "$baseurl/$apiversion/applications/$appid/edits/$($newEdit.id)/apks/$($curapk.id)/replace"
-        Write-Host "The url: $testurl"
-
-        $outje = Test-Path -Path $apkFile -PathType Leaf
-        Write-Host "File exists: $outje"
-
-        Write-Host "apkfile"
-        Write-Host ($apkFile | Get-Member | Format-Table | Out-String)
-        Write-Host "header2"
-        Write-Host ($header2 | Out-String)
-        Write-Host "result_apk"
-        Write-Host ($result_apk.Headers["ETag"] | Get-Member | Format-Table | Out-String)
-
-        $status = Invoke-RestMethod -Uri $testurl -Method 'Put' -Headers $header2 -InFile $apkFile
+        $status = Invoke-RestMethod -Uri "$baseurl/$apiversion/applications/$appid/edits/$($newEdit.id)/apks/$($curapk.id)/replace" -Method 'Put' -Headers $header2 -SkipHeaderValidation -InFile $apkFile
         
         $index++
     }
@@ -187,13 +166,18 @@ if ($replaceapk -eq $true) {
 
     $listings.recentChanges = $commitdescription
 
+    $etag = $result_listings.Headers["ETag"]
+    if ($etag -is [array]) {
+        $etag = $etag[0]
+    }
+
     $header2 = @{
         "Authorization"="Bearer $token"
         "Content-Type"="application/json"
-        'If-Match'= $result_listings.Headers["ETag"].ToString().Trim("{").Trim("}")
+        'If-Match'= $etag
     }
 
-    $updatelisting = Invoke-RestMethod -Uri "$baseurl/$apiversion/applications/$appid/edits/$($newEdit.id)/listings/en-US" -Method 'Put' -Headers $header2 -Body ($listings | ConvertTo-Json)
+    $updatelisting = Invoke-RestMethod -Uri "$baseurl/$apiversion/applications/$appid/edits/$($newEdit.id)/listings/en-US" -Method 'Put' -Headers $header2 -SkipHeaderValidation -Body ($listings | ConvertTo-Json)
 
 
     Write-Host "Publishing commit..."
@@ -202,14 +186,19 @@ if ($replaceapk -eq $true) {
     $result_edit = Invoke-WebRequest "$baseurl/$apiversion/applications/$appid/edits/$($newEdit.id)" -Method 'Get' -Headers $header -UseBasicParsing
     $edit = $result_edit.Content | ConvertFrom-Json
 
+    $etag = $result_edit.Headers["ETag"]
+    if ($etag -is [array]) {
+        $etag = $etag[0]
+    }
+
     $header2 = @{
         "Authorization"="Bearer $token"
         "Content-Type"="application/json"
-        'If-Match'= $result_listings.Headers["ETag"].ToString().Trim("{").Trim("}")
+        'If-Match'= $etag
     }
     
     # ​/{apiVersion}​/applications​/{appId}​/edits​/{editId}​/commit
-    $commit = Invoke-RestMethod -Uri "$baseurl/$apiversion/applications/$appid/edits/$($newEdit.id)/commit" -Method 'Post' -Headers $header2
+    $commit = Invoke-RestMethod -Uri "$baseurl/$apiversion/applications/$appid/edits/$($newEdit.id)/commit" -Method 'Post' -Headers $header2 -SkipHeaderValidation
 
     Write-Host "Commit completed"
 
