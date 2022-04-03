@@ -4,7 +4,9 @@ param (
     [Parameter(Mandatory=$true)]
     [string]$clientsecret,
     [Parameter(Mandatory=$true)]
-    [string]$commitdescription
+    [string]$commitdescription,
+    [Parameter(Mandatory=$true)]
+    [string]$version
 )
 
 $baseurl = "https://developer.amazon.com/api/appstore"
@@ -148,7 +150,7 @@ if ($replaceapk -eq $true) {
             "Authorization"="Bearer $token"
             'Content-Type'= 'application/vnd.android.package-archive'
             'If-Match'= $etag
-            'filename'=[System.IO.Path]::GetFileName($apkFile)
+            'filename'=$version + "_" + [System.IO.Path]::GetFileName($apkFile)
         }
 
         $status = Invoke-RestMethod -Uri "$baseurl/$apiversion/applications/$appid/edits/$($newEdit.id)/apks/$($curapk.id)/replace" -Method 'Put' -Headers $header2 -SkipHeaderValidation -InFile $apkFile

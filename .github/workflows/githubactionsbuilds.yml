@@ -446,7 +446,11 @@ jobs:
     - name: SubmitToAmazonAppStore
       shell: pwsh
       run: |
-        ./Scripts/SubmitToAmazonAppStore.ps1 -clientid ${{ secrets.AMAZONSTORE_CLIENTID }} -clientsecret ${{ secrets.AMAZONSTORE_CLIENTSECRET }} -commitdescription "${{ github.event.head_commit.message }}"
+        ./Scripts/SubmitToAmazonAppStore.ps1 `
+          -clientid ${{ secrets.AMAZONSTORE_CLIENTID }} `
+          -clientsecret ${{ secrets.AMAZONSTORE_CLIENTSECRET }} `
+          -commitdescription "${{ github.event.head_commit.message }}" `
+          -version 1.0.${{needs.generate_version_number.outputs.build_number}}.0
 
   release_linux_MicrosoftStore:
     needs: [generate_version_number, build_windows_WindowsUWP]
