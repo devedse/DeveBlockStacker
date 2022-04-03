@@ -38,10 +38,6 @@ $result = Invoke-RestMethod -Uri "https://api.amazon.com/auth/O2/token" -Method 
 $token = $result.access_token
 
 
-
-
-
-
 $header = @{
     "Content-Type"="application/json"
     "Authorization"="Bearer $token"
@@ -49,7 +45,8 @@ $header = @{
 
 # val activeEdit = editsService.getActiveEdit()
 # @GET("{version}/applications/{appId}/edits")
-$activeEdit = Invoke-RestMethod -Uri "$baseurl/$apiversion/applications/$appid/edits" -Method 'Get' -Headers $header
+$result_activeEdit = Invoke-WebRequest  -Uri "$baseurl/$apiversion/applications/$appid/edits" -Method 'Get' -Headers $header -UseBasicParsing
+$activeEdit = $result_activeEdit.Content | ConvertFrom-Json
 Write-Host $activeEdit
 
 
@@ -64,8 +61,20 @@ Write-Host $activeEdit
 if ($replaceedit -eq $true) {
     Write-Host "Deleting edit..."
     if ($null -ne $activeEdit -and [string]::IsNullOrEmpty($activeEdit.id) -eq $false) {
+
+        $etag = $result_activeEdit.Headers["ETag"]
+        if ($etag -is [array]) {
+            $etag = $etag[0]
+        }
+
+        $header2 = @{
+            "Authorization"="Bearer $token"
+            "Content-Type"="application/json"
+            'If-Match'= $etag
+        }
+
         # @DELETE("{version}/applications/{appId}/edits/{editId}")
-        Invoke-RestMethod -Uri "$baseurl/$apiversion/applications/$appid/edits/$($activeEdit.id)" -Method 'Delete' -Headers $header
+        Invoke-RestMethod -Uri "$baseurl/$apiversion/applications/$appid/edits/$($activeEdit.id)" -Method 'Delete' -Headers $header2 -SkipHeaderValidation
     }
 }
 
