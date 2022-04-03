@@ -135,10 +135,20 @@ if ($replaceapk -eq $true) {
         $result_apk = Invoke-WebRequest -Uri "$baseurl/$apiversion/applications/$appid/edits/$($newEdit.id)/apks/$($curapk.id)" -Method 'Get' -Headers $header -UseBasicParsing
         $apk = $result_apk.Content | ConvertFrom-Json
 
+
+        $test1 = $result_apk.Headers["ETag"]
+        Write-Host "Test1: $test1"
+        $test2 = $test1.ToString().Trim("{").Trim("}")
+        Write-Host "Test2: $test2"
+        $test3 = $test1[0]
+        Write-Host "Test3: $test3"
+        $test4 = $test2[0]
+        Write-Host "Test4: $test4"
+
         $header2 = @{
             "Authorization"="Bearer $token"
             'Content-Type'= 'application/vnd.android.package-archive'
-            'If-Match'= $result_apk.Headers["ETag"].ToString().Trim("{").Trim("}")
+            'If-Match'= 
             'filename'=[System.IO.Path]::GetFileName($apkFile)
         }
 
