@@ -441,8 +441,6 @@ jobs:
       with:
         path: ./Scripts/apks/
         name: DeveBlockStacker_build_windows_AndroidForFireStick_apk
-    - name: Debugging with tmate
-      uses: mxschmitt/action-tmate@v3.11
     - name: SubmitToAmazonAppStore
       shell: pwsh
       run: |
