@@ -154,7 +154,7 @@ if ($replaceapk -eq $true) {
         $header2 = @{
             "Authorization"="Bearer $token"
             'Content-Type'= 'application/vnd.android.package-archive'
-            'If-Match'= $test5
+            'If-Match'= $test4
             'filename'=[System.IO.Path]::GetFileName($apkFile)
         }
 
