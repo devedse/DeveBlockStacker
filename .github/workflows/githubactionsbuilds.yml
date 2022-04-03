@@ -407,7 +407,7 @@ jobs:
         name: DeveBlockStacker_build_windows_WindowsUWP_msixbundle
         path: ./DeveBlockStacker.WindowsUWP/bin/WindowsUniversal/x86/Release/Upload/DeveBlockStacker.WindowsUWP_1.0.${{needs.generate_version_number.outputs.build_number}}.0/DeveBlockStacker.WindowsUWP_1.0.${{needs.generate_version_number.outputs.build_number}}.0_x86_x64_ARM.msixbundle
 
-  release_windows_Android:
+  release_linux_Android:
     needs: [generate_version_number, build_windows_Android]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
@@ -429,3 +429,45 @@ jobs:
         #userFraction: 0.33
         #whatsNewDirectory: distribution/whatsnew
         #mappingFile: app/build/outputs/mapping/release/mapping.txt
+
+  release_linux_Amazon:
+    needs: [generate_version_number, build_windows_AndroidForFireStick]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+    - uses: actions/checkout@v2
+    - name: Download artifacts
+      uses: actions/download-artifact@v2
+      with:
+        path: ./Scripts/apks/
+        name: DeveBlockStacker_build_windows_AndroidForFireStick_apk
+    - name: SubmitToAmazonAppStore
+      shell: pwsh
+      run: |
+        ./Scripts/SubmitToAmazonAppStore.ps1 `
+          -clientid ${{ secrets.AMAZONSTORE_CLIENTID }} `
+          -clientsecret ${{ secrets.AMAZONSTORE_CLIENTSECRET }} `
+          -commitdescription "${{ github.event.head_commit.message }}" `
+          -version 1.0.${{needs.generate_version_number.outputs.build_number}}.0
+
+  release_linux_MicrosoftStore:
+    needs: [generate_version_number, build_windows_WindowsUWP]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+    - name: Download artifacts
+      uses: actions/download-artifact@v2
+      with:
+        path: ./artifacts/DeveBlockStacker_build_windows_WindowsUWP_msixbundle/
+        name: DeveBlockStacker_build_windows_WindowsUWP_msixbundle
+    - name: List all files recursively
+      run: |
+        find
+    - name: Windows Store Publish
+      uses: isaacrlevin/windows-store-action@1.0
+      with:
+        tenant-id: ${{ secrets.AZURE_AD_TENANT_ID }}
+        client-id: ${{ secrets.AZURE_AD_APPLICATION_CLIENT_ID }}
+        client-secret: ${{ secrets.AZURE_AD_APPLICATION_SECRET }}
+        app-id: ${{ secrets.STORE_APP_ID }}
+        package-path: "./artifacts/DeveBlockStacker_build_windows_WindowsUWP_msixbundle/"
