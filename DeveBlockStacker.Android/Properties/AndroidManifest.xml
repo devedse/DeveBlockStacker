@@ -16,4 +16,5 @@
 		android:supportsRtl="true"
 		android:theme="@style/Theme.Splash">		
 	</application>
+	<uses-feature android:name="android.hardware.touchscreen" android:required="false" />
 </manifest>
