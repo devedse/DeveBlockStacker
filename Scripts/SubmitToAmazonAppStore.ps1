@@ -147,11 +147,14 @@ if ($replaceapk -eq $true) {
         Write-Host "Test3: $test3"
         $test4 = $test2[0]
         Write-Host "Test4: $test4"
+        $test5 = "$test1"
+        Write-Host "Test5: $test5"
+        
 
         $header2 = @{
             "Authorization"="Bearer $token"
             'Content-Type'= 'application/vnd.android.package-archive'
-            'If-Match'= 
+            'If-Match'= $test5
             'filename'=[System.IO.Path]::GetFileName($apkFile)
         }
 
