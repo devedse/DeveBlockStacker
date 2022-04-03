@@ -137,10 +137,6 @@ if ($replaceapk -eq $true) {
         $result_apk = Invoke-WebRequest -Uri "$baseurl/$apiversion/applications/$appid/edits/$($newEdit.id)/apks/$($curapk.id)" -Method 'Get' -Headers $header -UseBasicParsing
         $apk = $result_apk.Content | ConvertFrom-Json
 
-
-        Write-Host "Headers:"
-        Write-Host $result_apk.Headers
-
         $etag = $result_apk.Headers["ETag"]
         if ($etag -is [array]) {
             $etag = $etag[0]
