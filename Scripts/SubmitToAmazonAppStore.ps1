@@ -136,6 +136,9 @@ if ($replaceapk -eq $true) {
         $apk = $result_apk.Content | ConvertFrom-Json
 
 
+        Write-Host "Headers:"
+        Write-Host $result_apk.Headers
+
         $test1 = $result_apk.Headers["ETag"]
         Write-Host "Test1: $test1"
         $test2 = $test1.ToString().Trim("{").Trim("}")
