@@ -40,6 +40,8 @@ namespace DeveBlockStacker.Core.GameState
 
         public void Draw(SpriteBatch spriteBatch, ContentDistributionThing contentDistributionThing)
         {
+            var gameSize = contentDistributionThing.ScreenSizeGame;
+
             if (measuredHelloString == Vector2.Zero)
             {
                 measuredHelloString = contentDistributionThing.SecularOne72.MeasureString(helloString);
@@ -49,14 +51,14 @@ namespace DeveBlockStacker.Core.GameState
                 measuredVersionString = contentDistributionThing.SecularOne72.MeasureString(versionString);
             }
 
-            var posHelloString = new Vector2(contentDistributionThing.ScreenWidth / 2, contentDistributionThing.ScreenHeight / 2 - contentDistributionThing.ScreenHeight / 10f + (contentDistributionThing.ScreenHeight / 5.0f * (float)Math.Sin(framesDelay / 20.0f)));
-            var scaleHelloString = contentDistributionThing.ScreenWidth / (measuredHelloString.X * 1.3f);
+            var posHelloString = new Vector2(gameSize.Width / 2, gameSize.Height / 2 - gameSize.Height / 10f + (gameSize.Height / 5.0f * (float)Math.Sin(framesDelay / 20.0f)));
+            var scaleHelloString = gameSize.Width / (measuredHelloString.X * 1.3f);
 
             //Take up 50% of the screen (in width) (also we use {sideDistance} to move it away from the side)
             int sideDistance = 5;
-            var scaleVersionString = (1f / ((measuredVersionString.X + sideDistance) / contentDistributionThing.ScreenWidth)) * 0.25f;
+            var scaleVersionString = (1f / ((measuredVersionString.X + sideDistance) / gameSize.Width)) * 0.25f;
             var scaledMeasuredString = measuredVersionString * scaleVersionString;
-            var posVersionString = new Vector2(contentDistributionThing.ScreenWidth - scaledMeasuredString.X - sideDistance, contentDistributionThing.ScreenHeight - scaledMeasuredString.Y - sideDistance);
+            var posVersionString = new Vector2(gameSize.Width - scaledMeasuredString.X - sideDistance, gameSize.Height - scaledMeasuredString.Y - sideDistance);
 
             spriteBatch.DrawString(contentDistributionThing.SecularOne72, helloString, posHelloString, Color.White, 0, measuredHelloString / 2, scaleHelloString, SpriteEffects.None, 0);
             spriteBatch.DrawString(contentDistributionThing.SecularOne72, versionString, posVersionString, Color.White, 0, Vector2.Zero, scaleVersionString, SpriteEffects.None, 0);

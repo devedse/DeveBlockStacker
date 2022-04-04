@@ -1,8 +1,7 @@
-﻿using DeveBlockStacker.Core.State;
-using DeveBlockStacker.Core.Data;
-using DeveBlockStacker.Core.Drawwers;
+﻿using DeveBlockStacker.Core.Data;
+using DeveBlockStacker.Core.Drawers;
+using DeveBlockStacker.Core.State;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using System;
 
 namespace DeveBlockStacker.Core.GameState
@@ -76,7 +75,7 @@ namespace DeveBlockStacker.Core.GameState
 
         public void Draw(SpriteBatch spriteBatch, ContentDistributionThing contentDistributionThing)
         {
-            NormalGridDrawwer.DrawGrid(spriteBatch, contentDistributionThing, gameData);
+            NormalGridDrawer.DrawGrid(spriteBatch, contentDistributionThing, gameData);
         }
     }
 }

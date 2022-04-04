@@ -1,4 +1,5 @@
 ﻿using DeveBlockStacker.Core.Data;
+using DeveBlockStacker.Core.Drawers;
 using DeveBlockStacker.Core.GameState;
 using DeveBlockStacker.Core.HelperObjects;
 using DeveBlockStacker.Core.State;
@@ -18,8 +19,10 @@ namespace DeveBlockStacker.Core
         private readonly InputStatifier _inputStatifier;
         private readonly Platform _platform;
 
-        private IntSize _desiredScreenSize = null;
+        private IntSize? _desiredScreenSize = null;
         private IContentManagerExtension _contentManagerExtension = null;
+
+        private EffectBlockDrawer _effectBlockDrawer;
 
         public TheGame() : this(Platform.Desktop)
         {
@@ -31,11 +34,11 @@ namespace DeveBlockStacker.Core
 
         }
 
-        public TheGame(IntSize desiredScreenSize, Platform platform) : this(null, desiredScreenSize, platform)
+        public TheGame(IntSize? desiredScreenSize, Platform platform) : this(null, desiredScreenSize, platform)
         {
         }
 
-        public TheGame(IContentManagerExtension contentManagerExtension, IntSize desiredScreenSize, Platform platform) : base()
+        public TheGame(IContentManagerExtension contentManagerExtension, IntSize? desiredScreenSize, Platform platform) : base()
         {
             _contentManagerExtension = contentManagerExtension;
             _desiredScreenSize = desiredScreenSize;
@@ -54,6 +57,8 @@ namespace DeveBlockStacker.Core
             _contentDistributionThing = new ContentDistributionThing(_graphics);
             _currentState = new NewGameState();
             _platform = platform;
+
+            _effectBlockDrawer = new EffectBlockDrawer(_contentDistributionThing);
         }
 
         protected override void Initialize()
@@ -61,8 +66,8 @@ namespace DeveBlockStacker.Core
 #if !BLAZOR
             if (_desiredScreenSize != null)
             {
-                _graphics.PreferredBackBufferWidth = _desiredScreenSize.Width;
-                _graphics.PreferredBackBufferHeight = _desiredScreenSize.Height;
+                _graphics.PreferredBackBufferWidth = _desiredScreenSize.Value.Width;
+                _graphics.PreferredBackBufferHeight = _desiredScreenSize.Value.Height;
             }
 
             if (_platform == Platform.Android)
@@ -107,6 +112,7 @@ namespace DeveBlockStacker.Core
             }
 
             _currentState = _currentState.Update(_inputStatifier);
+            _effectBlockDrawer.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -114,9 +120,12 @@ namespace DeveBlockStacker.Core
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
+            _contentDistributionThing.Update();
 
-            _spriteBatch.Begin();
+            var screenSizeGame = _contentDistributionThing.ScreenSizeGame;
+            _spriteBatch.Begin(transformMatrix: Matrix.CreateTranslation(screenSizeGame.X, screenSizeGame.Y, 0));
 
+            _effectBlockDrawer.Draw(_spriteBatch);
             _currentState.Draw(_spriteBatch, _contentDistributionThing);
 
             _spriteBatch.End();
