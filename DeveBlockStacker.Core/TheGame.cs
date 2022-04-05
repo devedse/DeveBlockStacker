@@ -64,36 +64,49 @@ namespace DeveBlockStacker.Core
         protected override void Initialize()
         {
 #if !BLAZOR
+            Window.ClientSizeChanged += Window_ClientSizeChanged;
+            Window.OrientationChanged += Window_OrientationChanged;
+
+            FixScreenSize();
+#endif
+            base.Initialize();
+        }
+
+        private void FixScreenSize()
+        {
             if (_desiredScreenSize != null)
             {
                 _graphics.PreferredBackBufferWidth = _desiredScreenSize.Value.Width;
                 _graphics.PreferredBackBufferHeight = _desiredScreenSize.Value.Height;
-            }
 
-            if (_platform == Platform.Android)
+                //Ensure this only happens once
+                _desiredScreenSize = null;
+            }
+            else
             {
                 _graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
                 _graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
-                //To remove the Battery bar
-                _graphics.IsFullScreen = true;
-
             }
 
-            if (_platform == Platform.UWP)
+            if (_platform == Platform.Android || _platform == Platform.UWP) // && Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile"
             {
-                //if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
-                //{
-                //}
-                _graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
-                _graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
                 //To remove the Battery bar
                 _graphics.IsFullScreen = true;
             }
 
-            _graphics.SupportedOrientations = DisplayOrientation.Portrait | DisplayOrientation.PortraitDown;
+            Window.AllowUserResizing = true;
+
             _graphics.ApplyChanges();
-#endif
-            base.Initialize();
+        }
+
+        private void Window_OrientationChanged(object sender, System.EventArgs e)
+        {
+            FixScreenSize();
+        }
+
+        private void Window_ClientSizeChanged(object sender, System.EventArgs e)
+        {
+            FixScreenSize();
         }
 
         protected override void LoadContent()

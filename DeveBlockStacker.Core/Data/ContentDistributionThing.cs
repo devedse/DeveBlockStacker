@@ -49,7 +49,7 @@ namespace DeveBlockStacker.Core.Data
             ScreenSizeTotal = new IntSize(screenWidth, screenHeight);
 
             float maxFactorWidth = 0.8f;
-            float maxFactorHeight = 1.8f;
+            float maxFactorHeight = 3f;
 
             int screenSizeGameWidth = (int)Math.Min(screenWidth, screenHeight * maxFactorWidth);
             int screenSizeGameHeight = (int)Math.Min(screenHeight, screenWidth * maxFactorHeight);
