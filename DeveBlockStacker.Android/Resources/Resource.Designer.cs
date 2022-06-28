@@ -14,7 +14,7 @@ namespace DeveBlockStacker.Android
 {
 	
 	
-	[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Android.Build.Tasks", "12.2.0.155")]
+	[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Android.Build.Tasks", "12.3.0.26")]
 	public partial class Resource
 	{
 		
@@ -60,10 +60,13 @@ namespace DeveBlockStacker.Android
 		{
 			
 			// aapt resource value: 0x7F020000
-			public const int Icon = 2130837504;
+			public const int GoogleTvBanner = 2130837504;
 			
 			// aapt resource value: 0x7F020001
-			public const int Splash = 2130837505;
+			public const int Icon = 2130837505;
+			
+			// aapt resource value: 0x7F020002
+			public const int Splash = 2130837506;
 			
 			static Drawable()
 			{
