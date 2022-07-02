@@ -15,14 +15,14 @@
 		android:roundIcon="@mipmap/ic_launcher_round"
 		android:supportsRtl="true"
 		android:theme="@style/Theme.Splash"
-		android:banner="@drawable/GoogleTvBanner">
+		android:banner="@drawable/googletvbanner"
+		android:isGame="true">
 		<activity
-        android:name=".MainActivity"
-        android:banner="@drawable/icon"
-        android:icon="@drawable/icon"
-        android:label="DeveBlockStacker"
-        android:logo="@drawable/icon"
-        android:screenOrientation="landscape">
+			android:name="DeveBlockStacker.Android.MainActivity"
+			android:icon="@drawable/icon"
+			android:label="DeveBlockStacker"
+			android:logo="@drawable/icon"
+			android:screenOrientation="landscape">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />

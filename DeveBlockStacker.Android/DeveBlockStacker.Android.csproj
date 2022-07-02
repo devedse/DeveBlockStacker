@@ -144,7 +144,7 @@
     <AndroidResource Include="Resources\Values\ic_launcher_background.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\Drawable\GoogleTvBanner.png">
+    <AndroidResource Include="Resources\drawable-xhdpi\googletvbanner.png">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
   </ItemGroup>

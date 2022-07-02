@@ -7,7 +7,8 @@ using DeveBlockStacker.Core.HelperObjects;
 
 namespace DeveBlockStacker.Android
 {
-    [Activity(Label = "DeveBlockStacker"
+    [Activity(Name = "DeveBlockStacker.Android.MainActivity"
+        , Label = "DeveBlockStacker"
         , MainLauncher = true
         , Theme = "@style/Theme.Splash"
         , AlwaysRetainTaskState = true

@@ -60,7 +60,7 @@ namespace DeveBlockStacker.Android
 		{
 			
 			// aapt resource value: 0x7F020000
-			public const int GoogleTvBanner = 2130837504;
+			public const int googletvbanner = 2130837504;
 			
 			// aapt resource value: 0x7F020001
 			public const int Icon = 2130837505;
