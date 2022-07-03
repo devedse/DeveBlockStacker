@@ -7,14 +7,20 @@ using DeveBlockStacker.Core.HelperObjects;
 
 namespace DeveBlockStacker.Android
 {
-    [Activity(Name = "DeveBlockStacker.Android.MainActivity"
-        , Label = "DeveBlockStacker"
+    [Activity(Label = "DeveBlockStacker"
         , MainLauncher = true
         , Theme = "@style/Theme.Splash"
         , AlwaysRetainTaskState = true
         , LaunchMode = LaunchMode.SingleInstance
         , ScreenOrientation = ScreenOrientation.FullSensor
         , ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.Keyboard | ConfigChanges.KeyboardHidden | ConfigChanges.ScreenSize)]
+    [IntentFilter(
+        new[] { "android.intent.action.MAIN" }, 
+        AutoVerify = true,
+        Categories = new[] { 
+            "android.intent.category.LAUNCHER", 
+            "android.intent.category.LEANBACK_LAUNCHER" 
+        })]
     public class MainActivity : Microsoft.Xna.Framework.AndroidGameActivity
     {
         private void FixUiOptions()
