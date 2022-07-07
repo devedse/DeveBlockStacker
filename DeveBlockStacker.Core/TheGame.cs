@@ -56,7 +56,6 @@ namespace DeveBlockStacker.Core
 
             _contentDistributionThing = new ContentDistributionThing(_graphics);
             _currentState = new NewGameState();
-            _platform = platform;
 
             _effectBlockDrawer = new EffectBlockDrawer(_contentDistributionThing);
         }
