@@ -24,8 +24,6 @@ namespace DeveBlockStacker.Core.GameState
 #endif
         private string _versionString = "";
         private Vector2 _measuredVersionString;
-        public IntSize? _lastScreenSizeTotal = null;
-        public Rectangle? _lastScreenSizeGame = null;
 
         public NewGameState()
         {
