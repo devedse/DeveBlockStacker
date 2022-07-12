@@ -36,12 +36,9 @@ namespace DeveBlockStacker.Core.State
 
         public bool IsTouchTapped()
         {
-            if (CurrentTouchState.Count > 0)
+            if (CurrentTouchState.Count > 0 && (CurrentTouchState[0].State == TouchLocationState.Moved || CurrentTouchState[0].State == TouchLocationState.Pressed) && PreviousTouchState.Count == 0)
             {
-                if ((CurrentTouchState[0].State == TouchLocationState.Moved || CurrentTouchState[0].State == TouchLocationState.Pressed) && PreviousTouchState.Count == 0)
-                {
-                    return true;
-                }
+                return true;
             }
             return false;
         }

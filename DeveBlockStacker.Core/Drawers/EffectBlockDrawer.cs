@@ -10,14 +10,14 @@ namespace DeveBlockStacker.Core.Drawers
     public class EffectBlockDrawer
     {
         private readonly ContentDistributionThing _contentDistributionThing;
-        private Queue<EffectBlock> _blocketjes = new Queue<EffectBlock>();
+        private readonly Queue<EffectBlock> _blocketjes = new Queue<EffectBlock>();
 
         private double _timer;
         private double _lastSpawn;
 
-        private double _timeBetweenSpawns = 0.05;
+        private readonly double _timeBetweenSpawns = 0.05;
 
-        private Random _random = new Random();
+        private readonly Random _random = new Random();
 
         public EffectBlockDrawer(ContentDistributionThing contentDistributionThing)
         {

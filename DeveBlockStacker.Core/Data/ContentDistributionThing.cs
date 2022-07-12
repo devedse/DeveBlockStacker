@@ -16,11 +16,11 @@ namespace DeveBlockStacker.Core.Data
         public Rectangle ScreenSizeGame { get; private set; }
 
 
-        private GraphicsDeviceManager graphics;
+        private readonly GraphicsDeviceManager _graphics;
 
         public ContentDistributionThing(GraphicsDeviceManager graphics)
         {
-            this.graphics = graphics;
+            _graphics = graphics;
             CalculateScreenSize();
         }
 
@@ -43,8 +43,8 @@ namespace DeveBlockStacker.Core.Data
 
         private void CalculateScreenSize()
         {
-            int screenWidth = graphics.PreferredBackBufferWidth;
-            int screenHeight = graphics.PreferredBackBufferHeight;
+            int screenWidth = _graphics.PreferredBackBufferWidth;
+            int screenHeight = _graphics.PreferredBackBufferHeight;
 
             ScreenSizeTotal = new IntSize(screenWidth, screenHeight);
 

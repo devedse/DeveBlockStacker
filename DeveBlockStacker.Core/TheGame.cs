@@ -19,10 +19,10 @@ namespace DeveBlockStacker.Core
         private readonly InputStatifier _inputStatifier;
         private readonly Platform _platform;
 
-        private IntSize? _desiredScreenSize = null;
-        private IContentManagerExtension _contentManagerExtension = null;
+        private IntSize? _desiredScreenSize;
+        private readonly IContentManagerExtension _contentManagerExtension;
 
-        private EffectBlockDrawer _effectBlockDrawer;
+        private readonly EffectBlockDrawer _effectBlockDrawer;
 
         public TheGame() : this(Platform.Desktop)
         {
