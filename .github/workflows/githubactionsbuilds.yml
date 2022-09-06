@@ -319,7 +319,7 @@ jobs:
         print-file: true
     - name: Use powershell to make this wear os capable
       run: |
-        $xmlfile = [XML](Get-Content DeveBlockStacker.Android/Properties/AndroidManifest.xml
+        $xmlfile = [XML](Get-Content DeveBlockStacker.Android/Properties/AndroidManifest.xml)
         $newelement = $xmlfile.CreateElement("uses-feature")
         $newelement.SetAttribute("android:name", "android.hardware.type.watch")
         $xmlfile.manifest.AppendChild($newelement)
