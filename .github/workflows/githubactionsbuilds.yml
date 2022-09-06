@@ -317,10 +317,12 @@ jobs:
         version-name: 1.0.${{needs.generate_version_number.outputs.build_number}}
         version-code: ${{needs.generate_version_number.outputs.build_number}}
         print-file: true
-    - name: Make this wear os
-      uses: Mudlet/xmlstarlet-action@master
-      with:
-        args: ed -L -s /manifest -t elem -n ResourceTMP -v "" -i //ResourceTMP -t attr -n "android:name" -v "android.hardware.type.watch" -r //ResourceTMP -v uses-feature DeveBlockStacker.Android/Properties/AndroidManifest.xml
+    - name: Install xmlstarlet
+      run: |
+        choco install xmlstarlet -y
+    - name: Use xmlstarlet to make this wear os capable
+      run: |
+        xmlstarlet ed -L -s /manifest -t elem -n ResourceTMP -v "" -i //ResourceTMP -t attr -n "android:name" -v "android.hardware.type.watch" -r //ResourceTMP -v uses-feature DeveBlockStacker.Android/Properties/AndroidManifest.xml
     - name: Show xml file
       run: cat DeveBlockStacker.Android/Properties/AndroidManifest.xml
       shell: bash
