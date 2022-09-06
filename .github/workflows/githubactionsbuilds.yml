@@ -322,7 +322,7 @@ jobs:
         choco install xmlstarlet -y
     - name: Use xmlstarlet to make this wear os capable
       run: |
-        xmlstarlet ed -L -s /manifest -t elem -n ResourceTMP -v "" -i //ResourceTMP -t attr -n "android:name" -v "android.hardware.type.watch" -r //ResourceTMP -v uses-feature DeveBlockStacker.Android/Properties/AndroidManifest.xml
+        xml ed -L -s /manifest -t elem -n ResourceTMP -v "" -i //ResourceTMP -t attr -n "android:name" -v "android.hardware.type.watch" -r //ResourceTMP -v uses-feature DeveBlockStacker.Android/Properties/AndroidManifest.xml
     - name: Show xml file
       run: cat DeveBlockStacker.Android/Properties/AndroidManifest.xml
       shell: bash
