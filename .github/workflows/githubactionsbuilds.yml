@@ -321,7 +321,7 @@ jobs:
       run: |
         $xmlfile = [XML](Get-Content DeveBlockStacker.Android/Properties/AndroidManifest.xml)
         $newelement = $xmlfile.CreateElement("uses-feature")
-        $newelement.SetAttribute("android:name", "android.hardware.type.watch")
+        $newelement.SetAttribute("name", "http://schemas.android.com/apk/res/android", "android.hardware.type.watch")
         $xmlfile.manifest.AppendChild($newelement)
         $xmlfile.save('DeveBlockStacker.Android/Properties/AndroidManifest.xml')
       shell: pwsh
