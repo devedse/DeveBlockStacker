@@ -379,7 +379,7 @@ jobs:
       with:
         name: DeveBlockStacker_build_macos_Android_aab
         path: ./DeveBlockStacker.Android/bin/AnyCPU/Release/deveblockstacker_android.deveblockstacker_android-Signed.aab
-  
+
   build_windows_AndroidForFireStick:
     needs: generate_version_number
     runs-on: windows-latest
