@@ -345,7 +345,7 @@ jobs:
     #   shell: powershell
     - uses: actions/upload-artifact@v2
       with:
-        name: DeveBlockStacker_build_windows_Android_aab
+        name: DeveBlockStacker_build_windows_Android_WearOS_aab
         path: ./DeveBlockStacker.Android/bin/AnyCPU/Release/deveblockstacker_android.deveblockstacker_android-Signed.aab
 
   build_macos_Android:
