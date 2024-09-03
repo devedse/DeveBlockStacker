@@ -169,7 +169,7 @@ jobs:
     if: github.ref == 'refs/heads/master'
     steps:
     - name: Download all artifacts
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v4.1.7
       with:
         path: ./artifacts/
 
@@ -464,7 +464,7 @@ jobs:
     if: github.ref == 'refs/heads/master'
     steps:
     - name: Download artifacts
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v4.1.7
       with:
         path: ./artifacts/DeveBlockStacker_build_windows_Android_aab/
         name: DeveBlockStacker_build_windows_Android_aab
@@ -488,7 +488,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Download artifacts
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v4.1.7
       with:
         path: ./Scripts/apks/
         name: DeveBlockStacker_build_windows_AndroidForFireStick_apk
@@ -507,7 +507,7 @@ jobs:
     if: github.ref == 'refs/heads/master'
     steps:
     - name: Download artifacts
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v4.1.7
       with:
         path: ./artifacts/DeveBlockStacker_build_windows_WindowsUWP_msixbundle/
         name: DeveBlockStacker_build_windows_WindowsUWP_msixbundle
